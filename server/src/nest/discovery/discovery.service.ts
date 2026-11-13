@@ -11,11 +11,11 @@ import {
 } from '@trek/shared';
 
 /** What "a short walk" means for the scan: the design's default radius. */
-export const DISCOVERY_SCAN_RADIUS_M = 250;
+const DISCOVERY_SCAN_RADIUS_M = 250;
 /** How many candidates the providers may return before ranking. */
-export const DISCOVERY_SCAN_LIMIT = 20;
+const DISCOVERY_SCAN_LIMIT = 20;
 /** How long a cell's answer stays fresh, the same 24h the privacy copy promises. */
-export const DISCOVERY_SCAN_TTL_SECONDS = 86400;
+const DISCOVERY_SCAN_TTL_SECONDS = 86400;
 
 /**
  * The Discovery scan — compose "what is near" from the maps domain and shape it

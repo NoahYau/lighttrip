@@ -1009,17 +1009,10 @@
       "hooks": ["src/components/Discovery/useNearbyDiscovery.ts", "src/components/Discovery/nearbyModel.ts"],
       "desktop": ["src/components/Discovery/NearbyPanel.tsx"],
       "mobile": ["src/mobile/screens/discovery/MNearbySheet.tsx"]
-    },
-    {
-      "feature": "Discovery: roaming",
-      "hooks": ["src/components/Discovery/useProximityEngine.ts"],
-      "desktop": ["src/components/Discovery/ProximityCardHost.tsx"],
-      "mobile": ["src/mobile/screens/discovery/MProximityCardHost.tsx"]
     }
   ],
   "mobileOnly": {
     "src/mobile/screens/discovery/MNearbyLauncher.tsx": "Phone-only round control that opens the nearby sheet; no logic to share.",
-    "src/mobile/screens/discovery/MProximitySheet.tsx": "Markup only; the roaming card sheet, its state and actions come from useProximityEngine in MProximityCardHost.",
     "src/mobile/screens/admin/MAdminOidcCard.tsx": "Markup only; the OIDC card of MAdminSettingsSection, with the form state from useAdmin and the save from its useAdminSettingsActions handed in through props.",
     "src/mobile/screens/admin/MAdminResetMfaSheet.tsx": "Markup only; the 2FA reset confirm that MAdminSheets opens, with the reset handed in through props from its useAdminUserActions.",
     "src/mobile/screens/admin/MAdminUi.tsx": "Phone only admin UI primitives (button, card, field, input, secret input, sheet frame).",

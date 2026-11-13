@@ -5,7 +5,6 @@ import { MAP_LAYER_SWITCHER_INSET, MAP_ROUND_CONTROL_SIZE } from '../../../../co
 import { TripRouteOverviewPill, TripRouteOverviewPanel } from '../../../../components/Map/TripRouteOverview'
 import { DawarichTrailPill } from '../../../../components/Map/DawarichTrailPill'
 import MNearbyLauncher from '../../discovery/MNearbyLauncher'
-import MProximityCardHost from '../../discovery/MProximityCardHost'
 import PoiCategoryPill from '../../../../components/Map/PoiCategoryPill'
 import { usePoiExplore } from '../../../../components/Map/usePoiExplore'
 import { useMergedMapPois } from '../../../../components/Map/useMergedMapPois'
@@ -526,7 +525,6 @@ export default function MMapArea({ planner, shell }: MMapAreaProps) {
             <TripRouteOverviewPill active={planner.overviewShown} onToggle={planner.toggleOverview} />
           )}
           <MNearbyLauncher tripId={planner.tripId} getFallbackCenter={() => mapCenterRef.current} />
-          <MProximityCardHost tripId={planner.tripId} />
         </div>
       )}
     </div>

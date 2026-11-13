@@ -11,7 +11,7 @@
  * `@trek/*` imports, `trek_*` ids and a `/TREK` path inside a URL are not a
  * display name, and changing them would break instructions and links.
  */
-export const BRAND_NAME = 'LightTrip';
+const BRAND_NAME = 'LightTrip';
 
 // `TREK` as a word: at the start of a string or after anything that is not a
 // word character, `/` or `@` (so URLs and scopes are skipped), and not followed

@@ -1,4 +1,4 @@
-import { useCallback, useRef, type Dispatch, type ReactElement, type SetStateAction } from 'react'
+import { useCallback, useRef, useState, type Dispatch, type ReactElement, type SetStateAction } from 'react'
 import { createPortal } from 'react-dom'
 import { MapViewAuto as MapView } from '../../components/Map/MapViewAuto'
 import { MapCompassPill, type CompassMap } from '../../components/Map/MapCompassPill'
@@ -6,7 +6,7 @@ import { TripRouteOverviewPill, TripRouteOverviewPanel } from '../../components/
 import { DawarichTrailPill } from '../../components/Map/DawarichTrailPill'
 import PoiCategoryPill from '../../components/Map/PoiCategoryPill'
 import NearbyLauncher from '../../components/Discovery/NearbyLauncher'
-import ProximityCardHost from '../../components/Discovery/ProximityCardHost'
+import { LocateMeButton } from '../../components/Discovery/LocateMeButton'
 import ActivityCompareLegend from '../../components/Tours/activity/ActivityCompareLegend'
 import { useActivityCompareMap } from '../../components/Tours/activity/useActivityCompareMap'
 import type { Poi } from '../../components/Map/poiCategories'
@@ -80,6 +80,13 @@ export function PlanMapStage({
   glMap, setGlMap, poiPillEnabled, mapPois, distanceUnit, inspectorHeight = 0,
 }: Readonly<PlanMapStageProps>): ReactElement {
   const mapCenterRef = useRef<{ lat: number; lng: number } | null>(null)
+  // The point "Locate me" asked for, with a key bumped on each press so the map
+  // refits even when the traveller asks for the same spot twice. Null until the
+  // first fix, so the map's normal framing stays in charge before then.
+  const [locateFocus, setLocateFocus] = useState<{ points: [number, number][]; key: number } | null>(null)
+  const handleLocate = useCallback((pos: { lat: number; lng: number }) => {
+    setLocateFocus(prev => ({ points: [[pos.lat, pos.lng]], key: (prev?.key ?? 0) + 1 }))
+  }, [])
   const captureViewport = tourMap.captureViewport
   const handleViewport = useCallback(
     (bbox: { south: number; west: number; north: number; east: number }) => {
@@ -156,7 +163,8 @@ export function PlanMapStage({
         onRouteClick={roadtripActive && can('day_edit', trip) ? addRoadtripVia : undefined}
         roadtripVias={roadtripActive ? roadtripVias.byDay : undefined}
         alternativeRoutes={alternativeOverlays}
-        focusPoints={overviewActive ? tripOverview.focusPoints : mapFocusPoints}
+        focusPoints={locateFocus ? locateFocus.points : overviewActive ? tripOverview.focusPoints : mapFocusPoints}
+        focusKey={locateFocus ? `locate:${locateFocus.key}` : undefined}
         clusterLoosely={roadtripActive}
         activeAlternative={highlightedAlternative}
         onChooseAlternative={chooseRouteAlternative}
@@ -219,7 +227,7 @@ export function PlanMapStage({
             />
           )}
           <NearbyLauncher tripId={tripId} getFallbackCenter={() => mapCenterRef.current} insetEnd={mapInsetRight + 14} />
-          <ProximityCardHost tripId={tripId} />
+          <LocateMeButton onLocate={handleLocate} />
         </div>
       )}
 
