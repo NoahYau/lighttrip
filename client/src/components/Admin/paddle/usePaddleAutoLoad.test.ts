@@ -1,4 +1,4 @@
-// FE-HOOK-PADDLE-AUTOLOAD-001 to 003: how TREK loads regions by itself, read and saved in the admin area (PAD-11C).
+// FE-HOOK-PADDLE-AUTOLOAD-001 to 003: how LightTrip loads regions by itself, read and saved in the admin area (PAD-11C).
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { createElement, type ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';

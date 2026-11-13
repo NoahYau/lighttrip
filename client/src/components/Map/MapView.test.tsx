@@ -223,7 +223,7 @@ vi.mock('../../mobile/useIsPhone', async (importOriginal) => {
 })
 
 vi.mock('./gcj02Crs', () => ({
-  crsForBasemap: (gcj02: boolean) => gcj02 ? { code: 'TREK:GCJ02' } : undefined,
+  crsForBasemap: (gcj02: boolean) => gcj02 ? { code: 'LightTrip:GCJ02' } : undefined,
 }))
 
 import { MapView } from './MapView'
@@ -277,7 +277,7 @@ describe('MapView', () => {
     })
     const { rerender } = render(<MapView {...props('default')} />)
     const defaultMap = screen.getByTestId('map-container')
-    expect(defaultMap).toHaveAttribute('data-crs', 'TREK:GCJ02')
+    expect(defaultMap).toHaveAttribute('data-crs', 'LightTrip:GCJ02')
     expect(screen.getAllByTestId('marker').some(marker => marker.getAttribute('data-lat') === '39.9042'
       && marker.getAttribute('data-lng') === '116.4074')).toBe(true)
     expect(screen.getByTestId('tile-layer')).toHaveAttribute('data-url', AMAP_ROAD)
@@ -306,11 +306,11 @@ describe('MapView', () => {
     rerender(<MapView {...props('satellite')} />)
     const satelliteMap = screen.getByTestId('map-container')
     expect(satelliteMap).not.toBe(topoMap)
-    expect(satelliteMap).toHaveAttribute('data-crs', 'TREK:GCJ02')
+    expect(satelliteMap).toHaveAttribute('data-crs', 'LightTrip:GCJ02')
     expect(screen.getByTestId('tile-layer')).toHaveAttribute('data-url', AMAP_SATELLITE)
 
     rerender(<MapView {...props('default')} />)
-    expect(screen.getByTestId('map-container')).toHaveAttribute('data-crs', 'TREK:GCJ02')
+    expect(screen.getByTestId('map-container')).toHaveAttribute('data-crs', 'LightTrip:GCJ02')
     expect(screen.getByTestId('tile-layer')).toHaveAttribute('data-url', AMAP_ROAD)
     expect(useSettingsStore.getState().settings.map_base_layer).toBe('default')
     expect(onViewBaseLayerChange).not.toHaveBeenCalled()

@@ -790,7 +790,7 @@ describe('a book a newer Studio saved', () => {
   /** A 409 for a book a newer Studio saved since this tab read it. */
   function newerError() {
     return Object.assign(new Error('Request failed'), {
-      response: { status: 409, data: { error: 'Book was saved by a newer version of TREK Studio', code: 'book_schema_newer', schemaRev: 2 } },
+      response: { status: 409, data: { error: 'Book was saved by a newer version of LightTrip Studio', code: 'book_schema_newer', schemaRev: 2 } },
     })
   }
 

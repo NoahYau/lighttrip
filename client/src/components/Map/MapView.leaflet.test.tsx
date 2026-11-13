@@ -298,7 +298,7 @@ describe('MapView on a real Leaflet map', () => {
     await waitFor(() => expect(view.container.querySelector('.leaflet-container')).toBeInTheDocument())
     let map = maps[maps.length - 1]
     expect(map.options.crs).toBeTruthy()
-    expect(map.options.crs?.code).toBe('TREK:GCJ02')
+    expect(map.options.crs?.code).toBe('LightTrip:GCJ02')
 
     const retainedCenter = L.latLng(39.91, 116.41)
     act(() => map.setView(retainedCenter, 13))
@@ -320,7 +320,7 @@ describe('MapView on a real Leaflet map', () => {
     view.rerender(renderLayer('satellite'))
     await waitFor(() => expect(maps[maps.length - 1]).not.toBe(map))
     map = maps[maps.length - 1]
-    expect(map.options.crs?.code).toBe('TREK:GCJ02')
+    expect(map.options.crs?.code).toBe('LightTrip:GCJ02')
     expect(map.getCenter().lat).toBeCloseTo(retainedCenter.lat, 5)
     expect(map.getCenter().lng).toBeCloseTo(retainedCenter.lng, 5)
     expect(waypoints).toEqual([{ id: 'beijing', lat: 39.9042, lng: 116.4074, role: 'start' }])

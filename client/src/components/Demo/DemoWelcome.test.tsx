@@ -16,10 +16,10 @@ afterEach(() => {
 });
 
 describe('DemoWelcome', () => {
-  it('FE-COMP-DEMOWELCOME-001: opens as a dialog saying what TREK is', () => {
+  it('FE-COMP-DEMOWELCOME-001: opens as a dialog saying what LightTrip is', () => {
     render(<DemoWelcome />);
     const dialog = screen.getByRole('dialog', { name: 'Live demo' });
-    expect(dialog).toHaveTextContent('Welcome to TREK');
+    expect(dialog).toHaveTextContent('Welcome to LightTrip');
     expect(dialog).toHaveTextContent('The travel planner you share');
   });
 
@@ -41,7 +41,7 @@ describe('DemoWelcome', () => {
     for (const title of [
       'Trip planner',
       'Tours and hikes',
-      'Photo books in TREK Studio',
+      'Photo books in LightTrip Studio',
       'Plan together live',
       'Journey travel journal',
       'Atlas world map',

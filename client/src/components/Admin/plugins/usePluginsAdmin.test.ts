@@ -267,7 +267,7 @@ describe('usePluginsAdmin', () => {
     expect(result.current.confirmUninstall).toBeNull();
   });
 
-  it('FE-ADMIN-PLUGINS-HOOK-013: switching on a plugin outside its TREK range asks first, then runs it anyway', async () => {
+  it('FE-ADMIN-PLUGINS-HOOK-013: switching on a plugin outside its LightTrip range asks first, then runs it anyway', async () => {
     serve([
       row({ enabled: 0, dependencyStatus: 'hostIncompatible', trekRange: '>=3.2.0 <4.0.0', hostVersion: '5.0.0' }),
     ]);

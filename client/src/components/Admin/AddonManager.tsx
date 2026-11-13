@@ -216,7 +216,7 @@ export default function AddonManager({ bagTrackingEnabled, onToggleBagTracking, 
   const subtitle = (
     <span className="inline-flex flex-wrap items-center gap-1">
       {t('admin.addons.subtitleBefore')}
-      <img src={dark ? '/text-light.svg' : '/text-dark.svg'} alt="TREK" style={{ height: 10, verticalAlign: 'middle', opacity: 0.7 }} />
+      <img src={dark ? '/text-light.svg' : '/text-dark.svg'} alt="LightTrip" style={{ height: 10, verticalAlign: 'middle', opacity: 0.7 }} />
       {t('admin.addons.subtitleAfter')}
     </span>
   )

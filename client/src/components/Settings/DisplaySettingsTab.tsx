@@ -13,7 +13,7 @@ import Section from './Section'
 import ToggleSwitch from './ToggleSwitch'
 import { ChoiceChips, SettingRow, SettingRows } from './settingsKit'
 import { useSettingSaver } from './useSettingSaver'
-import { TRIP_TAB_IDS, TRIP_TAB_LABEL_KEYS } from '../../constants/tripTabs'
+import { TRIP_TAB_IDS, TRIP_TAB_LABELS } from '../../constants/tripTabs'
 import { DEFAULT_START_PAGE, DEFAULT_START_TRIP_TAB } from '../../utils/startDestination'
 import type { DistanceUnit } from '../../types'
 import { DEFAULT_DATE_FORMAT, DEFAULT_WEEK_START } from '@trek/shared'
@@ -94,7 +94,7 @@ export default function DisplaySettingsTab(): React.ReactElement {
                     onChange={async v => {
                       await save('start_trip_tab', String(v))
                     }}
-                    options={TRIP_TAB_IDS.map(id => ({ value: id, label: t(TRIP_TAB_LABEL_KEYS[id]) }))}
+                    options={TRIP_TAB_IDS.map(id => ({ value: id, label: t(TRIP_TAB_LABELS[id].labelKey) }))}
                   />
                 </div>
               }

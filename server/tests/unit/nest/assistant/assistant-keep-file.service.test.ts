@@ -166,7 +166,7 @@ describe('AssistantKeepFileService', () => {
     expect(await run({}, { attachmentId: 'nope' })).toEqual({ ok: false, value: 'This change can no longer be read.' });
     expect(await run({ allowed: 'jpg' })).toEqual({
       ok: false,
-      value: 'This file type is not allowed on this TREK instance.',
+      value: 'This file type is not allowed on this LightTrip instance.',
     });
     expect(await run({ foreign: 'reservation_id' }, { attachmentId: ID, reservation_id: 404 })).toEqual({
       ok: false,

@@ -1,0 +1,45 @@
+import type { TranslationStrings } from '../types';
+
+/** カーボンフットプリントパネルと交通手段比較の文言。 */
+const carbon: TranslationStrings = {
+  'carbon.title': 'カーボンフットプリント',
+  'carbon.subtitle': 'この旅行の移動による CO₂e 推計値',
+  'carbon.total': '推計合計',
+  'carbon.totalValue': '{value} kg CO₂e',
+  'carbon.measuredLegs': '計測済みの移動区間',
+  'carbon.measuredValue': '{estimated} / {total}',
+  'carbon.km': '{value} km',
+  'carbon.disclaimer': '推計：大円距離と平均排出係数による概算で、カーボン監査ではありません。',
+  'carbon.byMode': '排出源',
+  'carbon.perDay': '日別',
+  'carbon.legs': '移動区間',
+  'carbon.empty':
+    'まだ計測できるものがありません。地点のある立ち寄り先を追加するか、出発駅と到着駅の両方を指定して交通機関を予約してください。',
+  'carbon.loading': '計測中…',
+  'carbon.offline': 'カーボン推計には接続が必要です。',
+  'carbon.error': 'カーボン推計を読み込めませんでした。',
+  'carbon.retry': '再試行',
+  'carbon.unknownMode': '未推計',
+  'carbon.compareTitle': '交通手段を比較',
+  'carbon.compareFor': '{route} の場合',
+  'carbon.comparePick': '移動区間を選ぶと、代替の交通手段が表示されます。',
+  'carbon.compareMode': '手段',
+  'carbon.compareEmissions': 'CO₂e',
+  'carbon.compareSaved': '削減量',
+  'carbon.compareBest': '最小',
+  'carbon.compareCurrent': '現在',
+  'carbon.mode.walk': '徒歩',
+  'carbon.mode.cycle': '自転車',
+  'carbon.mode.rail': '鉄道',
+  'carbon.mode.bus': 'バス',
+  'carbon.mode.coach': '高速バス',
+  'carbon.mode.car': '自動車（ガソリンまたはディーゼル）',
+  'carbon.mode.car_electric': '電気自動車',
+  'carbon.mode.taxi': 'タクシー',
+  'carbon.mode.motorbike': 'バイク',
+  'carbon.mode.ferry': 'フェリー',
+  'carbon.mode.cruise': 'クルーズ船',
+  'carbon.mode.flight': '飛行機',
+};
+
+export default carbon;

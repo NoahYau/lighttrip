@@ -1090,7 +1090,7 @@ describe('JourneyController in demo mode', () => {
     const service = takesAll();
     expect(await thrownAsync(() => call(ctl(service), demo))).toEqual({
       status: 403,
-      body: { error: 'Uploads are disabled in demo mode. Self-host TREK for full functionality.' },
+      body: { error: 'Uploads are disabled in demo mode. Self-host LightTrip for full functionality.' },
     });
     expect(fs.readdirSync(spoolDir)).toEqual([]);
     expect(storageStub.put).not.toHaveBeenCalled();

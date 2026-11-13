@@ -13,7 +13,7 @@ import { errorView, liveStepText, suggestionsFor, toolStepKey, toThreadMessage, 
 const AT = '2026-10-21T08:00:00.000Z';
 
 describe('toThreadMessage', () => {
-  it('FE-AI-MODEL-001: passes text, tool calls with their approval and TREK data parts through, and drops empty text', () => {
+  it('FE-AI-MODEL-001: passes text, tool calls with their approval and LightTrip data parts through, and drops empty text', () => {
     const message: AssistantMessage = {
       id: 'm1',
       role: 'assistant',
@@ -107,7 +107,7 @@ describe('errorView', () => {
     expect(errorView('generic', { canConnectOwn: true, provider: 'Mistral' }).messageKey).toBe(
       'assistant.error.generic'
     );
-    // TREK's own limit never blames the provider.
+    // LightTrip's own limit never blames the provider.
     expect(errorView('too_many_requests', { canConnectOwn: true, provider: 'OpenRouter' }).messageKey).toBe(
       'assistant.error.rateLimited'
     );

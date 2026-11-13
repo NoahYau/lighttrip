@@ -39,10 +39,10 @@ vi.mock('./ObstacleEntryDialog', () => ({
     </div>
   ),
 }));
-vi.mock('./PaddleObstacleNotice', () => ({ PaddleObstacleNotice: () => <p>What TREK knows about the water</p> }));
+vi.mock('./PaddleObstacleNotice', () => ({ PaddleObstacleNotice: () => <p>What LightTrip knows about the water</p> }));
 
 /** The line the data notice stub shows. */
-const OBSTACLE_NOTICE = 'What TREK knows about the water';
+const OBSTACLE_NOTICE = 'What LightTrip knows about the water';
 
 /** The words as shared/src/i18n/en/tours.ts has them. */
 const SAYS = {

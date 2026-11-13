@@ -28,11 +28,11 @@ for (const { name, size } of sizes) {
 
 // Maskable variants: Android lays a maskable icon edge to edge under the round
 // launcher mask, so the glyph has to sit inside the safe zone (a circle of 80%
-// of the canvas). The master SVG draws the glyph nearly full bleed; shrink and
-// recenter it, keeping the brand gradient as the full background.
+// of the canvas). The master SVG draws the glyph at 88%; shrink and recenter it
+// to about two thirds, keeping the brand gradient as the full background.
 const maskableSvg = svgBuffer
   .toString()
-  .replace('translate(56,51) scale(0.267)', 'translate(81,81) scale(0.234)');
+  .replace('translate(30.72 30.72) scale(4.506)', 'translate(56 56) scale(4.0)');
 
 const maskableSizes = [
   { name: 'icon-maskable-192x192.png', size: 192 },

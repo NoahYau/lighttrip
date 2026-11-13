@@ -10,6 +10,7 @@ vi.mock('../../components/Packing/PackingListPanel', () => ({ default: label('pa
 vi.mock('../../components/Todo/TodoListPanel', () => ({ default: label('todo list panel') }))
 vi.mock('../../components/Files/FileManager', () => ({ default: label('file manager') }))
 vi.mock('../../components/Budget/CostsPanel', () => ({ default: label('costs panel'), ExpenseModal: label('expense modal') }))
+vi.mock('../../components/Carbon/CarbonPanel', () => ({ default: label('carbon panel') }))
 vi.mock('../../components/Collab/CollabPanel', () => ({ default: label('collab panel') }))
 vi.mock('../../components/Roadtrip/RoadtripSidebar', () => ({ default: label('roadtrip sidebar') }))
 vi.mock('../../components/Roadtrip/RoadtripCorridorPanel', () => ({ default: label('roadtrip corridor panel') }))
@@ -32,6 +33,7 @@ const cases: Array<[keyof typeof lazy, string]> = [
   ['TodoListPanel', 'todo list panel'],
   ['FileManager', 'file manager'],
   ['CostsPanel', 'costs panel'],
+  ['CarbonPanel', 'carbon panel'],
   ['ExpenseModal', 'expense modal'],
   ['CollabPanel', 'collab panel'],
   ['RoadtripSidebar', 'roadtrip sidebar'],

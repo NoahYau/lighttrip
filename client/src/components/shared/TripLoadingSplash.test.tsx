@@ -1,11 +1,6 @@
-// FE-W4TLS-001 to FE-W4TLS-007
+// FE-W4TLS-001 to FE-W4TLS-006
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen, act } from '../../../tests/helpers/render'
-
-vi.mock('../../mobile/components/MDancingTrek', () => ({
-  default: ({ scene, mood, size }: { scene: string; mood: string; size: number }) =>
-    <div data-testid="mascot" data-scene={scene} data-mood={mood} data-size={size} />,
-}))
 
 import TripLoadingSplash from './TripLoadingSplash'
 
@@ -41,31 +36,33 @@ describe('TripLoadingSplash', () => {
     expect(screen.getByText('Iceland 2026')).toBeInTheDocument()
   })
 
-  it('FE-W4TLS-002: falls back to the TREK wordmark without a title', () => {
+  it('FE-W4TLS-002: falls back to the LightTrip wordmark without a title', () => {
     render(<TripLoadingSplash />)
 
-    expect(screen.getByRole('status')).toHaveAttribute('aria-label', 'TREK')
-    expect(screen.getByText('TREK')).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveAttribute('aria-label', 'LightTrip')
+    expect(screen.getByText('LightTrip')).toBeInTheDocument()
   })
 
-  it('FE-W4TLS-003: starts on the packing scene', () => {
-    render(<TripLoadingSplash />)
+  it('FE-W4TLS-003: shows the LightTrip loading mark instead of the mascot', () => {
+    const { container } = render(<TripLoadingSplash />)
 
-    expect(screen.getByTestId('mascot')).toHaveAttribute('data-scene', 'packing')
-    expect(screen.getByTestId('mascot')).toHaveAttribute('data-mood', 'happy')
+    expect(container.querySelector('img[src="/icons/lighttrip-loading-light.svg"]')).not.toBeNull()
+    expect(container.querySelector('img[src="/icons/lighttrip-loading-dark.svg"]')).not.toBeNull()
   })
 
-  it('FE-W4TLS-004: advances through the journey scenes and loops', () => {
+  it('FE-W4TLS-004: advances through the loading beats and loops', () => {
     render(<TripLoadingSplash />)
+
+    expect(screen.getByText('Packing your bags...')).toBeInTheDocument()
 
     act(() => { vi.advanceTimersByTime(1400) })
-    expect(screen.getByTestId('mascot')).toHaveAttribute('data-scene', 'transport')
+    expect(screen.getByText('Hitting the road...')).toBeInTheDocument()
+
+    act(() => { vi.advanceTimersByTime(1400) })
+    expect(screen.getByText('Loading place photos...')).toBeInTheDocument()
 
     act(() => { vi.advanceTimersByTime(1400 * 2) })
-    expect(screen.getByTestId('mascot')).toHaveAttribute('data-scene', 'collections')
-
-    act(() => { vi.advanceTimersByTime(1400) })
-    expect(screen.getByTestId('mascot')).toHaveAttribute('data-scene', 'packing')
+    expect(screen.getByText('Packing your bags...')).toBeInTheDocument()
   })
 
   it('FE-W4TLS-005: widens the beat dot of the active step', () => {
@@ -82,18 +79,10 @@ describe('TripLoadingSplash', () => {
     stubReducedMotion(true)
     const { container } = render(<TripLoadingSplash />)
 
-    expect(screen.getByTestId('mascot')).toHaveAttribute('data-scene', 'dashboard')
+    expect(screen.getByText('Loading place photos...')).toBeInTheDocument()
 
     act(() => { vi.advanceTimersByTime(1400 * 3) })
-    expect(screen.getByTestId('mascot')).toHaveAttribute('data-scene', 'dashboard')
+    expect(screen.getByText('Loading place photos...')).toBeInTheDocument()
     expect((container.querySelectorAll('.rounded-full')[2] as HTMLElement).style.width).toBe('20px')
-  })
-
-  it('FE-W4TLS-007: skips the mascot entry animation under reduced motion', () => {
-    stubReducedMotion(true)
-    const { container } = render(<TripLoadingSplash />)
-    const stage = container.querySelector('.m-splash-content > div > div') as HTMLElement
-
-    expect(stage.style.animation).toBe('')
   })
 })

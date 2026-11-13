@@ -217,9 +217,9 @@ describe('JourneyPublicPage', () => {
     await waitFor(() => {
       expect(screen.getByRole('heading', { level: 1, name: 'Tokyo 2026' })).toBeInTheDocument();
     });
-    // One footer, the shared frame's: "Shared via TREK", the credit and the GitHub link
+    // One footer, the shared frame's: "Shared via LightTrip", the credit and the GitHub link
     const footer = screen.getByRole('contentinfo');
-    expect(within(footer).getByText('TREK')).toBeInTheDocument();
+    expect(within(footer).getByText('LightTrip')).toBeInTheDocument();
     expect(within(footer).getByText(/Made with/)).toBeInTheDocument();
     expect(within(footer).getByText('GitHub')).toBeInTheDocument();
     expect(screen.getAllByText(/Made with/)).toHaveLength(1);

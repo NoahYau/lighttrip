@@ -3,7 +3,7 @@ import { ChevronDown, Languages, Map, Rocket } from 'lucide-react'
 import { useTranslation, SUPPORTED_LANGUAGES } from '../../../i18n'
 import { useSettingSaver } from '../../../components/Settings/useSettingSaver'
 import { SYMBOLS, currenciesWith } from '../../../components/Budget/BudgetPanel.constants'
-import { TRIP_TAB_IDS, TRIP_TAB_LABEL_KEYS, isTripTabId } from '../../../constants/tripTabs'
+import { TRIP_TAB_IDS, TRIP_TAB_LABELS, isTripTabId } from '../../../constants/tripTabs'
 import { DEFAULT_START_PAGE, DEFAULT_START_TRIP_TAB, type StartPage } from '../../../utils/startDestination'
 import type { Settings, DistanceUnit, WeekStart } from '../../../types'
 import { DEFAULT_DATE_FORMAT, DEFAULT_WEEK_START } from '@trek/shared'
@@ -115,7 +115,7 @@ export default function MSettingsGeneral() {
           <>
             <MSetEyebrow className="mb-[5px] mt-[14px]">{t('settings.startTripTab')}</MSetEyebrow>
             <MSetSelectRow
-              label={t(TRIP_TAB_LABEL_KEYS[startTripTab])}
+              label={t(TRIP_TAB_LABELS[startTripTab].labelKey)}
               trailing={chevron}
               onClick={() => setStartTabOpen(true)}
             />
@@ -254,7 +254,7 @@ export default function MSettingsGeneral() {
         title={t('settings.startTripTab')}
         value={startTripTab}
         onSelect={(v) => save('start_trip_tab', v)}
-        options={TRIP_TAB_IDS.filter(id => id !== 'tour-planner').map((id) => ({ value: id, label: t(TRIP_TAB_LABEL_KEYS[id]) }))}
+        options={TRIP_TAB_IDS.filter(id => id !== 'tour-planner').map((id) => ({ value: id, label: t(TRIP_TAB_LABELS[id].labelKey) }))}
       />
     </>
   )

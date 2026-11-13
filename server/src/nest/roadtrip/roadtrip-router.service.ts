@@ -433,7 +433,7 @@ export class RoadtripRouterService {
       throw err;
     });
     if (answer && !relayCannotAnswer(answer.status)) return payloadOf(answer);
-    if (!publicFallback) throw new Error('The TREK routing service cannot answer');
+    if (!publicFallback) throw new Error('The LightTrip routing service cannot answer');
     if (locationCount(body) > FOSSGIS_MAX_LOCATIONS) throw new TooManyForFossgis();
     return this.request(`${FOSSGIS_VALHALLA}/${action}`, body, timeoutMs);
   }

@@ -23,12 +23,11 @@ describe('LazyPanel', () => {
     expect(await screen.findByText('packing list')).toBeInTheDocument()
   })
 
-  it('FE-PAGE-PLANNER-LAZYPANEL-002: a panel holds its place with a skeleton while loading', () => {
+  it('FE-PAGE-PLANNER-LAZYPANEL-002: a panel holds its place with the LightTrip loader while loading', () => {
     const { container } = render(<LazyPanel id="files"><Pending /></LazyPanel>)
 
-    const skeleton = container.querySelector('.animate-pulse')
-    expect(skeleton).not.toBeNull()
-    expect(skeleton).toHaveClass('min-h-[180px]', 'bg-surface-secondary')
+    expect(container.querySelector('img[src="/icons/lighttrip-loading-light.svg"]')).not.toBeNull()
+    expect(container.querySelector('.min-h-\\[180px\\]')).not.toBeNull()
   })
 
   it('FE-PAGE-PLANNER-LAZYPANEL-003: an overlay shows nothing while its chunk loads', () => {

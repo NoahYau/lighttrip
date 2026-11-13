@@ -250,7 +250,7 @@ describe('the chat card', () => {
     expect(screen.getByLabelText('❤️ 1: Jon')).toBeInTheDocument();
   });
 
-  it('FE-AI-COLLAB-007: an image is drawn from TREK by its id, another file named, a cut message says so', () => {
+  it('FE-AI-COLLAB-007: an image is drawn from LightTrip by its id, another file named, a cut message says so', () => {
     const files = chat([
       bubble({
         cut: true,

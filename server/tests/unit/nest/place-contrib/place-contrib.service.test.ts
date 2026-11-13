@@ -426,7 +426,7 @@ describe('withdrawAll and the log', () => {
     const res = await refusal(service().withdrawAll(NOW));
     expect(res).toEqual({
       status: 502,
-      body: { error: 'The TREK Places API did not confirm the withdrawal', reason: 'TimeoutError' },
+      body: { error: 'The LightTrip Places API did not confirm the withdrawal', reason: 'TimeoutError' },
     });
     expect(await countRows(orm(), PlaceContribOutbox)).toBe(1);
     expect((await store().consent()).withdrawnFields).toBeUndefined();

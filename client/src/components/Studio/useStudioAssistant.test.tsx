@@ -1,7 +1,7 @@
 /**
  * FE-STUDIO-AST-001 to FE-STUDIO-AST-007
  *
- * What TREK Studio does for its assistant (journey-studio.md 3.1, 4.5): it
+ * What LightTrip Studio does for its assistant (journey-studio.md 3.1, 4.5): it
  * hosts the journey's chat while the column shows; it draws the page a turn
  * asks for off screen, with other members' photos as empty frames, and sends
  * it at the version the turn named; a page of a design draft comes from the

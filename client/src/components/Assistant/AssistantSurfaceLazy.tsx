@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import { lazyWithRetry } from '../../utils/lazyWithRetry';
 import ErrorBoundary from '../shared/ErrorBoundary';
-import { Spinner } from '../shared/Spinner';
+import { LightTripLoader } from '../shared/LightTripLoader';
 import type { AssistantSurfaceProps } from './AssistantSurface';
 
 /**
@@ -15,7 +15,7 @@ const AssistantSurface = lazyWithRetry(() => import('./AssistantSurface'));
 export default function AssistantSurfaceLazy(props: AssistantSurfaceProps) {
   const waiting = (
     <div className="flex flex-1 items-center justify-center">
-      <Spinner className="h-5 w-5 border-2 border-edge border-t-[color:var(--text-primary)]" />
+      <LightTripLoader size={28} />
     </div>
   );
   return (

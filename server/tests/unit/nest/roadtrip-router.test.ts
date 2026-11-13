@@ -732,9 +732,9 @@ describe('server Roadtrip router through the TREK services (routing relay)', () 
     const refusals = [
       () => Promise.resolve(answer(429, { error: 'Too many routing requests' })),
       () => Promise.resolve(answer(502, { error: 'down' })),
-      () => Promise.resolve(answer(503, { error: 'The TREK routing service is resting' })),
+      () => Promise.resolve(answer(503, { error: 'The LightTrip routing service is resting' })),
       () => Promise.resolve(answer(404, { error: 'Not Found' })),
-      () => Promise.reject(new DomainError(503, 'The TREK routing service is not available on this instance')),
+      () => Promise.reject(new DomainError(503, 'The LightTrip routing service is not available on this instance')),
     ];
     await oneByOne([...refusals.entries()], async ([userId, refusal]) => {
       vi.mocked(safeFetchAdminConfigured)
@@ -749,7 +749,7 @@ describe('server Roadtrip router through the TREK services (routing relay)', () 
 
   it('ROUTER-RELAY-007: a question the relay ran out of time on is not handed to FOSSGIS, and OSRM routes the day', async () => {
     const slow = [
-      () => Promise.reject(new DomainError(504, 'The TREK routing service took too long for this route')),
+      () => Promise.reject(new DomainError(504, 'The LightTrip routing service took too long for this route')),
       () => Promise.resolve(answer(504, { error: 'gateway timeout' })),
     ];
     await oneByOne([...slow.entries()], async ([userId, timedOut]) => {
@@ -899,9 +899,9 @@ describe('server Roadtrip router: every day through Valhalla where it routes the
         () => Promise.resolve(answer(403, { error: 'Forbidden' })),
         () => Promise.resolve(answer(413, { error: 'Payload too large' })),
         () => Promise.resolve(answer(429, { error: 'Too many routing requests' })),
-        () => Promise.resolve(answer(502, { error: 'The TREK routing service did not answer' })),
-        () => Promise.resolve(answer(503, { error: 'The TREK routing service is resting' })),
-        () => Promise.reject(new DomainError(503, 'The TREK routing service is not available on this instance')),
+        () => Promise.resolve(answer(502, { error: 'The LightTrip routing service did not answer' })),
+        () => Promise.resolve(answer(503, { error: 'The LightTrip routing service is resting' })),
+        () => Promise.reject(new DomainError(503, 'The LightTrip routing service is not available on this instance')),
       ];
       await oneByOne([...refusals.entries()], async ([userId, refusal]) => {
         vi.mocked(safeFetchAdminConfigured).mockClear();
@@ -934,7 +934,7 @@ describe('server Roadtrip router: every day through Valhalla where it routes the
     });
 
     it('ROUTER-DAY-005: a day that avoids something keeps FOSSGIS behind the relay, cut again in its ten locations', async () => {
-      relay.ask.mockReset().mockResolvedValue(answer(503, { error: 'The TREK routing service is resting' }));
+      relay.ask.mockReset().mockResolvedValue(answer(503, { error: 'The LightTrip routing service is resting' }));
       vi.mocked(safeFetchAdminConfigured).mockImplementation(
         async (_url, init) => new Response(JSON.stringify(legsFor(bodyOf(init)))),
       );
@@ -950,7 +950,7 @@ describe('server Roadtrip router: every day through Valhalla where it routes the
 
     it('ROUTER-DAY-008: keeps no OSRM stand-in, so the same day asks the relay again once it is back', async () => {
       const { router } = setup();
-      relay.ask.mockResolvedValueOnce(answer(502, { error: 'The TREK routing service did not answer' }));
+      relay.ask.mockResolvedValueOnce(answer(502, { error: 'The LightTrip routing service did not answer' }));
       const fallen = await settled(router.route(4, 1, 1, points, 'driving', []));
       expect(fallen.parts.map((part) => part.duration)).toEqual([100, 200]);
 
@@ -972,7 +972,7 @@ describe('server Roadtrip router: every day through Valhalla where it routes the
     });
 
     it('ROUTER-DAY-010: a walk kept off the boats goes to FOSSGIS where the relay cannot answer, as only Valhalla can plan it', async () => {
-      relay.ask.mockReset().mockResolvedValue(answer(503, { error: 'The TREK routing service is resting' }));
+      relay.ask.mockReset().mockResolvedValue(answer(503, { error: 'The LightTrip routing service is resting' }));
       vi.mocked(safeFetchAdminConfigured).mockImplementation(
         async (_url, init) => new Response(JSON.stringify(legsFor(bodyOf(init)))),
       );

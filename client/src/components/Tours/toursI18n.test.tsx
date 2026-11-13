@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import en from '@trek/shared/i18n/en'
+import { withBrand } from '../../i18n/brand'
 import de from '@trek/shared/i18n/de'
 import fr from '@trek/shared/i18n/fr'
 import type { TourListItem } from '@trek/shared'
@@ -27,7 +28,7 @@ const tour: TourListItem = {
 function toursText(strings: typeof en, key: string): string {
   const value = strings[key]
   if (typeof value !== 'string') throw new Error(`Missing Tours text: ${key}`)
-  return value
+  return withBrand(value)
 }
 
 function planner(overrides: Partial<TourPlannerController>): TourPlannerController {

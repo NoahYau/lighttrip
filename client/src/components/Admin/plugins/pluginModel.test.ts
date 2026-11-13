@@ -111,7 +111,7 @@ describe('pluginModel', () => {
       blocked: false,
       version: '0.9.0',
     });
-    // Nothing fits this TREK: still an Install, behind the admin's own warning for this plugin.
+    // Nothing fits this LightTrip: still an Install, behind the admin's own warning for this plugin.
     expect(installOffer(incompatible, t)).toMatchObject({
       blocked: false,
       label: 'admin.plugins.install',

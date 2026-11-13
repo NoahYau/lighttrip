@@ -483,7 +483,7 @@ describe('JourneySettingsDialog', () => {
       prep: { enabled: true, connection: 'ready', lastAttemptAt: null, lastSuccessAt: null, lastError: 'unreachable' },
       saving: false,
       fetching: false,
-      statusLine: { text: 'The first fetch failed: TREK could not reach that address.', tone: 'warning' },
+      statusLine: { text: 'The first fetch failed: LightTrip could not reach that address.', tone: 'warning' },
       canFetch: true,
       setEnabled: vi.fn(async () => {}),
       fetchNow: vi.fn(async () => {}),
@@ -496,7 +496,7 @@ describe('JourneySettingsDialog', () => {
     const prep = prepState()
     mountDialog(buildJourney({ auto_prepare_recordings: 1 }), prep)
 
-    expect(screen.getByTestId('journey-prep-status')).toHaveTextContent('The first fetch failed: TREK could not reach that address.')
+    expect(screen.getByTestId('journey-prep-status')).toHaveTextContent('The first fetch failed: LightTrip could not reach that address.')
     await userEvent.click(screen.getByRole('button', { name: /Fetch now/ }))
     expect(prep.fetchNow).toHaveBeenCalledTimes(1)
 

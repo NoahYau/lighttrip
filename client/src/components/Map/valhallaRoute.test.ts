@@ -5,7 +5,7 @@ import { useSettingsStore } from '../../store/settingsStore'
 import { valhallaBase, valhallaAvailable, valhallaTurn, resetValhallaTurns, valhallaRouteAvoiding, valhallaRun, valhallaRunOnFoot, valhallaAlternates, alternatesFrom, runFrom, legAvoids, valhallaTraceAttributes } from './valhallaRoute'
 
 const FOSSGIS_VALHALLA = 'https://valhalla1.openstreetmap.de/route'
-/** The relay to the TREK services' Valhalla, the base asked when nothing else is configured. */
+/** The relay to the LightTrip services' Valhalla, the base asked when nothing else is configured. */
 const TREK_VALHALLA = '/api/routing/valhalla'
 
 /**
@@ -94,7 +94,7 @@ const HAMBURG = { lat: 53.5511, lng: 9.9937 }
 const BERLIN = { lat: 52.52, lng: 13.405 }
 
 describe('valhallaBase', () => {
-  it('VALHALLA-BASE-001: asks the TREK services through the relay when nothing is configured', () => {
+  it('VALHALLA-BASE-001: asks the LightTrip services through the relay when nothing is configured', () => {
     expect(valhallaBase()).toBe(TREK_VALHALLA)
     expect(valhallaAvailable()).toBe(true)
   })
@@ -765,7 +765,7 @@ describe('crossings by boat on a walk (CW-12)', () => {
   })
 })
 
-describe('through the TREK services (routing relay)', () => {
+describe('through the LightTrip services (routing relay)', () => {
   const RELAY = '/api/routing/valhalla/:action'
 
   it('VALHALLA-RELAY-001: asks the relay first, and FOSSGIS is not asked while it answers', async () => {
@@ -797,7 +797,7 @@ describe('through the TREK services (routing relay)', () => {
     server.use(
       http.post(RELAY, () => {
         relayCalls++
-        return HttpResponse.json({ error: 'The TREK routing service took too long for this route' }, { status: 504 })
+        return HttpResponse.json({ error: 'The LightTrip routing service took too long for this route' }, { status: 504 })
       }),
       http.post(FOSSGIS_VALHALLA, () => { fossgis++; return HttpResponse.json(answer()) }),
     )

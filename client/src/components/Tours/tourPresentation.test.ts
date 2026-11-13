@@ -71,7 +71,7 @@ describe('tourPresentation', () => {
     expect(plannedTotalText({ plannedTotalMinutes: 165, atLeast: true }, t, true)).toBe('≥ 2 h 45 min')
   })
 
-  it('uses the source abstraction for TREK, GPX import, and wanderer badges', () => {
+  it('uses the source abstraction for LightTrip, GPX import, and wanderer badges', () => {
     const t = vi.fn((key: string) => key)
 
     expect(tourSource({ wanderer_ref: null })).toBe('trek')

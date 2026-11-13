@@ -279,9 +279,9 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       manifest: {
-        name: 'TREK \u2014 Travel Planner',
-        short_name: 'TREK',
-        description: 'Travel Resource & Exploration Kit',
+        name: 'LightTrip \u2014 Eco Travel Planner',
+        short_name: 'LightTrip',
+        description: 'Plan light. Travel deep. AI-planned eco journeys with a carbon footprint.',
         theme_color: '#111827',
         background_color: '#0f172a',
         display: 'standalone',
@@ -369,7 +369,15 @@ export default defineConfig(({ mode }) => ({
     exclude: ['@trek/shared'],
   },
   server: {
+    // Bind every interface so a phone on the same network can open the dev
+    // server (the API is reached through the proxy below, so it stays local).
+    host: true,
     port: DEV_PORT,
+
+
+    allowedHosts: ["picked-unbiased-slug.ngrok-free.app"],
+
+
     // And watch the build output, so rebuilding shared reloads the page rather
     // than leaving a stale module graph behind.
     watch: {

@@ -177,7 +177,7 @@ describe('MTripShell', () => {
       await act(async () => {
         await vi.advanceTimersByTimeAsync(TRIP_SPLASH_AFTER_MS)
       })
-      expect(screen.getByText('TREK')).toBeInTheDocument()
+      expect(screen.getByText('LightTrip')).toBeInTheDocument()
     } finally {
       vi.useRealTimers()
     }

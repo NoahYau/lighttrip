@@ -149,7 +149,7 @@ describe('card parts', () => {
     expect(screen.getByText('Day 2')).toBeInTheDocument();
   });
 
-  it('FE-AI-CARDPART-007: the signed-in user reads as You, a picture comes from TREK only, the rest is counted', () => {
+  it('FE-AI-CARDPART-007: the signed-in user reads as You, a picture comes from LightTrip only, the rest is counted', () => {
     useAuthStore.setState({ user: buildUser({ id: 1 }) });
     const people: CardPerson[] = [
       { id: 1, name: 'Ana', avatarKey: 'ana.png' },

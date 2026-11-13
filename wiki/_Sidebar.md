@@ -59,6 +59,7 @@
 - [[Transport: Flights, Trains, Cars|Transport-Flights-Trains-Cars]]
 - [[Accommodations]]
 - [[Costs|Budget-Tracking]]
+- [[Carbon Footprint|Carbon-Footprint]]
 - [[Currencies]]
 - [[Packing Lists|Packing-Lists]]
 - [[Packing Templates|Packing-Templates]]

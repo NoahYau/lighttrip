@@ -780,7 +780,7 @@ describe('Journey e2e (real auth guard + temp SQLite)', () => {
         ? req.attach(field, Buffer.from('not a clip'), clip)
         : req.attach(field, image));
       expect(res.status).toBe(403);
-      expect(res.body).toEqual({ error: 'Uploads are disabled in demo mode. Self-host TREK for full functionality.' });
+      expect(res.body).toEqual({ error: 'Uploads are disabled in demo mode. Self-host LightTrip for full functionality.' });
       expect(jsvc.uploadGalleryPhotos).not.toHaveBeenCalled();
     });
   });

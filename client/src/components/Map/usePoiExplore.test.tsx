@@ -329,7 +329,7 @@ describe('usePoiExplore with plugin categories', () => {
     act(() => { result.current.toggle(KEY) })
 
     await waitFor(() => expect(result.current.pois).toHaveLength(1))
-    // The TREK language rather than the locale: that is what the SDK promises a plugin.
+    // The LightTrip language rather than the locale: that is what the SDK promises a plugin.
     expect(search).toHaveBeenCalledWith('trail-finder', 'trailheads', BBOX, 'en', expect.any(AbortSignal))
     expect(pois).not.toHaveBeenCalled()
     expect(result.current.pois[0]).toMatchObject({ osm_id: 'plugin:trail-finder:th-1', color: '#2f855a', icon: 'Signpost' })

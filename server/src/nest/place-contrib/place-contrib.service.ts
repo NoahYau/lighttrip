@@ -163,7 +163,7 @@ export class PlaceContribService {
     if (answer.kind !== 'ok') {
       const reason = answer.kind === 'refused' ? answer.error : answer.reason;
       logWarn(`Places contribution: the withdrawal was not confirmed (${reason})`);
-      throw new DomainError(502, 'The TREK Places API did not confirm the withdrawal', { details: { reason } });
+      throw new DomainError(502, 'The LightTrip Places API did not confirm the withdrawal', { details: { reason } });
     }
     const withdrawn = countsOf(answer.body.withdrawn);
     const day = dayOf(now);

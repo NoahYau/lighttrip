@@ -335,7 +335,7 @@ describe('Collab e2e (real auth guard + temp SQLite)', () => {
     // Over the wire, because a refusal from a guard would reset the connection
     // while the client is still sending (PROFILE-015): the 403 has to arrive with
     // its body, and nothing of the upload may be written.
-    const refused = { error: 'Uploads are disabled in demo mode. Self-host TREK for full functionality.' };
+    const refused = { error: 'Uploads are disabled in demo mode. Self-host LightTrip for full functionality.' };
 
     beforeAll(async () => {
       // Pinned id: sessionCookie(2) signs for exactly this user, the owner of trip 6.

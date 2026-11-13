@@ -1,6 +1,7 @@
 import en from '@trek/shared/i18n/en'
 import { resolvePluralKey } from '@trek/shared'
 import type { TranslationStrings } from '@trek/shared/i18n'
+import { withBrand } from './brand'
 
 /**
  * The template a key reads as. A numeric `count` (or `n`) picks the plural
@@ -10,6 +11,9 @@ import type { TranslationStrings } from '@trek/shared/i18n'
  * only when the locale has none of the key's forms. A count that arrives as
  * text (in-app notification params are strings) counts when it is a plain
  * whole number.
+ *
+ * The string goes through `withBrand` on the way out: the upstream packs still
+ * say TREK, and the fork shows LightTrip in every language.
  */
 export function resolveTemplate(
   strings: TranslationStrings,
@@ -20,12 +24,12 @@ export function resolveTemplate(
   const count = asCount(params?.count ?? params?.n)
   if (count !== undefined) {
     const own = resolvePluralKey(strings, key, count, intlLanguage)
-    if (own) return strings[own] as string
+    if (own) return withBrand(strings[own] as string)
     const fallback = resolvePluralKey(en, key, count, 'en')
-    if (fallback) return en[fallback] as string
+    if (fallback) return withBrand(en[fallback] as string)
     return key
   }
-  return (strings[key] ?? en[key] ?? key) as string
+  return withBrand((strings[key] ?? en[key] ?? key) as string)
 }
 
 function asCount(raw: string | number | undefined): number | undefined {

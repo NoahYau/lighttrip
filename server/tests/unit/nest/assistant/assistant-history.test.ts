@@ -176,7 +176,7 @@ describe('toChatHistory', () => {
       text: '[The user attached the file "trip.pdf" (application/pdf, 2048 bytes).]',
     });
     const note = (history[1] as { text: string }).text;
-    expect(note).toContain('TREK read the attached file "trip.pdf" and found 5 booking(s): "LH 716", "Hotel Gion"');
+    expect(note).toContain('LightTrip read the attached file "trip.pdf" and found 5 booking(s): "LH 716", "Hotel Gion"');
     expect(note).toContain('"LH 716" was added to the trip as a booking.');
     expect(note).toContain('"Hotel Gion" could not be added.');
     expect(note).toContain('The user discarded "Bus".');
@@ -195,7 +195,7 @@ describe('toChatHistory', () => {
       serverStepsNote([
         { type: 'tool-call', toolCallId: 'r', toolName: 'read_booking_file', args: { name: 'a.ics' }, result: {} },
       ]),
-    ).toBe('TREK read the attached file "a.ics" and found no booking in it.');
+    ).toBe('LightTrip read the attached file "a.ics" and found no booking in it.');
     const history = toChatHistory(
       [
         row('user', [
@@ -222,7 +222,7 @@ describe('toChatHistory', () => {
         },
       ]);
     expect(read('ai_not_configured')).toBe(
-      'TREK read the attached file "AirBnB Buchung.pdf" and found no booking in it: AI reading for imports is not ' +
+      'LightTrip read the attached file "AirBnB Buchung.pdf" and found no booking in it: AI reading for imports is not ' +
         "set up on this server, so only TREK's own reader looked at it.",
     );
     expect(read('ai_failed')).toContain('found no booking in it: the AI reader for imports could not read it.');
@@ -230,7 +230,7 @@ describe('toChatHistory', () => {
     expect(read('nothing_found')).toContain(
       "found no booking in it: neither TREK's reader nor the AI reader found one.",
     );
-    expect(read('later_reason')).toBe('TREK read the attached file "AirBnB Buchung.pdf" and found no booking in it.');
+    expect(read('later_reason')).toBe('LightTrip read the attached file "AirBnB Buchung.pdf" and found no booking in it.');
   });
 
   it('ASTHIS-005c: a kept attachment is named with the id the model reads it by', () => {

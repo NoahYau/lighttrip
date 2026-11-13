@@ -1,7 +1,7 @@
 /**
  * FE-AI-STORE-JRN-001 to FE-AI-STORE-JRN-006
  *
- * A journey's chat (the assistant in TREK Studio) in the same store as the
+ * A journey's chat (the assistant in LightTrip Studio) in the same store as the
  * trips': kept under its own key, beside a trip with the same id; every call
  * the two have goes out with the journey's scope; an applied change does not
  * make the planner jump; the trip-only actions (files, found places,

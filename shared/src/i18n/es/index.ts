@@ -19,6 +19,7 @@ import assistantVacay from './assistantVacay';
 import atlas from './atlas';
 import backup from './backup';
 import budget from './budget';
+import carbon from './carbon';
 import categories from './categories';
 import collab from './collab';
 import collection from './collection';
@@ -114,6 +115,7 @@ const locale = {
   ...files,
   ...packing,
   ...members,
+  ...carbon,
   ...categories,
   ...backup,
   ...pdf,

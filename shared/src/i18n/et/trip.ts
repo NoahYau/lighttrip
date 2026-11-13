@@ -10,6 +10,7 @@ const trip: TranslationStrings = {
   'trip.tabs.lists': 'Nimekirjad',
   'trip.tabs.listsShort': 'Nimekirjad',
   'trip.tabs.budget': 'Kulud',
+  'trip.tabs.carbon': 'Süsinik',
   'trip.tabs.files': 'Failid',
   'trip.loading': 'Reisi laadimine...',
   'trip.loadingPhotos': 'Kohtade fotode laadimine...',

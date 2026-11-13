@@ -128,7 +128,7 @@ describe('ToursSidebar', () => {
     expect(labels[0]).toMatch(/(Estimated time|Geschätzte Zeit): 30 min/)
     expect(labels[1]).toContain('1.9 km')
     expect(labels[2]).toContain('13 m')
-    expect(within(row).queryByText('TREK')).not.toBeInTheDocument()
+    expect(within(row).queryByText('LightTrip')).not.toBeInTheDocument()
     expect(screen.getByLabelText(/Maximum trail difficulty|Maximale Wanderschwierigkeit|T2/)).toBeInTheDocument()
     const actionRow = row.querySelector('[data-testid="tour-action-row"]')!
     expect(within(actionRow as HTMLElement).getByRole('button', { name: /Add to day|Zum Tag hinzufügen/ })).toHaveAttribute('aria-haspopup', 'menu')

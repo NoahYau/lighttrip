@@ -92,6 +92,6 @@ describe('usePlaceSuggestions', () => {
     usePluginStore.setState({ plugins: [plugin({ id: 'all-the-places', name: 'All the Places', searchProvider: true })] })
     const { result } = renderHook(() => usePlaceSuggestions(), { wrapper })
     expect(result.current.sourceLabel(pluginRow, 'trek-places')).toBe('All the Places')
-    expect(result.current.sourceLabel(core.suggestions[0], 'trek-places')).toBe('TREK')
+    expect(result.current.sourceLabel(core.suggestions[0], 'trek-places')).toBe('LightTrip')
   })
 })

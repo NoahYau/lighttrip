@@ -1,4 +1,4 @@
-// FE-COMP-PADDLENOTICE-001 to FE-COMP-PADDLENOTICE-011: the one line on what TREK knows about the water.
+// FE-COMP-PADDLENOTICE-001 to FE-COMP-PADDLENOTICE-011: the one line on what LightTrip knows about the water.
 import type { PaddleCoverageRegion, RelatedObstacle } from '@trek/shared';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { act, render, screen } from '../../../../tests/helpers/render';
@@ -10,10 +10,10 @@ import { PaddleObstacleNotice } from './PaddleObstacleNotice';
 type Published = Parameters<typeof publishPaddleObstacles>[0];
 
 const LOADING = 'Loading the obstacles along the route …';
-const OFFLINE = 'Without a connection TREK loads no obstacle data. Check the water yourself.';
+const OFFLINE = 'Without a connection LightTrip loads no obstacle data. Check the water yourself.';
 const FAILED = 'The obstacle data could not be loaded. Check the water yourself.';
 const NO_DATA = 'No obstacle data for this area. Check weirs, locks and portages here yourself.';
-const TRUNCATED = 'TREK shows only part of the objects here; the area holds more. Check the water yourself.';
+const TRUNCATED = 'LightTrip shows only part of the objects here; the area holds more. Check the water yourself.';
 const UNKNOWN_DATE = 'an unknown date';
 
 const partialLine = (date: string): string =>
@@ -26,7 +26,7 @@ const coveredEmptyLine = (date: string): string =>
   `No known obstacles along the route (OpenStreetMap as of ${date}). Check the water yourself all the same.`;
 
 /**
- * A region TREK holds data for. Its date is local noon, so it reads as the
+ * A region LightTrip holds data for. Its date is local noon, so it reads as the
  * same day in whatever time zone the suite runs.
  */
 const region = (id: string, sourceTimestamp: string | null): PaddleCoverageRegion => ({

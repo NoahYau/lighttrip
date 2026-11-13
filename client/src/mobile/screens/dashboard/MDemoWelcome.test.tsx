@@ -15,7 +15,7 @@ describe('MDemoWelcome', () => {
   it('FE-COMP-DEMOWELCOME-030: on a phone it is a sheet with the same content and a full-width start', async () => {
     render(<MDemoWelcome />);
     const sheet = screen.getByRole('dialog', { name: 'Live demo' });
-    expect(sheet).toHaveTextContent('Welcome to TREK');
+    expect(sheet).toHaveTextContent('Welcome to LightTrip');
     expect(within(sheet).getByTestId('demo-countdown')).toBeInTheDocument();
     expect(within(sheet).getByText('Everything resets every hour')).toBeInTheDocument();
     expect(within(sheet).getByText('Trip planner')).toBeInTheDocument();

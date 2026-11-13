@@ -99,7 +99,7 @@ describe("useTourPlanner, a run at the runner's own pace (RUN-01)", () => {
     expect(routeRun).toHaveBeenCalledWith(expect.any(Array), 'running', expect.any(AbortSignal));
     expect(routeWalkingTour).not.toHaveBeenCalled();
     expect(result.current.status).toBe('ready');
-    // No pace of TREK's own: the time stays unknown and the router's walking time never stands in.
+    // No pace of LightTrip's own: the time stays unknown and the router's walking time never stands in.
     expect(result.current.runPace.paceSecondsPerKm).toBeNull();
     expect(result.current.walkingDurationMinutes).toBeNull();
     expect(result.current.runPaceMissing).toBe(true);

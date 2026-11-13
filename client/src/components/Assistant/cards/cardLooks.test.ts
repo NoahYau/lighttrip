@@ -56,7 +56,7 @@ describe('cardLooks', () => {
 
   it('FE-AI-LOOK-003: a place, a stop, a note, a booking and a stay show on the map; a kept note never', () => {
     const onMap = Object.entries(ENTITY_LOOK).flatMap(([entity, look]) => (look.onMap ? [entity] : []));
-    // The core's own; a part of TREK may add its entities (a stay shows its place).
+    // The core's own; a part of LightTrip may add its entities (a stay shows its place).
     expect(onMap).toEqual(expect.arrayContaining(['assignment', 'day_note', 'place', 'reservation', 'accommodation']));
     expect(onMap).not.toContain('memory');
     expect(onMap).not.toContain('other');

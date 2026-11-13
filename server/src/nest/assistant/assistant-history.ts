@@ -186,9 +186,9 @@ function bookingReadNote(part: ToolCallPart): string {
   const result = (part.result ?? {}) as { bookings?: unknown; reason?: unknown };
   const titles = Array.isArray(result.bookings) ? result.bookings.map(quoted) : [];
   if (titles.length > 0)
-    return `TREK read the attached file ${file} and found ${titles.length} booking(s): ${titles.join(', ')}.`;
+    return `LightTrip read the attached file ${file} and found ${titles.length} booking(s): ${titles.join(', ')}.`;
   const why = typeof result.reason === 'string' ? EMPTY_REASONS[result.reason] : undefined;
-  return `TREK read the attached file ${file} and found no booking in it${why ? `: ${why}` : ''}.`;
+  return `LightTrip read the attached file ${file} and found no booking in it${why ? `: ${why}` : ''}.`;
 }
 
 /** The note of a server step about tours (P6, P7), null for any other. */

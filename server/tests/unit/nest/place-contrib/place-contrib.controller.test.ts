@@ -89,7 +89,7 @@ describe('PlaceContribController', () => {
   });
 
   it('PCCT-010: switching off whose withdrawal the service did not confirm is still audited, then fails', async () => {
-    const refused = new DomainError(502, 'The TREK Places API did not confirm the withdrawal');
+    const refused = new DomainError(502, 'The LightTrip Places API did not confirm the withdrawal');
     contrib.decide.mockRejectedValueOnce(refused);
     await expect(
       controller.decide(admin, { action: 'off', withdraw: true } as PlaceContribDecisionDto, req),

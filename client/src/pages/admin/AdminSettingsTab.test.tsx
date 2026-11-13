@@ -25,7 +25,7 @@ function renderTab(overrides: Record<string, unknown> = {}) {
 }
 
 /** The card (a settingsKit SettingsCard, a <section>) whose <h2> matches the given heading text. */
-/** The card with the TREK services, the providers and the search log, apart from the keys. */
+/** The card with the LightTrip services, the providers and the search log, apart from the keys. */
 const SERVICES = 'Place search and routing';
 
 function card(heading: string | RegExp): HTMLElement {
@@ -308,7 +308,7 @@ describe('AdminSettingsTab', () => {
     // failing, which is quiet enough to be mistaken for the provider working.
     renderTab({ placesProvider: 'amap', hasAmapKey: false });
     expect(
-      within(card(SERVICES)).getByText(/TREK index and OpenStreetMap alone/i),
+      within(card(SERVICES)).getByText(/LightTrip index and OpenStreetMap alone/i),
     ).toBeInTheDocument();
   });
 
@@ -481,11 +481,11 @@ describe('AdminSettingsTab', () => {
     expect(hint.textContent).toMatch(/provider/i);
   });
 
-  it('FE-ADMSET-031: the place search card leads with the TREK index and no weather panel', () => {
+  it('FE-ADMSET-031: the place search card leads with the LightTrip index and no weather panel', () => {
     renderTab();
 
     const keys = card(SERVICES);
-    expect(within(keys).getByRole('img', { name: 'TREK Places API' })).toBeInTheDocument();
+    expect(within(keys).getByRole('img', { name: 'LightTrip Places API' })).toBeInTheDocument();
     expect(within(keys).getByText('Recommended default')).toBeInTheDocument();
     // Weather needs no key, so it left a card about keys. The panel itself lives
     // on in the mobile section, where FE-MOB-ASET-019 asserts it.
@@ -609,7 +609,7 @@ describe('AdminSettingsTab', () => {
     // data source.
     renderTab();
 
-    expect(screen.queryByRole('button', { name: /trek place index/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /LightTrip place index/i })).not.toBeInTheDocument();
     expect(screen.queryByText(/place search uses openstreetmap/i)).not.toBeInTheDocument();
   });
 

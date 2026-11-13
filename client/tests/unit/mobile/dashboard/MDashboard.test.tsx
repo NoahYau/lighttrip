@@ -190,7 +190,7 @@ describe('MDashboard', () => {
     mocks.dash = buildDash({ demoMode: true });
     render(<MDashboard />);
 
-    expect(screen.getByRole('dialog')).toHaveTextContent('Welcome to TREK');
+    expect(screen.getByRole('dialog')).toHaveTextContent('Welcome to LightTrip');
   });
 
   it('FE-MOB-DASH-009: unread notifications mark the bell and it opens the list', () => {
@@ -496,7 +496,7 @@ describe('MDashboard', () => {
     window.scrollTo = scrollTo as unknown as typeof window.scrollTo;
     render(<MDashboard />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'TREK' }));
+    fireEvent.click(screen.getByRole('button', { name: 'LightTrip' }));
 
     expect(scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
     window.scrollTo = original;

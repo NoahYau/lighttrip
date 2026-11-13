@@ -1,7 +1,7 @@
 /**
  * FE-AI-STORE-STUDIO-001 to FE-AI-STORE-STUDIO-006
  *
- * A journey's chat hosted by TREK Studio (journey-studio.md 3.1, 4.5): before
+ * A journey's chat hosted by LightTrip Studio (journey-studio.md 3.1, 4.5): before
  * a question or a decision goes out the Studio writes the book's local work,
  * and the turn says the Studio draws pages; the page a turn asks for goes to
  * the host with the turn's signal; an unhosted chat sends neither; a host

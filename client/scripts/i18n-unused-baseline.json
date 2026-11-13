@@ -36,8 +36,8 @@
   "storage.ts": 16,
   "system_notice.ts": 32,
   "todo.ts": 2,
-  "tours.ts": 12,
-  "trip.ts": 10,
+  "tours.ts": 11,
+  "trip.ts": 8,
   "undo.ts": 1,
   "vacay.ts": 17
 }

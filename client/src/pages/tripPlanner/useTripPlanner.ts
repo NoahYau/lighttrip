@@ -7,7 +7,7 @@ import { useCanDo } from '../../store/permissionsStore'
 import { useSettingsStore } from '../../store/settingsStore'
 import { getCached, fetchPhoto } from '../../services/photoService'
 import { useToast } from '../../components/shared/Toast'
-import { Map, Ticket, PackageCheck, Wallet, FolderOpen, Users, Train, Mountain, Route } from 'lucide-react'
+import { Map, Ticket, PackageCheck, Wallet, FolderOpen, Users, Train, Mountain, Route, Leaf } from 'lucide-react'
 import { resolvePluginIcon } from '../../components/shared/PluginIcon'
 import { useTranslation } from '../../i18n'
 import { addonsApi, authApi, tripsApi, healthApi, placesApi } from '../../api/client'
@@ -35,7 +35,7 @@ import type { Assignment, TripMember, Day, Reservation } from '../../types'
 import { OFM_POSITRON, DEFAULT_MAP_LAT, DEFAULT_MAP_LNG, DEFAULT_MAP_ZOOM } from '../../constants/mapDefaults'
 import { useTileUrl } from '../../hooks/useTileUrl'
 import { placesForDays, tourPlannerTabOf } from './tripPlannerModel'
-import { isDeepLinkableTripTab, TRIP_TAB_LABEL_KEYS } from '../../constants/tripTabs'
+import { isDeepLinkableTripTab, TRIP_TAB_LABELS } from '../../constants/tripTabs'
 import { isRoutableReservation } from '../../utils/reservationRoutes'
 import { showReservationOnMap } from '../../components/Planner/bookings/showOnMap'
 import { useTripStays } from '../../components/Planner/useTripStays'
@@ -225,17 +225,20 @@ export function useTripPlanner() {
   const replacedTabs = new Set(tripPagePlugins.flatMap(p => p.tripPage?.replaces ?? []))
   const tourTab = tourPlannerTabOf(!!enabledAddons.tours, isMobile, largeTouch)
   const TRIP_TABS = [
-    { id: 'plan', label: t(TRIP_TAB_LABEL_KEYS.plan), icon: Map },
-    ...(tourTab ? [{ id: 'tour-planner', label: t(TRIP_TAB_LABEL_KEYS['tour-planner']), icon: Mountain, desktopOnly: tourTab.desktopOnly }] : []),
-    { id: 'transports', label: t(TRIP_TAB_LABEL_KEYS.transports), icon: Train },
-    { id: 'buchungen', label: t(TRIP_TAB_LABEL_KEYS.buchungen), shortLabel: t('trip.tabs.reservationsShort'), icon: Ticket },
+    { id: 'plan', label: t(TRIP_TAB_LABELS.plan.labelKey), icon: Map },
+    ...(tourTab ? [{ id: 'tour-planner', label: t(TRIP_TAB_LABELS['tour-planner'].labelKey), icon: Mountain, desktopOnly: tourTab.desktopOnly }] : []),
+    { id: 'transports', label: t(TRIP_TAB_LABELS.transports.labelKey), icon: Train },
+    { id: 'buchungen', label: t(TRIP_TAB_LABELS.buchungen.labelKey), shortLabel: t('trip.tabs.reservationsShort'), icon: Ticket },
     // Phone only: the desktop reaches the drive through the mode switch beside the
     // day plan, and a second entry point there would be a tab nobody needs.
-    ...(enabledAddons.roadtrip && isMobile ? [{ id: 'roadtrip', label: t(TRIP_TAB_LABEL_KEYS.roadtrip), icon: Route }] : []),
-    ...(enabledAddons.packing ? [{ id: 'listen', label: t(TRIP_TAB_LABEL_KEYS.listen), shortLabel: t('trip.tabs.listsShort'), icon: PackageCheck }] : []),
-    ...(enabledAddons.budget ? [{ id: 'finanzplan', label: t(TRIP_TAB_LABEL_KEYS.finanzplan), icon: Wallet }] : []),
-    ...(enabledAddons.documents ? [{ id: 'dateien', label: t(TRIP_TAB_LABEL_KEYS.dateien), icon: FolderOpen }] : []),
-    ...(enabledAddons.collab ? [{ id: 'collab', label: t(TRIP_TAB_LABEL_KEYS.collab), icon: Users }] : []),
+    ...(enabledAddons.roadtrip && isMobile ? [{ id: 'roadtrip', label: t(TRIP_TAB_LABELS.roadtrip.labelKey), icon: Route }] : []),
+    ...(enabledAddons.packing ? [{ id: 'listen', label: t(TRIP_TAB_LABELS.listen.labelKey), shortLabel: t('trip.tabs.listsShort'), icon: PackageCheck }] : []),
+    ...(enabledAddons.budget ? [{ id: 'finanzplan', label: t(TRIP_TAB_LABELS.finanzplan.labelKey), icon: Wallet }] : []),
+    // Not behind an addon: the estimate costs two reads the planner already makes,
+    // and a trip's footprint is as much a part of the plan as its cost.
+    { id: 'carbon', label: t(TRIP_TAB_LABELS.carbon.labelKey), icon: Leaf },
+    ...(enabledAddons.documents ? [{ id: 'dateien', label: t(TRIP_TAB_LABELS.dateien.labelKey), icon: FolderOpen }] : []),
+    ...(enabledAddons.collab ? [{ id: 'collab', label: t(TRIP_TAB_LABELS.collab.labelKey), icon: Users }] : []),
     // A journal from the Journey addon tied to this trip, for whoever the link lets in.
     ...(journal.openJournalId != null ? [{ id: 'journal', label: t('trip.tabs.journal'), icon: LinkedJournalIcon }] : []),
   ].filter(tab => tab.id === 'plan' || !replacedTabs.has(tab.id))

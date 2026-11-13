@@ -26,7 +26,7 @@ import { validDraft } from './tourPlannerDraft';
 import { useTourPlanner } from './useTourPlanner';
 
 // FE-TOUR-WALK-IMPORT-PLANNER-001 to FE-TOUR-WALK-IMPORT-PLANNER-004: a walk read from a Google Maps link,
-// opened as a new draft with its stop names, routed on foot by TREK and saved like any other walk (CW-07).
+// opened as a new draft with its stop names, routed on foot by LightTrip and saved like any other walk (CW-07).
 
 const routed = {
   coordinates: [
@@ -107,7 +107,7 @@ describe('useTourPlanner, a walk read from Google Maps (CW-07)', () => {
 
   afterEach(() => vi.useRealTimers());
 
-  it('FE-TOUR-WALK-IMPORT-PLANNER-001: opens as a new walk with its stop names, routed on foot by TREK', async () => {
+  it('FE-TOUR-WALK-IMPORT-PLANNER-001: opens as a new walk with its stop names, routed on foot by LightTrip', async () => {
     const { result } = renderHook(() => useTourPlanner({ tripId: 31 }));
     let started = false;
     act(() => {
@@ -149,7 +149,7 @@ describe('useTourPlanner, a walk read from Google Maps (CW-07)', () => {
       'Ribeira de Gaia',
     ]);
     expect(body).not.toHaveProperty('derived_from_place_id');
-    // Saved, the walk is TREK's own: the notice of where it came from goes.
+    // Saved, the walk is LightTrip's own: the notice of where it came from goes.
     expect(result.current.draftSource).toBeNull();
     expect(result.current.mode).toEqual({ type: 'edit-saved', placeId: 51 });
   });

@@ -261,7 +261,7 @@ describe('booking cards', () => {
     expect(screen.getByText('Invalidenstraße 38')).toBeInTheDocument();
   });
 
-  it("FE-AI-BOOKING-005: a stay's picture comes only through TREK's photo proxy", async () => {
+  it("FE-AI-BOOKING-005: a stay's picture comes only through LightTrip's photo proxy", async () => {
     globalThis.IntersectionObserver = class {
       private readonly callback: IntersectionObserverCallback;
       constructor(callback: IntersectionObserverCallback) {

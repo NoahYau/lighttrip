@@ -5,6 +5,7 @@ import { Fragment, useMemo } from 'react';
 
 import { useTranslation } from '../../i18n';
 import { chatOf, useAssistantStore } from '../../store/assistantStore';
+import { LightTripLoader } from '../shared/LightTripLoader';
 import { Tooltip } from '../shared/Tooltip';
 import AssistantChangeCard from './AssistantChangeCard';
 import AssistantFollowUps from './AssistantFollowUps';
@@ -154,6 +155,7 @@ function Answer({ message }: { message: StoredMessage }) {
       {/* Nothing below says the answer goes on: no words being written, no step running. */}
       {writing && last?.kind !== 'text' && last?.kind !== 'steps' && (
         <p role="status" className="m-0 text-caption">
+          <LightTripLoader size={16} className="me-1.5 align-[-3px]" />
           <span className="trek-assistant-shimmer">{t('assistant.step.working')}</span>
         </p>
       )}

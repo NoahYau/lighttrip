@@ -379,7 +379,7 @@ describe('ArtikelZeile — category picker', () => {
 })
 
 describe('ArtikelZeile — sharing badges', () => {
-  it('FE-W5ROW-018: an item somebody else brings shows their name in the TREK tooltip', async () => {
+  it('FE-W5ROW-018: an item somebody else brings shows their name in the LightTrip tooltip', async () => {
     setup({
       item: buildPackingItem({ id: 1, name: 'Stove', is_private: 1, owner_id: 2, owner_username: 'Bob' } as Partial<PackingItem>),
       currentUserId: 1,

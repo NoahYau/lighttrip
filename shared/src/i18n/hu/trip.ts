@@ -10,6 +10,7 @@ const trip: TranslationStrings = {
   'trip.tabs.lists': 'Listák',
   'trip.tabs.listsShort': 'Listák',
   'trip.tabs.budget': 'Költségek',
+  'trip.tabs.carbon': 'Kibocsátás',
   'trip.tabs.files': 'Fájlok',
   'trip.loading': 'Utazás betöltése...',
   'trip.mobilePlan': 'Tervezés',

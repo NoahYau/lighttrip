@@ -4,7 +4,7 @@ import { AttributionControl, type Map } from 'maplibre-gl'
 /**
  * GHSA-jrc7-96c5-q579: MapLibre's attribution sanitizer let a second dangerous
  * attribute through after removing the first, so a tile source's attribution
- * could run script. TREK carried a patch for this on 5.x; 6.x replaced the
+ * could run script. LightTrip carried a patch for this on 5.x; 6.x replaced the
  * sanitizer with an allow list, and these cases hold the upgrade to it.
  */
 function attribution(html: string, fromSource = false) {

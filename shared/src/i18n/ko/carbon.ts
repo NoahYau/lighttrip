@@ -1,0 +1,45 @@
+import type { TranslationStrings } from '../types';
+
+/** 탄소 발자국 패널과 교통수단 비교 문구. */
+const carbon: TranslationStrings = {
+  'carbon.title': '탄소 발자국',
+  'carbon.subtitle': '이 여행 이동의 CO₂e 추정치',
+  'carbon.total': '추정 합계',
+  'carbon.totalValue': '{value} kg CO₂e',
+  'carbon.measuredLegs': '측정된 구간',
+  'carbon.measuredValue': '{estimated} / {total}',
+  'carbon.km': '{value} km',
+  'carbon.disclaimer': '추정치입니다. 대권 거리와 평균 배출 계수를 사용한 값이며 탄소 감사가 아닙니다.',
+  'carbon.byMode': '배출원',
+  'carbon.perDay': '일별',
+  'carbon.legs': '이동 구간',
+  'carbon.empty':
+    '아직 측정할 항목이 없습니다. 위치가 있는 경유지를 추가하거나 출발역과 도착역을 모두 입력해 교통편을 예약하세요.',
+  'carbon.loading': '측정 중…',
+  'carbon.offline': '탄소 추정치를 불러오려면 연결이 필요합니다.',
+  'carbon.error': '탄소 추정치를 불러오지 못했습니다.',
+  'carbon.retry': '다시 시도',
+  'carbon.unknownMode': '미추정',
+  'carbon.compareTitle': '교통수단 비교',
+  'carbon.compareFor': '{route} 기준',
+  'carbon.comparePick': '구간을 선택하면 대체 수단을 볼 수 있습니다.',
+  'carbon.compareMode': '수단',
+  'carbon.compareEmissions': 'CO₂e',
+  'carbon.compareSaved': '절감량',
+  'carbon.compareBest': '최저',
+  'carbon.compareCurrent': '현재',
+  'carbon.mode.walk': '도보',
+  'carbon.mode.cycle': '자전거',
+  'carbon.mode.rail': '기차',
+  'carbon.mode.bus': '버스',
+  'carbon.mode.coach': '고속버스',
+  'carbon.mode.car': '자동차(휘발유 또는 디젤)',
+  'carbon.mode.car_electric': '전기차',
+  'carbon.mode.taxi': '택시',
+  'carbon.mode.motorbike': '오토바이',
+  'carbon.mode.ferry': '페리',
+  'carbon.mode.cruise': '크루즈선',
+  'carbon.mode.flight': '항공편',
+};
+
+export default carbon;

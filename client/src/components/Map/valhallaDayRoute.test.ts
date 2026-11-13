@@ -95,7 +95,7 @@ afterEach(() => {
 });
 
 describe('which engine routes a day', () => {
-  it.each(PROFILES)('VDAY-ENGINE-001: the TREK services and an own Valhalla route every %s day', (profile) => {
+  it.each(PROFILES)('VDAY-ENGINE-001: the LightTrip services and an own Valhalla route every %s day', (profile) => {
     choose({ routing_valhalla_provider: 'trek' });
     expect([routeEngineFor(profile, []), routeEngineFor(profile, ['toll'])]).toEqual(['valhalla', 'valhalla']);
     choose({ routing_valhalla_provider: '', valhalla_base_url: OWN_VALHALLA });
@@ -164,7 +164,7 @@ describe('a day where Valhalla routes the days', () => {
       () => HttpResponse.json({ error: 'Too large' }, { status: 413 }),
       () => HttpResponse.json({ error: 'Too many routing requests' }, { status: 429 }),
       () => HttpResponse.json({ error: 'down' }, { status: 500 }),
-      () => HttpResponse.json({ error: 'The TREK routing service is resting' }, { status: 503 }),
+      () => HttpResponse.json({ error: 'The LightTrip routing service is resting' }, { status: 503 }),
       () => HttpResponse.json({ error: 'Expected number, received string' }, { status: 400 }),
       () => HttpResponse.json({ error_code: 442, error: 'No path could be found for input' }, { status: 400 }),
       () => HttpResponse.error(),
@@ -196,7 +196,7 @@ describe('a day where Valhalla routes the days', () => {
     let slow = true;
     const traffic = listen((body) =>
       slow
-        ? HttpResponse.json({ error: 'The TREK routing service took too long for this route' }, { status: 504 })
+        ? HttpResponse.json({ error: 'The LightTrip routing service took too long for this route' }, { status: 504 })
         : answered(body)
     );
     const fallen = await calculateRouteWithLegs(freshDay(3), { profile: 'cycling' });

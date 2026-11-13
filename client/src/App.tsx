@@ -17,6 +17,7 @@ import BackgroundTasksWidget from './components/BackgroundTasks/BackgroundTasksW
 import MobileShell from './mobile/MobileShell'
 import MRouteFallback from './mobile/components/MRouteFallback'
 import ErrorBoundary from './components/shared/ErrorBoundary'
+import { LightTripLoader } from './components/shared/LightTripLoader'
 import { lazyWithRetry } from './utils/lazyWithRetry'
 import { reconcileAppVersion } from './utils/versionHandover'
 import { useServerVersionStore } from './store/serverVersionStore'
@@ -296,19 +297,17 @@ function RootRedirect() {
 }
 
 /**
- * Shown while a route chunk is in flight. Same geometry as the auth spinner above,
- * but on theme tokens — that one predates the styleguide and a new surface does not
- * get to inherit its raw slate.
+ * Shown while a route chunk is in flight: the LightTrip mark, needle sweeping,
+ * instead of a bare spinner. It renders above MobileShell, so it picks its own
+ * surface — on a phone a desktop loader would be a foreign white sheet in front
+ * of the mobile screen, which is why the phone keeps its skeleton.
  */
 function RouteFallback() {
-  // The fallback renders above MobileShell, so it has to pick its own palette —
-  // on a phone the desktop spinner on bg-surface would be a foreign white sheet
-  // in front of the mobile screen.
   const isPhone = useIsPhone()
   if (isPhone) return <MRouteFallback />
   return (
     <div className="min-h-screen flex items-center justify-center bg-surface">
-      <div className="w-10 h-10 border-4 border-edge border-t-content rounded-full animate-spin"></div>
+      <LightTripLoader size={48} />
     </div>
   )
 }

@@ -1,19 +1,17 @@
 import { useTranslation } from '../../i18n'
-import MDancingTrek from '../../mobile/components/MDancingTrek'
+import { LightTripLoader } from './LightTripLoader'
 import { useTripSplashBeats } from './useTripSplashBeats'
 
 /**
- * Trip-open splash for desktop â€” the same little journey the mobile splash
- * plays: the TREK mascot packs, hits the road, cruises in and drops the
- * destination pin while the trip loads. It now takes over the viewport as a
- * calm, Apple-style scene: a slowly drifting pastel gradient wash (soft
- * pink/lavender/periwinkle, toned right down) whose tiles pan and whose hue
- * gently breathes, dusted with a faint filmic grain, and the whole journey
- * floating on a frosted "liquid glass" card. Monochrome mascot tokens map onto
- * the desktop palette; the mascot's eye cut-outs (--m-bg) are pinned to the
- * card surface so they read as clean holes. Under reduced motion the background
- * freezes and the mascot parks on "loading photos". Palette + glass tint swap
- * for light/dark via the .dark class the app puts on <html>.
+ * Trip-open splash for desktop: the LightTrip mark sweeps while the trip and
+ * its place photos load — the same loader the app boots on, so the brand and
+ * the motion stay one thing from the first paint to the trip. The scene keeps
+ * a fixed stage over a drifting pastel gradient wash (soft pink/lavender/
+ * periwinkle, toned right down) whose tiles pan and whose hue gently breathes,
+ * dusted with a faint filmic grain, with the journey floating on a frosted
+ * "liquid glass" card. Under reduced motion the background freezes and the
+ * loader's own CSS parks the needle (the SVG carries that rule). Palette + glass
+ * tint swap for light/dark via the .dark class the app puts on <html>.
  */
 const SPLASH_CSS = `
 .m-splash-root { background: #eef0fb; }
@@ -149,13 +147,13 @@ const SPLASH_CSS = `
 
 export default function TripLoadingSplash({ title }: { title?: string }) {
   const { t } = useTranslation()
-  const { reduceMotion, activeIndex, step, steps } = useTripSplashBeats({ liveReducedMotion: false })
+  const { activeIndex, step, steps } = useTripSplashBeats({ liveReducedMotion: false })
 
   return (
     <div
       className="m-splash-root fixed inset-0 z-[100] flex items-center justify-center overflow-hidden"
       role="status"
-      aria-label={title || 'TREK'}
+      aria-label={title || 'LightTrip'}
     >
       {/* Slowly drifting glass gradient â€” painted behind the card so the frost
           blurs it. */}
@@ -166,14 +164,12 @@ export default function TripLoadingSplash({ title }: { title?: string }) {
 
       <div className="m-splash-card">
         <div className="m-splash-content flex flex-col items-center justify-center">
-          {/* Fixed stage so the travelling mascot never nudges the layout. */}
+          {/* Fixed stage so the loader never nudges the layout. */}
           <div className="mb-6 flex h-[150px] w-[160px] items-center justify-center overflow-hidden">
-            <div key={step.scene} style={reduceMotion ? undefined : { animation: 'm-trek-beat 460ms cubic-bezier(.34,1.56,.64,1) both' }}>
-              <MDancingTrek scene={step.scene} mood="happy" size={128} />
-            </div>
+            <LightTripLoader size={128} />
           </div>
 
-          <div className="mb-2 text-[1.25rem] font-bold tracking-[-0.3px] text-content">{title || 'TREK'}</div>
+          <div className="mb-2 text-[1.25rem] font-bold tracking-[-0.3px] text-content">{title || 'LightTrip'}</div>
 
           <div className="mb-8 flex h-4 items-center justify-center">
             <span key={step.key} className="text-[0.75rem] font-medium uppercase tracking-[2px] text-content-faint">

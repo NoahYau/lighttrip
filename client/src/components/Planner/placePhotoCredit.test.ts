@@ -23,7 +23,7 @@ describe('placePhotoCredit', () => {
     expect(sourceLabelFor('google')).toBe('Google');
     expect(sourceLabelFor('wikipedia')).toBe('Wikipedia');
     expect(sourceLabelFor('wikimedia')).toBe('Wikimedia Commons');
-    expect(sourceLabelFor('community')).toBe('TREK Community');
+    expect(sourceLabelFor('community')).toBe('LightTrip Community');
   });
 
   it('FE-PLANNER-PHOTOCREDIT-002: the author is credited, and the provider when there is none', () => {

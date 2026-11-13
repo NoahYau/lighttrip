@@ -147,7 +147,7 @@ describe('getWebPushSupport', () => {
     expect(getWebPushSupport()).toEqual({ supported: false, reason: 'insecure' })
   })
 
-  it('FE-PUSH-003: an iPhone in a Safari tab is told to add TREK to the Home Screen', () => {
+  it('FE-PUSH-003: an iPhone in a Safari tab is told to add LightTrip to the Home Screen', () => {
     vi.stubGlobal('isSecureContext', true)
     setUserAgent(IPHONE, 5)
     expect(getWebPushSupport()).toEqual({ supported: false, reason: 'ios-install' })

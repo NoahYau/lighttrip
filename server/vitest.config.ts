@@ -1,5 +1,17 @@
+import { fileURLToPath } from 'node:url';
 import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
+
+/**
+ * An absolute path to a file of the MCP SDK's CJS dist.
+ *
+ * `new URL(...).pathname` looks like the shorter spelling, but it keeps the
+ * percent-escapes of a checkout whose path holds a space (`C:/Users/Noah%20Yau/…`),
+ * which is a path no file on disk has: every suite that imports `src/nest-mcp/`
+ * then fails to resolve the SDK. `fileURLToPath` decodes it.
+ */
+const cjsDist = (file: string): string =>
+  fileURLToPath(new URL(`../node_modules/@modelcontextprotocol/sdk/dist/cjs/${file}`, import.meta.url));
 
 export default defineConfig({
   // SWC transform so NestJS decorator metadata is emitted in tests
@@ -100,6 +112,11 @@ export default defineConfig({
         'src/nest/backup/**/*.ts': { statements: 97, branches: 93, functions: 99, lines: 98 },
         'src/nest/booking-import/**/*.ts': { statements: 50, branches: 28, functions: 64, lines: 53 },
         'src/nest/budget/**/*.ts': { statements: 91, branches: 77, functions: 97, lines: 95 },
+        // Read-only and derived: the itinerary helpers and the two routes. Every
+        // branch of the mode mapping and the unestimated-leg paths is pinned in
+        // tests/unit/nest/carbon.helpers.test.ts, the service in carbon.service.test.ts,
+        // the guarded routes in tests/e2e/carbon.e2e.test.ts.
+        'src/nest/carbon/**/*.ts': { statements: 98, branches: 84, functions: 100, lines: 100 },
         'src/nest/calendar/**/*.ts': { statements: 96, branches: 93, functions: 99, lines: 99 },
         'src/nest/categories/**/*.ts': { statements: 99, branches: 80, functions: 99, lines: 99 },
         'src/nest/collab/**/*.ts': { statements: 92, branches: 85, functions: 95, lines: 97 },
@@ -271,22 +288,10 @@ export default defineConfig({
       // MCP SDK's exports map uses extension-less wildcard targets that neither
       // Node nor Vite can resolve. Point directly at the CJS dist files.
       // Paths are relative to the monorepo root (packages are hoisted there).
-      '@modelcontextprotocol/sdk/server/mcp': new URL(
-        '../node_modules/@modelcontextprotocol/sdk/dist/cjs/server/mcp.js',
-        import.meta.url,
-      ).pathname,
-      '@modelcontextprotocol/sdk/server/streamableHttp': new URL(
-        '../node_modules/@modelcontextprotocol/sdk/dist/cjs/server/streamableHttp.js',
-        import.meta.url,
-      ).pathname,
-      '@modelcontextprotocol/sdk/inMemory': new URL(
-        '../node_modules/@modelcontextprotocol/sdk/dist/cjs/inMemory.js',
-        import.meta.url,
-      ).pathname,
-      '@modelcontextprotocol/sdk/client/index': new URL(
-        '../node_modules/@modelcontextprotocol/sdk/dist/cjs/client/index.js',
-        import.meta.url,
-      ).pathname,
+      '@modelcontextprotocol/sdk/server/mcp': cjsDist('server/mcp.js'),
+      '@modelcontextprotocol/sdk/server/streamableHttp': cjsDist('server/streamableHttp.js'),
+      '@modelcontextprotocol/sdk/inMemory': cjsDist('inMemory.js'),
+      '@modelcontextprotocol/sdk/client/index': cjsDist('client/index.js'),
     },
   },
 });

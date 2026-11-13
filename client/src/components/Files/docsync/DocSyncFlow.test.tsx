@@ -11,6 +11,7 @@
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import en from '@trek/shared/i18n/en'
+import { withBrand } from '../../../i18n/brand'
 import { render, screen, fireEvent } from '../../../../tests/helpers/render'
 import DocSyncFlow, { type FlowHoldings, type SyncDirection } from './DocSyncFlow'
 
@@ -59,7 +60,7 @@ describe('DocSyncFlow ends', () => {
 
     expect(screen.getByText('12')).toBeInTheDocument()
     expect(screen.getByText('7')).toBeInTheDocument()
-    expect(screen.getByText(S['docsync.flow.trek'])).toBeInTheDocument()
+    expect(screen.getByText(withBrand(S['docsync.flow.trek']))).toBeInTheDocument()
     expect(screen.getByText('Paperless')).toBeInTheDocument()
   })
 

@@ -3,7 +3,7 @@
  *
  * What a receipt offers for the thing it changed, read off the entity's
  * look: the map pin where the plan can show it, "Open" where it lives in
- * another part of TREK, and nothing where the shell cannot open anything.
+ * another part of LightTrip, and nothing where the shell cannot open anything.
  */
 import type { AssistantApplied } from '@trek/shared';
 import { describe, expect, it, vi } from 'vitest';

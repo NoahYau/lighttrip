@@ -516,7 +516,7 @@ describe('JourneyDetailPage', () => {
       await waitFor(() => {
         expect(screen.getByText('No entries yet')).toBeInTheDocument();
       });
-      // The shared EmptyState renders the TREK mascot acting out the "journey"
+      // The shared EmptyState renders the LightTrip mascot acting out the "journey"
       // scene instead of a text hint.
       expect(container.querySelector('.trek--journey')).toBeInTheDocument();
     });

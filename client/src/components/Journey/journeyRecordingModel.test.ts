@@ -43,7 +43,7 @@ describe('journeyRecordingModel', () => {
     expect(zoneOptions(t, null, 17).some((o) => o.value === 17)).toBe(true);
   });
 
-  it('FE-JRN-RECORDING-MODEL-003: names the modes TREK knows and shows any other as Dawarich spells it', () => {
+  it('FE-JRN-RECORDING-MODEL-003: names the modes LightTrip knows and shows any other as Dawarich spells it', () => {
     expect(modeLabel('walking', t)).toBe('t:journey.recording.mode.walking');
     expect(modeLabel('hovercraft', t)).toBe('hovercraft');
   });

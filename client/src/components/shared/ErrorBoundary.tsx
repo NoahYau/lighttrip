@@ -231,11 +231,11 @@ export function RootErrorFallback({ error, isChunkError }: FallbackState) {
         </span>
         <div className="space-y-1.5">
           <p className="text-title font-semibold text-content">
-            {isChunkError ? 'A new version is available' : 'TREK could not start'}
+            {isChunkError ? 'A new version is available' : 'LightTrip could not start'}
           </p>
           <p className="text-body text-content-secondary">
             {isChunkError
-              ? 'TREK was updated while this tab was open. Reload to get the new version.'
+              ? 'LightTrip was updated while this tab was open. Reload to get the new version.'
               : 'Reloading usually fixes this. Your data is safe.'}
           </p>
         </div>

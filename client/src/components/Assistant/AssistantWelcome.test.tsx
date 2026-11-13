@@ -2,7 +2,7 @@
  * FE-AI-WELCOME-001 to FE-AI-WELCOME-002
  *
  * The empty chat asks what fits the chat it is: a journey's conversation
- * shown for its journal asks about the journal, the same conversation in TREK
+ * shown for its journal asks about the journal, the same conversation in LightTrip
  * Studio about the book, and each tells a reader what they may not change.
  */
 import { describe, expect, it } from 'vitest';

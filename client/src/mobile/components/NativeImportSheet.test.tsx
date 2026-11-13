@@ -67,7 +67,7 @@ describe('NativeImportSheet', () => {
   it('asks what a shared page is for, and keeps it among the links of the trip picked', async () => {
     render(<NativeImportSheet />);
     act(() => useSharedImportStore.getState().setFile(page(), link()));
-    expect(screen.getByText('What should TREK do with this link?')).toBeInTheDocument();
+    expect(screen.getByText('What should LightTrip do with this link?')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Japan/ })).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: /Save to the trip's links/ }));
@@ -99,7 +99,7 @@ describe('NativeImportSheet', () => {
     useAddonStore.setState({ addons: [], loaded: true });
     render(<NativeImportSheet />);
     act(() => useSharedImportStore.getState().setFile(page(), link()));
-    expect(screen.queryByText('What should TREK do with this link?')).not.toBeInTheDocument();
+    expect(screen.queryByText('What should LightTrip do with this link?')).not.toBeInTheDocument();
     expect(await screen.findAllByRole('button', { name: /Japan|Past trip/ })).toHaveLength(2);
 
     act(() => useSharedImportStore.getState().setFile(bareLink(), link()));

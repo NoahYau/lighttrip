@@ -1,0 +1,45 @@
+import type { TranslationStrings } from '../types';
+
+/** Ślad węglowy podróży: panel, podział na środki transportu i dni oraz tabela porównania. */
+const carbon: TranslationStrings = {
+  'carbon.title': 'Ślad węglowy',
+  'carbon.subtitle': 'Szacowana emisja CO₂e z transportu w tej podróży',
+  'carbon.total': 'Szacowana suma',
+  'carbon.totalValue': '{value} kg CO₂e',
+  'carbon.measuredLegs': 'Zmierzone odcinki',
+  'carbon.measuredValue': '{estimated} / {total}',
+  'carbon.km': '{value} km',
+  'carbon.disclaimer': 'Szacunek: odległości w linii prostej i średnie wskaźniki emisji, a nie audyt węglowy.',
+  'carbon.byMode': 'Skąd pochodzi',
+  'carbon.perDay': 'Według dni',
+  'carbon.legs': 'Odcinki podróży',
+  'carbon.empty':
+    'Nie ma jeszcze czego mierzyć — dodaj miejsca z lokalizacją lub zarezerwuj transport z obiema stacjami.',
+  'carbon.loading': 'Obliczanie…',
+  'carbon.offline': 'Szacowanie śladu węglowego wymaga połączenia.',
+  'carbon.error': 'Nie udało się wczytać szacunku śladu węglowego.',
+  'carbon.retry': 'Spróbuj ponownie',
+  'carbon.unknownMode': 'Nie oszacowano',
+  'carbon.compareTitle': 'Porównaj środki transportu',
+  'carbon.compareFor': 'Dla trasy {route}',
+  'carbon.comparePick': 'Wybierz odcinek, aby zobaczyć alternatywy.',
+  'carbon.compareMode': 'Środek transportu',
+  'carbon.compareEmissions': 'CO₂e',
+  'carbon.compareSaved': 'Oszczędność',
+  'carbon.compareBest': 'Najniższa',
+  'carbon.compareCurrent': 'Obecny',
+  'carbon.mode.walk': 'Pieszo',
+  'carbon.mode.cycle': 'Rowerem',
+  'carbon.mode.rail': 'Pociągiem',
+  'carbon.mode.bus': 'Autobusem',
+  'carbon.mode.coach': 'Autokarem',
+  'carbon.mode.car': 'Samochodem (benzyna lub diesel)',
+  'carbon.mode.car_electric': 'Samochodem elektrycznym',
+  'carbon.mode.taxi': 'Taksówką',
+  'carbon.mode.motorbike': 'Motocyklem',
+  'carbon.mode.ferry': 'Promem',
+  'carbon.mode.cruise': 'Statkiem wycieczkowym',
+  'carbon.mode.flight': 'Samolotem',
+};
+
+export default carbon;

@@ -27,6 +27,7 @@ import { SessionRenewalInterceptor } from './auth/session-renewal.interceptor';
 import { BackupModule } from './backup/backup.module';
 import { BookingImportModule } from './booking-import/booking-import.module';
 import { BudgetModule } from './budget/budget.module';
+import { CarbonModule } from './carbon/carbon.module';
 import { CategoriesModule } from './categories/categories.module';
 import { CollabModule } from './collab/collab.module';
 import { CollectionsModule } from './collections/collections.module';
@@ -158,6 +159,7 @@ import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
     PackingModule,
     TodoModule,
     BudgetModule,
+    CarbonModule,
     ReservationsModule,
     DaysModule,
     DayNotesModule,

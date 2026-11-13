@@ -169,7 +169,7 @@ export class FilesMcp {
     const originalname = filename.split(/[\\/]/).pop()!.trim();
     const mimetype = contentTypeFor(originalname);
     if (!originalname || !isUploadTypeAllowed(originalname, mimetype, await this.allowedTypes.get())) {
-      return errorResult('This file type is not allowed on this TREK instance.');
+      return errorResult('This file type is not allowed on this LightTrip instance.');
     }
     const clean = content.replace(/\s+/g, '');
     if (!BASE64.test(clean)) return errorResult('content is not valid base64.');

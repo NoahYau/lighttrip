@@ -504,7 +504,7 @@ describe('CollabController (parity with the legacy /api/trips/:tripId/collab rou
     const demo = { ...user, email: 'demo@trek.app' } as User;
     const refused = {
       status: 403,
-      body: { error: 'Uploads are disabled in demo mode. Self-host TREK for full functionality.' },
+      body: { error: 'Uploads are disabled in demo mode. Self-host LightTrip for full functionality.' },
     };
     let spoolDir: string;
     const spooled = (name: string): Express.Multer.File => {

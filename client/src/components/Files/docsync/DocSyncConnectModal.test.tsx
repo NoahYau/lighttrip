@@ -1,11 +1,12 @@
 // FE-DOCSYNC-CONNECT-001 to FE-DOCSYNC-CONNECT-030
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import en from '@trek/shared/i18n/en'
+import { withBrand } from '../../../i18n/brand'
 import { render, screen, fireEvent, waitFor, act, within } from '../../../../tests/helpers/render'
 import type { DocSyncConnection, DocSyncProvider } from './useDocSync'
 
 /** What the app really shows: `en` is bundled, so `t()` resolves for real here. */
-const tx = (key: string): string => (en as unknown as Record<string, string>)[key] ?? key
+const tx = (key: string): string => withBrand((en as unknown as Record<string, string>)[key] ?? key)
 
 const providers = vi.fn(async (_tripId: number | string): Promise<unknown> => [])
 const listConnections = vi.fn(async (_tripId: number | string): Promise<unknown> => [])
@@ -323,7 +324,7 @@ describe('DocSyncConnectModal probe verdict', () => {
     expect(line.parentElement?.querySelector('svg')?.getAttribute('class')).not.toMatch(/shield/)
   })
 
-  it('FE-DOCSYNC-CONNECT-016: an address TREK itself blocked is marked with the shield, not the warning', async () => {
+  it('FE-DOCSYNC-CONNECT-016: an address LightTrip itself blocked is marked with the shield, not the warning', async () => {
     testConnection.mockResolvedValueOnce({ connected: false, error: 'ssrf_blocked' })
     await open()
 

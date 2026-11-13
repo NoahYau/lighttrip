@@ -44,10 +44,10 @@ describe('appLock', () => {
   });
 
   it('unlocks on success and stays locked on a cancel or a failure', async () => {
-    expect(await unlockApp('Unlock TREK')).toBe(true);
+    expect(await unlockApp('Unlock LightTrip')).toBe(true);
     vi.mocked(TrekShell.authenticateBiometric).mockRejectedValue({ code: 'CANCELLED' });
-    expect(await unlockApp('Unlock TREK')).toBe(false);
+    expect(await unlockApp('Unlock LightTrip')).toBe(false);
     vi.mocked(TrekShell.authenticateBiometric).mockRejectedValue({ code: 'FAILED' });
-    expect(await unlockApp('Unlock TREK')).toBe(false);
+    expect(await unlockApp('Unlock LightTrip')).toBe(false);
   });
 });

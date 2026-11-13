@@ -10,6 +10,7 @@ const trip: TranslationStrings = {
   'trip.tabs.lists': 'Danh sách',
   'trip.tabs.listsShort': 'Danh sách',
   'trip.tabs.budget': 'Chi phí',
+  'trip.tabs.carbon': 'Carbon', // same-as-en
   'trip.tabs.files': 'Tập tin',
   'trip.loading': 'Đang tải chuyến đi...',
   'trip.loadingPhotos': 'Đang tải ảnh địa điểm...',

@@ -145,7 +145,7 @@ describe('AboutTab', () => {
     expect(logos).toEqual(
       expect.arrayContaining(['/brands/dataforest-cloud.svg', '/brands/dataforest-cloud-dark.svg'])
     );
-    // Served by TREK itself: opening Settings must not reach a third party.
+    // Served by LightTrip itself: opening Settings must not reach a third party.
     expect(logos.every((src) => src?.startsWith('/'))).toBe(true);
     expect(screen.getByText('Place search')).toBeInTheDocument();
     expect(screen.getByText('Address search')).toBeInTheDocument();

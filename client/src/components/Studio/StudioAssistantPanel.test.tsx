@@ -1,7 +1,7 @@
 /**
  * FE-STUDIO-ASTPANEL-001 to FE-STUDIO-ASTPANEL-009
  *
- * The assistant's floating window in TREK Studio (journey-studio.md 3.4, 4.5): the
+ * The assistant's floating window in LightTrip Studio (journey-studio.md 3.4, 4.5): the
  * journey's chat with its own question; the notice that images of a page
  * leave only once the user agreed, for the connection on screen, that "Not
  * now" keeps it text for the visit, and that a model reading no images is

@@ -38,7 +38,7 @@ describe('AssistantMarkdown', () => {
     expect(link).toHaveTextContent('(www.kinkaku-ji.or.jp)');
   });
 
-  it('FE-AI-MD-005: a link into TREK stays in the app, and the writing caret is marked', () => {
+  it('FE-AI-MD-005: a link into LightTrip stays in the app, and the writing caret is marked', () => {
     const { container } = render(<AssistantMarkdown text={'See [day 2](/trips/4)'} writing />);
     const link = screen.getByRole('link', { name: 'day 2' });
     expect(link).toHaveAttribute('href', '/trips/4');

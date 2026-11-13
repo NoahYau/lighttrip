@@ -57,7 +57,7 @@ describe('native shell', () => {
     }
   });
 
-  it("FE-NATIVE-SHELL-003: Russian keeps TREK's faces through Cyrillic stand-ins under the same family names", () => {
+  it("FE-NATIVE-SHELL-003: Russian keeps LightTrip's faces through Cyrillic stand-ins under the same family names", () => {
     const faces = css.match(/@font-face\s*\{[^}]*\}/g) ?? [];
     const cyrillic = faces.filter((f) => /unicode-range:\s*U\+0301, U\+0400-045F/.test(f));
     expect(cyrillic.filter((f) => /font-family:\s*'Poppins'/.test(f))).toHaveLength(3);

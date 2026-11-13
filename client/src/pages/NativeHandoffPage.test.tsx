@@ -26,9 +26,9 @@ describe('NativeHandoffPage', () => {
   it('FE-NATIVE-HANDOFF-PAGE-001: asks before handing the session to the app', () => {
     render(<NativeHandoffPage />);
     expect(
-      screen.getByText('You are signed in as maria. Open the TREK app to finish signing in there.')
+      screen.getByText('You are signed in as maria. Open the LightTrip app to finish signing in there.')
     ).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Open the TREK app' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Open the LightTrip app' }));
     expect(base.openApp).toHaveBeenCalled();
     fireEvent.click(screen.getByRole('button', { name: 'Use a different account' }));
     expect(base.switchAccount).toHaveBeenCalled();
@@ -41,7 +41,7 @@ describe('NativeHandoffPage', () => {
 
     vi.mocked(useNativeHandoff).mockReturnValue({ ...base, status: 'sending' });
     rerender(<NativeHandoffPage />);
-    expect(screen.getByRole('button', { name: 'Open the TREK app' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Open the LightTrip app' })).toBeDisabled();
   });
 
   it('FE-NATIVE-HANDOFF-PAGE-003: spins while the session is being checked', () => {

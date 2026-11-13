@@ -10,6 +10,7 @@ const trip: TranslationStrings = {
   'trip.tabs.lists': 'Списки',
   'trip.tabs.listsShort': 'Списки',
   'trip.tabs.budget': 'Расходы',
+  'trip.tabs.carbon': 'Углерод',
   'trip.tabs.files': 'Файлы',
   'trip.loading': 'Загрузка поездки...',
   'trip.loadingPhotos': 'Загрузка фото мест...',

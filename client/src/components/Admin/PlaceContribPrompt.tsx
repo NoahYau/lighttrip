@@ -75,7 +75,7 @@ export default function PlaceContribPrompt({
           }
           tint={NEUTRAL_TINT}
           labelId="place-contrib-prompt-title"
-          eyebrow="TREK Places API"
+          eyebrow="LightTrip Places API"
           title={t('admin.contribute.prompt.title')}
           onClose={onClose}
         />

@@ -2,7 +2,7 @@
  * FE-AI-PLACES-001 to FE-AI-PLACES-010
  *
  * The strip of places a search found: what a card says, that its picture only
- * ever comes from TREK's photo proxy, "Add to trip" opening the place form on
+ * ever comes from LightTrip's photo proxy, "Add to trip" opening the place form on
  * the day in focus, the map's part, and no "Add to trip" in a journey's chat.
  */
 import type { AssistantFoundPlace, AssistantMessage, AssistantPlaces } from '@trek/shared';

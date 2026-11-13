@@ -38,11 +38,12 @@ import { useBookingExpenseEditor } from './tripPlanner/useBookingExpenseEditor'
 import { applyTripCoverUpdate } from './tripPlanner/tripCover'
 import { latestReservation } from './tripPlanner/transportEditorOpeners'
 import {
-  ReservationsPanel, FileManager, CostsPanel, ExpenseModal, CollabPanel,
+  ReservationsPanel, FileManager, CostsPanel, CarbonPanel, ExpenseModal, CollabPanel,
   RoadtripSidebar, RoadtripCorridorPanel, RoadtripLimitsCard, RoadtripStopPopup, RoadtripStayModal, RoadtripTrackModal,
   TourWorkspaceRail, TourPlannerToursRail, TransportModal, TripJournalPanel,
 } from './tripPlanner/plannerLazy'
 import { LazyPanel } from './tripPlanner/LazyPanel'
+import { TabPage } from './tripPlanner/TabPage'
 import { ListsContainer } from './tripPlanner/ListsContainer'
 import { PlanMapStage } from './tripPlanner/PlanMapStage'
 import { TourPlannerMapStage } from './tripPlanner/TourPlannerMapStage'
@@ -743,36 +744,38 @@ function TripPlannerPageDesktop(): React.ReactElement | null {
         )}
 
         {activeTab === 'listen' && (
-          <div style={{ height: '100%', overflowY: 'auto', overscrollBehavior: 'contain', width: '100%', paddingBottom: 'var(--bottom-nav-h)' }}>
+          <TabPage id="listen">
             <ListsContainer tripId={tripId} packingItems={packingItems} todoItems={todoItems} />
-          </div>
+          </TabPage>
         )}
 
         {activeTab === 'finanzplan' && (
-          <div style={{ height: '100%', overflowY: 'auto', overscrollBehavior: 'contain', width: '100%', paddingBottom: 'var(--bottom-nav-h)' }}>
-            <LazyPanel id="finanzplan">
-              <CostsPanel tripId={tripId} tripMembers={tripMembers} />
-            </LazyPanel>
-          </div>
+          <TabPage id="finanzplan">
+            <CostsPanel tripId={tripId} tripMembers={tripMembers} />
+          </TabPage>
+        )}
+
+        {activeTab === 'carbon' && (
+          <TabPage id="carbon">
+            <CarbonPanel tripId={tripId} />
+          </TabPage>
         )}
 
         {activeTab === 'dateien' && (
-          <div style={{ height: '100%', overflow: 'hidden', overscrollBehavior: 'contain', paddingBottom: 'var(--bottom-nav-h)' }}>
-            <LazyPanel id="dateien">
-              <FileManager
-                files={files || []}
-                onUpload={(fd) => tripActions.addFile(tripId, fd)}
-                onDelete={(id) => tripActions.deleteFile(tripId, id)}
-                onUpdate={() => tripActions.loadFiles(tripId)}
-                places={places}
-                days={days}
-                assignments={assignments}
-                reservations={reservations}
-                tripId={tripId}
-                allowedFileTypes={allowedFileTypes}
-              />
-            </LazyPanel>
-          </div>
+          <TabPage id="dateien" fixed>
+            <FileManager
+              files={files || []}
+              onUpload={(fd) => tripActions.addFile(tripId, fd)}
+              onDelete={(id) => tripActions.deleteFile(tripId, id)}
+              onUpdate={() => tripActions.loadFiles(tripId)}
+              places={places}
+              days={days}
+              assignments={assignments}
+              reservations={reservations}
+              tripId={tripId}
+              allowedFileTypes={allowedFileTypes}
+            />
+          </TabPage>
         )}
 
         {activeTab === 'collab' && (

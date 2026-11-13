@@ -16,6 +16,7 @@
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import en from '@trek/shared/i18n/en'
+import { withBrand } from '../../../i18n/brand'
 import { render, screen, fireEvent, waitFor } from '../../../../tests/helpers/render'
 import type { DocSyncConnection, DocSyncScope } from './useDocSync'
 
@@ -157,7 +158,7 @@ describe('DocSyncScopeModal list', () => {
     render(<Harness providerName="Paperless" />)
 
     expect(await screen.findByText(S['docsync.scope.title'].replace('{provider}', 'Paperless'))).toBeInTheDocument()
-    expect(screen.getByText(S['docsync.scope.intro'])).toBeInTheDocument()
+    expect(screen.getByText(withBrand(S['docsync.scope.intro']))).toBeInTheDocument()
   })
 
   it('FE-DOCSYNC-SCOPE-006: the header close button leaves without binding anything', async () => {

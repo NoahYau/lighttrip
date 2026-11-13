@@ -76,7 +76,7 @@ vi.mock('../components/Layout/Navbar', () => ({ default: stub('navbar', 'navbar'
 vi.mock('../components/shared/SlidingTabs', () => ({ default: stub('tabs', 'sliding-tabs'), TabLabel: () => null }));
 vi.mock('../components/shared/TripLoadingSplash', () => ({
   default: ({ title }: { title?: string }) =>
-    React.createElement('div', { 'data-testid': 'splash', role: 'status' }, title ?? 'TREK'),
+    React.createElement('div', { 'data-testid': 'splash', role: 'status' }, title ?? 'LightTrip'),
 }));
 vi.mock('../components/shared/ConfirmDialog', () => ({ default: () => null }));
 

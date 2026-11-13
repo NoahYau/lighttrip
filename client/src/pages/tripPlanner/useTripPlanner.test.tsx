@@ -344,7 +344,7 @@ describe('useTripPlanner — tabs', () => {
 
     await waitFor(() => {
       expect(result.current.TRIP_TABS.map(t => t.id)).toEqual(
-        ['plan', 'transports', 'buchungen', 'listen', 'dateien'],
+        ['plan', 'transports', 'buchungen', 'listen', 'carbon', 'dateien'],
       )
     })
   })
@@ -410,7 +410,7 @@ describe('useTripPlanner — tabs', () => {
 
     await waitFor(() => {
       expect(result.current.TRIP_TABS.map(t => t.id))
-        .toEqual(['plan', 'plugin:transit-pro', 'buchungen', 'plugin:tail'])
+        .toEqual(['plan', 'plugin:transit-pro', 'buchungen', 'carbon', 'plugin:tail'])
     })
   })
 
@@ -428,7 +428,7 @@ describe('useTripPlanner — tabs', () => {
 
     await waitFor(() => {
       expect(result.current.TRIP_TABS.map(t => t.id))
-        .toEqual(['plan', 'plugin:early', 'transports', 'plugin:late', 'buchungen'])
+        .toEqual(['plan', 'plugin:early', 'transports', 'plugin:late', 'buchungen', 'carbon'])
     })
   })
 

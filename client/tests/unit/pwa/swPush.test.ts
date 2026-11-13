@@ -128,7 +128,7 @@ describe('sw-push.js: push', () => {
   it('FE-SW-PUSH-002: a payload that is not JSON still shows, with its text as the body', async () => {
     const sw = boot();
     await fire(sw.listeners.push, { data: pushData('plain words, no JSON') });
-    expect(sw.registration.showNotification).toHaveBeenCalledWith('TREK', {
+    expect(sw.registration.showNotification).toHaveBeenCalledWith('LightTrip', {
       body: 'plain words, no JSON',
       icon: '/icons/icon-192x192.png',
       data: { url: '/' },
@@ -141,7 +141,7 @@ describe('sw-push.js: push', () => {
     await fire(sw.listeners.push, { data: pushData({ title: 42, body: ['x'], tag: 7 }) });
     await fire(sw.listeners.push, { data: pushData('"just a string"') });
     for (const call of sw.registration.showNotification.mock.calls) {
-      expect(call[0]).toBe('TREK');
+      expect(call[0]).toBe('LightTrip');
       expect(call[1]).toEqual({ body: '', icon: '/icons/icon-192x192.png', data: { url: '/' } });
     }
     expect(sw.registration.showNotification).toHaveBeenCalledTimes(3);
@@ -170,7 +170,7 @@ describe('sw-push.js: notificationclick', () => {
     return { notification, done: fire(sw.listeners.notificationclick, { notification }) };
   }
 
-  it('FE-SW-PUSH-006: closes the notification, focuses a TREK window and takes it there', async () => {
+  it('FE-SW-PUSH-006: closes the notification, focuses a LightTrip window and takes it there', async () => {
     const win = fakeWindow();
     const sw = boot([win]);
     const { notification, done } = click(sw, '/trips/5');

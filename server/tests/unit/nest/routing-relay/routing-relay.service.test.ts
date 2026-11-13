@@ -152,7 +152,7 @@ describe('RoutingRelayService.ask', () => {
     vi.mocked(safeFetchAdminConfigured).mockRejectedValueOnce(new Error('connect ECONNREFUSED'));
     await expect(relay.ask(1, 'route', ROUTE)).rejects.toMatchObject({
       status: 502,
-      message: 'The TREK routing service did not answer',
+      message: 'The LightTrip routing service did not answer',
     });
     vi.setSystemTime(new Date('2026-10-29T10:01:01Z'));
     vi.mocked(safeFetchAdminConfigured).mockResolvedValueOnce(upstream(200, 'x'.repeat(8 * 1024 * 1024 + 1)));
@@ -188,7 +188,7 @@ describe('RoutingRelayService.ask', () => {
     );
     await expect(relay.ask(1, 'route', ROUTE)).rejects.toMatchObject({
       status: 504,
-      message: 'The TREK routing service took too long for this route',
+      message: 'The LightTrip routing service took too long for this route',
     });
     vi.mocked(safeFetchAdminConfigured).mockResolvedValueOnce(upstream(504, '{"error":"gateway timeout"}'));
     expect((await relay.ask(1, 'route', ROUTE)).status).toBe(504);

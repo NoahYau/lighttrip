@@ -307,7 +307,7 @@ describe('CollectionsController', () => {
         ),
       ).toEqual({
         status: 403,
-        body: { error: 'Uploads are disabled in demo mode. Self-host TREK for full functionality.' },
+        body: { error: 'Uploads are disabled in demo mode. Self-host LightTrip for full functionality.' },
       });
     });
     it('400 when no file was uploaded', async () => {
@@ -346,7 +346,7 @@ describe('CollectionsController', () => {
         ),
       ).toEqual({
         status: 403,
-        body: { error: 'Uploads are disabled in demo mode. Self-host TREK for full functionality.' },
+        body: { error: 'Uploads are disabled in demo mode. Self-host LightTrip for full functionality.' },
       });
     });
     it('400 when no file was uploaded', async () => {

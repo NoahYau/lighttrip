@@ -13,10 +13,11 @@
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import en from '@trek/shared/i18n/en'
+import { withBrand } from '../../../i18n/brand'
 import { act, render, screen, within, fireEvent, waitFor } from '../../../../tests/helpers/render'
 
 /** What the dialog actually renders for a key, via the same fallback chain `t()` uses. */
-const t = (key: string): string => (en as unknown as Record<string, string>)[key] ?? key
+const t = (key: string): string => withBrand((en as unknown as Record<string, string>)[key] ?? key)
 
 const providers = vi.fn()
 const listConnections = vi.fn()

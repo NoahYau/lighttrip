@@ -11,6 +11,9 @@ export const PackingListPanel = lazyWithRetry(() => import('../../components/Pac
 export const TodoListPanel = lazyWithRetry(() => import('../../components/Todo/TodoListPanel'))
 export const FileManager = lazyWithRetry(() => import('../../components/Files/FileManager'))
 export const CostsPanel = lazyWithRetry(() => import('../../components/Budget/CostsPanel'))
+// The footprint tab: derived on the server, so its own chunk and nothing in the
+// planner's critical path until someone opens the tab.
+export const CarbonPanel = lazyWithRetry(() => import('../../components/Carbon/CarbonPanel'))
 // Named export, so it needs the extra hop. Importing it statically would keep the
 // whole CostsPanel module in the page chunk and undo the split above.
 export const ExpenseModal = lazyWithRetry(() =>

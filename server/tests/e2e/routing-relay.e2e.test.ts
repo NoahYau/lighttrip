@@ -150,7 +150,7 @@ describe('POST /api/routing/valhalla/:action', () => {
     identity.headersFor.mockReturnValueOnce({ 'User-Agent': 'TREK/5.1.0' });
     const res = await request(app.getHttpServer()).post('/api/routing/valhalla/route').set(as(USER)).send(ROUTE);
     expect(res.status).toBe(503);
-    expect(res.body).toEqual({ error: 'The TREK routing service is not available on this instance' });
+    expect(res.body).toEqual({ error: 'The LightTrip routing service is not available on this instance' });
     expect(safeFetchAdminConfigured).not.toHaveBeenCalled();
   });
 
@@ -169,7 +169,7 @@ describe('POST /api/routing/valhalla/:action', () => {
     const resting = await request(app.getHttpServer()).post('/api/routing/valhalla/route').set(as(USER)).send(ROUTE);
     expect(resting.status).toBe(503);
     expect(Number(resting.headers['retry-after'])).toBeGreaterThan(0);
-    expect(resting.body).toEqual({ error: 'The TREK routing service is resting' });
+    expect(resting.body).toEqual({ error: 'The LightTrip routing service is resting' });
     expect(safeFetchAdminConfigured).toHaveBeenCalledTimes(1);
   });
 });

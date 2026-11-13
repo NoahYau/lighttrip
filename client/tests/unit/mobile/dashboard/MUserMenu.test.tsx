@@ -112,7 +112,7 @@ describe('MUserMenu', () => {
     render(<MUserMenu open onClose={() => {}} />);
 
     expect(screen.getByText('v5.0.0')).toBeInTheDocument();
-    expect(screen.getByAltText('TREK')).toBeInTheDocument();
+    expect(screen.getByAltText('LightTrip')).toBeInTheDocument();
   });
 
   it('FE-MOB-MENU-010: renders no version footer while the version is unknown', () => {
@@ -120,6 +120,6 @@ describe('MUserMenu', () => {
     render(<MUserMenu open onClose={() => {}} />);
 
     expect(screen.queryByText(/^v\d/)).not.toBeInTheDocument();
-    expect(screen.queryByAltText('TREK')).not.toBeInTheDocument();
+    expect(screen.queryByAltText('LightTrip')).not.toBeInTheDocument();
   });
 });

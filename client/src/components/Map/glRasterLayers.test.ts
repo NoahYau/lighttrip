@@ -17,7 +17,7 @@ function fakeMap(styleLayers: Array<{ id: string }> = [{ id: 'water' }, { id: 't
 }
 
 describe('applyBaseLayer (MAP-01)', () => {
-  it('lays OpenHikingMap with its credit under the first thing TREK draws', () => {
+  it('lays OpenHikingMap with its credit under the first thing LightTrip draws', () => {
     const { map, sources } = fakeMap();
     applyBaseLayer(map, 'hiking');
     expect(tourRasterSourceId('hiking')).toBe('trip-hiking');

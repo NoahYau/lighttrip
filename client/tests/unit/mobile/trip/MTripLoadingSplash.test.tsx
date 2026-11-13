@@ -40,6 +40,9 @@ const dots = (container: HTMLElement) =>
 const activeDotIndex = (container: HTMLElement) =>
   dots(container).findIndex(d => d.className.includes('w-5'))
 
+const loader = (container: HTMLElement) =>
+  container.querySelector('img[src="/icons/lighttrip-loading-light.svg"]')
+
 describe('MTripLoadingSplash', () => {
   beforeEach(() => {
     vi.useFakeTimers()
@@ -51,34 +54,31 @@ describe('MTripLoadingSplash', () => {
     window.matchMedia = origMatchMedia
   })
 
-  it('FE-MOB-SPLASH-001: opens on the packing beat with the trip title', () => {
+  it('FE-MOB-SPLASH-001: opens on the packing beat with the trip title and the loading mark', () => {
     const { container } = render(<MTripLoadingSplash title="Japan 2026" />)
 
     expect(screen.getByText('Japan 2026')).toBeInTheDocument()
     expect(screen.getByText('Packing your bags...')).toBeInTheDocument()
-    expect(container.querySelector('.trek--packing')).toBeTruthy()
+    expect(loader(container)).not.toBeNull()
   })
 
-  it('FE-MOB-SPLASH-002: falls back to the TREK wordmark when the trip has no title', () => {
+  it('FE-MOB-SPLASH-002: falls back to the LightTrip wordmark when the trip has no title', () => {
     render(<MTripLoadingSplash title="" />)
 
-    expect(screen.getByText('TREK')).toBeInTheDocument()
+    expect(screen.getByText('LightTrip')).toBeInTheDocument()
   })
 
   it('FE-MOB-SPLASH-003: walks the four beats in order, one every 1400ms', () => {
-    const { container } = render(<MTripLoadingSplash title="Japan 2026" />)
+    render(<MTripLoadingSplash title="Japan 2026" />)
 
     tick(STEP_MS)
     expect(screen.getByText('Hitting the road...')).toBeInTheDocument()
-    expect(container.querySelector('.trek--transport')).toBeTruthy()
 
     tick(STEP_MS)
     expect(screen.getByText('Loading place photos...')).toBeInTheDocument()
-    expect(container.querySelector('.trek--dashboard')).toBeTruthy()
 
     tick(STEP_MS)
     expect(screen.getByText('Almost there...')).toBeInTheDocument()
-    expect(container.querySelector('.trek--collections')).toBeTruthy()
   })
 
   it('FE-MOB-SPLASH-004: wraps back to the first beat after the last one', () => {
@@ -107,11 +107,12 @@ describe('MTripLoadingSplash', () => {
     expect(activeDotIndex(container)).toBe(2)
   })
 
-  it('FE-MOB-SPLASH-007: animates the mascot stage between beats', () => {
+  it('FE-MOB-SPLASH-007: the loading mark stays on screen through the beats', () => {
     const { container } = render(<MTripLoadingSplash title="Japan 2026" />)
 
-    const stage = container.querySelector('.trek--packing')?.parentElement
-    expect(stage).toHaveStyle({ animation: 'm-trek-beat 460ms cubic-bezier(.34,1.56,.64,1) both' })
+    expect(loader(container)).not.toBeNull()
+    tick(STEP_MS * 2)
+    expect(loader(container)).not.toBeNull()
   })
 
   it('FE-MOB-SPLASH-008: reduced motion parks on the photo beat and never advances', () => {
@@ -127,12 +128,12 @@ describe('MTripLoadingSplash', () => {
     expect(activeDotIndex(container)).toBe(2)
   })
 
-  it('FE-MOB-SPLASH-009: reduced motion drops the beat animation', () => {
+  it('FE-MOB-SPLASH-009: reduced motion still shows the loading mark', () => {
     stubReducedMotion(true)
     const { container } = render(<MTripLoadingSplash title="Japan 2026" />)
 
-    const stage = container.querySelector('.trek--dashboard')?.parentElement
-    expect(stage?.getAttribute('style')).toBeNull()
+    expect(loader(container)).not.toBeNull()
+    expect(container.querySelector('.m-trek-beat') ?? null).toBeNull()
   })
 
   it('FE-MOB-SPLASH-011: follows the OS setting while the splash is up', () => {

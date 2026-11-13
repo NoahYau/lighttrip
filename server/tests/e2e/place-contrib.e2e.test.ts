@@ -243,6 +243,6 @@ describe('withdrawing everything', () => {
     fetchMock.mockResolvedValue(new Response(JSON.stringify({ error: 'unavailable' }), { status: 500 }));
     const res = await request(server).post(`${BASE}/withdraw`).set(as(ADMIN)).send({ confirm: true });
     expect(res.status).toBe(502);
-    expect(res.body).toEqual({ error: 'The TREK Places API did not confirm the withdrawal', reason: 'status_500' });
+    expect(res.body).toEqual({ error: 'The LightTrip Places API did not confirm the withdrawal', reason: 'status_500' });
   });
 });

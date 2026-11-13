@@ -18,6 +18,7 @@ export const TRIP_TAB_IDS = [
   'buchungen',
   'listen',
   'finanzplan',
+  'carbon',
   'dateien',
   'collab',
   'journal',
@@ -30,18 +31,24 @@ export type TripTabId = (typeof TRIP_TAB_IDS)[number]
  * the tabs exactly as the planner's own tab bar does. useTripPlanner builds its
  * TRIP_TABS from these too — one source, or the two would drift apart the first
  * time a tab is renamed.
+ *
+ * Each entry holds the key in a `labelKey` property rather than as a bare string:
+ * that is the shape `lint:i18n-keys` reads, and a flat map had left every one of
+ * these keys looking unreferenced — a `Carbon` tab that no scan could see is how
+ * the ratchet was first hit.
  */
-export const TRIP_TAB_LABEL_KEYS: Record<TripTabId, string> = {
-  plan: 'trip.tabs.plan',
-  'tour-planner': 'trip.tabs.tourPlanner',
-  roadtrip: 'roadtrip.title',
-  transports: 'trip.tabs.transports',
-  buchungen: 'trip.tabs.reservations',
-  listen: 'trip.tabs.lists',
-  finanzplan: 'trip.tabs.budget',
-  dateien: 'trip.tabs.files',
-  collab: 'admin.addons.catalog.collab.name',
-  journal: 'trip.tabs.journal',
+export const TRIP_TAB_LABELS: Record<TripTabId, { labelKey: string }> = {
+  plan: { labelKey: 'trip.tabs.plan' },
+  'tour-planner': { labelKey: 'trip.tabs.tourPlanner' },
+  roadtrip: { labelKey: 'roadtrip.title' },
+  transports: { labelKey: 'trip.tabs.transports' },
+  buchungen: { labelKey: 'trip.tabs.reservations' },
+  listen: { labelKey: 'trip.tabs.lists' },
+  finanzplan: { labelKey: 'trip.tabs.budget' },
+  carbon: { labelKey: 'trip.tabs.carbon' },
+  dateien: { labelKey: 'trip.tabs.files' },
+  collab: { labelKey: 'admin.addons.catalog.collab.name' },
+  journal: { labelKey: 'trip.tabs.journal' },
 }
 
 export const isTripTabId = (value: unknown): value is TripTabId =>

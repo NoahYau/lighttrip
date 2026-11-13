@@ -65,7 +65,7 @@ describe('probeServer', () => {
     expect(get).toHaveBeenNthCalledWith(2, 'http://192.168.1.10:3001/api/health/features');
   });
 
-  it('names a TREK server without the native flag as too old', async () => {
+  it('names a LightTrip server without the native flag as too old', async () => {
     const get = vi
       .fn()
       .mockResolvedValue(
@@ -74,7 +74,7 @@ describe('probeServer', () => {
     expect(await probeServer('https://old.example.com', get)).toEqual({ ok: false, reason: 'tooOld' });
   });
 
-  it('tells a server that is not TREK apart from one that is not there', async () => {
+  it('tells a server that is not LightTrip apart from one that is not there', async () => {
     const html = vi
       .fn()
       .mockResolvedValue({ status: 200, data: '<html>', url: 'https://x.example.com/api/health/features' });
@@ -142,7 +142,7 @@ describe('probeServer behind a sign-in proxy', () => {
     expect(get).toHaveBeenCalledWith('https://trek.example.com/');
   });
 
-  it('keeps calling an address that is simply something else not TREK', async () => {
+  it('keeps calling an address that is simply something else not LightTrip', async () => {
     const get = vi
       .fn()
       .mockResolvedValue({ status: 200, url: 'https://x.example.com/api/health/features', data: { hello: 1 } });
@@ -180,7 +180,7 @@ describe('probeServer behind mutual TLS', () => {
     expect((await probeServer('https://trek.example.com', get)).cert?.sent).toBe(true);
   });
 
-  it('connects where the proxy asked and TREK answered, with or without a certificate', async () => {
+  it('connects where the proxy asked and LightTrip answered, with or without a certificate', async () => {
     const trek = { bookingImport: false, nativeApp: true, nativeApi: 2 };
     for (const sent of [true, false]) {
       const get = vi.fn().mockResolvedValue(asked(200, sent, trek));

@@ -192,7 +192,7 @@ describe('PlPlaceSearch', () => {
     const { input } = setup()
     fireEvent.change(input, { target: { value: 'Lou' } })
 
-    expect(await screen.findByText('TREK')).toBeInTheDocument()
+    expect(await screen.findByText('LightTrip')).toBeInTheDocument()
     expect(await screen.findByText('OpenStreetMap')).toBeInTheDocument()
   })
 
@@ -568,7 +568,7 @@ describe('PlPlaceSearch plugin search (#2221)', () => {
     fireEvent.keyDown(input, { key: 'Enter' })
     const pluginRow = (await screen.findByText('Ichiran Ueno')).closest('button')!
     expect(within(pluginRow).getByText('All the Places')).toBeInTheDocument()
-    expect(within(screen.getByText('Ichiran Shibuya').closest('button')!).getByText('TREK')).toBeInTheDocument()
+    expect(within(screen.getByText('Ichiran Shibuya').closest('button')!).getByText('LightTrip')).toBeInTheDocument()
     expect(perKeystroke).not.toHaveBeenCalled()
   })
 })

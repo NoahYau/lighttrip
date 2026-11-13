@@ -70,7 +70,7 @@ describe('isManagedBlocked', () => {
 describe('the shared 403', () => {
   it('MANAGED-007: one body, and it does not name a reason', () => {
     // Pinned because DEMO_MODE grew two texts for one condition (REST says
-    // 'Self-host TREK for full functionality.', MCP says something else) and
+    // 'Self-host LightTrip for full functionality.', MCP says something else) and
     // neither can now be changed without hunting for the other.
     expect(MANAGED_FORBIDDEN_ERROR).toEqual({
       error: 'This is configured by the operator of this instance.',

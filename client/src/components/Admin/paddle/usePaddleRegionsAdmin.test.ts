@@ -260,7 +260,7 @@ describe('usePaddleRegionsAdmin', () => {
 
     await act(() => result.current.add('oberpfalz'));
     expect(repo.add).toHaveBeenCalledWith('oberpfalz');
-    expect(toast.success).toHaveBeenCalledWith('Region added. TREK reads it in the background.');
+    expect(toast.success).toHaveBeenCalledWith('Region added. LightTrip reads it in the background.');
     expect(toast.error).not.toHaveBeenCalled();
     expect(result.current.search).toMatchObject({ query: '', hits: null, searching: false });
     expect(repo.list).toHaveBeenCalledTimes(2);

@@ -1108,7 +1108,7 @@ function PluginDetailSheet({ item, installed, busy, onInstall, onClose, t, local
               {/* The range, not just its lower bound: "TREK 3.2.0+" reads as "and anything
                   newer", which is exactly the claim a `<4.0.0` upper bound denies. */}
               {(item.trek || item.minTrekVersion) && (
-                <Meta k={t('admin.plugins.metaRequires')} v={item.trek ? `TREK ${item.trek}` : `TREK ${item.minTrekVersion}+`} />
+                <Meta k={t('admin.plugins.metaRequires')} v={item.trek ? `LightTrip ${item.trek}` : `LightTrip ${item.minTrekVersion}+`} />
               )}
               {item.reviewedAt && <Meta k={t('admin.plugins.metaReviewed')} v={dateOf(new Date(item.reviewedAt))} />}
               {typeof item.downloadCount === 'number' && item.downloadCount > 0 && (

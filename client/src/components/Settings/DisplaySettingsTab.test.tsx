@@ -413,7 +413,7 @@ describe('DisplaySettingsTab – startup destination', () => {
     const block = optionBlock(/^Start page$/);
 
     expect(within(block).getByText('Dashboard').closest('button')).toHaveAttribute('aria-pressed', 'true');
-    // Nothing to pick a tab for while TREK opens on the dashboard.
+    // Nothing to pick a tab for while LightTrip opens on the dashboard.
     expect(screen.queryByText('Start tab')).not.toBeInTheDocument();
   });
 

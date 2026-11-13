@@ -172,7 +172,7 @@ const COVERAGE: Coverage[] = [
     id: 'PCB-013',
     data: 'limited',
     word: 'Cut short',
-    info: 'TREK shows only part of the objects here; the area holds more. Check the water yourself.',
+    info: 'LightTrip shows only part of the objects here; the area holds more. Check the water yourself.',
   },
   {
     id: 'PCB-014',
@@ -183,7 +183,7 @@ const COVERAGE: Coverage[] = [
 ];
 
 describe('PaddleCheckDataLine', () => {
-  it('PCB-010: covered data shows no coverage badge, the date OSM is current to and when TREK fetched it', async () => {
+  it('PCB-010: covered data shows no coverage badge, the date OSM is current to and when LightTrip fetched it', async () => {
     render(<PaddleCheckDataLine check={paddleBench({ data_as_of: DATA_AS_OF, read_at: READ_AT })} />);
 
     expect(screen.queryByTestId('paddle-check-coverage')).not.toBeInTheDocument();
@@ -401,7 +401,7 @@ describe('ObstacleAccessBadge', () => {
     expect(within(badge).getByText('private').parentElement).toHaveClass('text-warning');
   });
 
-  it('PCB-032: a value TREK has no words for is shown as written, its condition in the tooltip', async () => {
+  it('PCB-032: a value LightTrip has no words for is shown as written, its condition in the tooltip', async () => {
     render(<ObstacleAccessBadge access={{ ...NO_RULE, value: 'permit', source: 'boat', condition: CONDITION }} />);
 
     const badge = screen.getByTestId('paddle-check-access');
