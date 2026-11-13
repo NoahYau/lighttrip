@@ -35,7 +35,15 @@ export default function NearbyPanel({
   const view = nearbyStatusView(status, suggestions.length > 0, t);
 
   return (
-    <div className="flex max-h-[70vh] w-[360px] max-w-[calc(100vw-28px)] flex-col overflow-hidden rounded-2xl border border-edge bg-surface">
+    <div
+      className="flex max-h-[70vh] w-[360px] max-w-[calc(100vw-28px)] flex-col overflow-hidden rounded-2xl"
+      style={{
+        background: 'var(--sidebar-bg)',
+        backdropFilter: 'blur(20px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+        boxShadow: 'var(--sidebar-shadow)',
+      }}
+    >
       <header className="flex items-center gap-2 px-4 pb-2 pt-3">
         <MapPin size={16} className="flex-none text-content-muted" />
         <div className="min-w-0 flex-1">
