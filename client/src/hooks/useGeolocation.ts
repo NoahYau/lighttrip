@@ -64,6 +64,11 @@ export class GeoOnceError extends Error {
 // generous to make the button feel instant when the OS already has a fix.
 const ONCE_OPTIONS: PositionOptions = { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
 
+// Desktop browsers without GPS never deliver a high-accuracy fix — they sit
+// out the whole timeout instead of settling for Wi-Fi/IP. Ask again without
+// the GPS-only constraint before reporting the one-shot fix as unavailable.
+const ONCE_FALLBACK_OPTIONS: PositionOptions = { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 }
+
 export function getCurrentPositionOnce(
   options: PositionOptions = ONCE_OPTIONS,
 ): Promise<GeoPosition> {
@@ -78,21 +83,40 @@ export function getCurrentPositionOnce(
       reject(new GeoOnceError('insecure-context'))
       return
     }
-    navigator.geolocation.getCurrentPosition(
-      (pos) => resolve({
-        lat: pos.coords.latitude,
-        lng: pos.coords.longitude,
-        accuracy: pos.coords.accuracy,
-        heading: pos.coords.heading ?? null,
-        speed: pos.coords.speed ?? null,
-        timestamp: pos.timestamp,
-      }),
-      (err) => reject(new GeoOnceError(
+
+    const toPosition = (pos: GeolocationPosition): GeoPosition => ({
+      lat: pos.coords.latitude,
+      lng: pos.coords.longitude,
+      accuracy: pos.coords.accuracy,
+      heading: pos.coords.heading ?? null,
+      speed: pos.coords.speed ?? null,
+      timestamp: pos.timestamp,
+    })
+
+    const toError = (err: GeolocationPositionError): GeoOnceError =>
+      new GeoOnceError(
         err.code === err.PERMISSION_DENIED ? 'permission-denied'
           : err.code === err.TIMEOUT ? 'timeout'
           : 'unavailable',
         err.message,
-      )),
+      )
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => resolve(toPosition(pos)),
+      (err) => {
+        const error = toError(err)
+        // A coarse fix beats no fix: retry only when the radio could still
+        // come back (timeout or no signal), never on a denied permission.
+        if (error.code !== 'timeout' && error.code !== 'unavailable') {
+          reject(error)
+          return
+        }
+        navigator.geolocation.getCurrentPosition(
+          (pos) => resolve(toPosition(pos)),
+          (retryErr) => reject(toError(retryErr)),
+          ONCE_FALLBACK_OPTIONS,
+        )
+      },
       options,
     )
   })

@@ -1,4 +1,4 @@
-// FE-HOOK-GEO-001 to FE-HOOK-GEO-031
+// FE-HOOK-GEO-001 to FE-HOOK-GEO-033
 import { StrictMode } from 'react';
 import { act, renderHook } from '@testing-library/react';
 import { GeoOnceError, getCurrentPositionOnce, useGeolocation } from './useGeolocation';
@@ -433,5 +433,48 @@ describe('getCurrentPositionOnce', () => {
     const rejection = await getCurrentPositionOnce().catch((e: unknown) => e);
     expect(rejection).toBeInstanceOf(GeoOnceError);
     expect((rejection as GeoOnceError).code).toBe(expected);
+  });
+
+  it('FE-HOOK-GEO-032: retries at low accuracy after a high-accuracy timeout', async () => {
+    const getCurrentPosition = vi.fn()
+      .mockImplementationOnce((_ok: PositionCallback, fail?: PositionErrorCallback) => {
+        fail?.(geoError(3, 'Timeout expired'));
+      })
+      .mockImplementationOnce((ok: PositionCallback) => {
+        ok(fix({ latitude: 40.4, longitude: -3.7, accuracy: 1500 }));
+      });
+    Object.defineProperty(navigator, 'geolocation', {
+      value: { getCurrentPosition },
+      configurable: true,
+    });
+
+    await expect(getCurrentPositionOnce()).resolves.toEqual({
+      lat: 40.4, lng: -3.7, accuracy: 1500, heading: null, speed: null, timestamp: 1_700_000_000_000,
+    });
+
+    expect(getCurrentPosition).toHaveBeenCalledTimes(2);
+    expect(getCurrentPosition.mock.calls[0][2]).toEqual({
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 60000,
+    });
+    expect(getCurrentPosition.mock.calls[1][2]).toEqual({
+      enableHighAccuracy: false,
+      timeout: 10000,
+      maximumAge: 60000,
+    });
+  });
+
+  it('FE-HOOK-GEO-033: does not retry after a permission denial', async () => {
+    const getCurrentPosition = vi.fn((_ok: PositionCallback, fail?: PositionErrorCallback) => {
+      fail?.(geoError(1, 'User denied Geolocation'));
+    });
+    Object.defineProperty(navigator, 'geolocation', {
+      value: { getCurrentPosition },
+      configurable: true,
+    });
+
+    await expect(getCurrentPositionOnce()).rejects.toMatchObject({ code: 'permission-denied' });
+    expect(getCurrentPosition).toHaveBeenCalledTimes(1);
   });
 });
