@@ -1,5 +1,5 @@
 import type { DiscoveryCategory, DiscoverySuggestion } from '@trek/shared';
-import { MapPin } from 'lucide-react';
+import { MapPin, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from '../../i18n';
 import DiscoveryFilterChips from './DiscoveryFilterChips';
@@ -21,9 +21,11 @@ import { useNearbyDiscovery } from './useNearbyDiscovery';
 export default function NearbyPanel({
   tripId,
   getFallbackCenter,
+  onClose,
 }: {
   tripId: number;
   getFallbackCenter?: () => { lat: number; lng: number } | null;
+  onClose: () => void;
 }) {
   const { t, locale } = useTranslation();
   const { status, suggestions, scan } = useNearbyDiscovery(tripId, getFallbackCenter);
@@ -36,10 +38,18 @@ export default function NearbyPanel({
     <div className="flex max-h-[70vh] w-[360px] max-w-[calc(100vw-28px)] flex-col overflow-hidden rounded-2xl border border-edge bg-surface">
       <header className="flex items-center gap-2 px-4 pb-2 pt-3">
         <MapPin size={16} className="flex-none text-content-muted" />
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <h2 className="truncate text-subtitle font-semibold text-content">{t('discovery.title')}</h2>
           <p className="truncate text-caption text-content-muted">{t('discovery.subtitle')}</p>
         </div>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label={t('common.close')}
+          className="flex h-7 w-7 flex-none items-center justify-center rounded-full text-content-muted hover:text-content"
+        >
+          <X size={16} strokeWidth={2} />
+        </button>
       </header>
 
       <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-3">

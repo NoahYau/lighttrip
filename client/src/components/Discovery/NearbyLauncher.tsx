@@ -12,9 +12,12 @@ import NearbyPanel from './NearbyPanel';
 export default function NearbyLauncher({
   tripId,
   getFallbackCenter,
+  insetEnd = 14,
 }: {
   tripId: number;
   getFallbackCenter?: () => { lat: number; lng: number } | null;
+  /** The card's gap from the viewport's inline end, in px (past the right panel). */
+  insetEnd?: number;
 }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -32,10 +35,10 @@ export default function NearbyLauncher({
         createPortal(
           <div
             className="pointer-events-none fixed flex flex-col items-end"
-            style={{ bottom: 18, insetInlineEnd: 14, zIndex: 'var(--z-modal)' }}
+            style={{ bottom: 18, insetInlineEnd: insetEnd, zIndex: 'var(--z-modal)' }}
           >
             <div className="pointer-events-auto">
-              <NearbyPanel tripId={tripId} getFallbackCenter={getFallbackCenter} />
+              <NearbyPanel tripId={tripId} getFallbackCenter={getFallbackCenter} onClose={() => setOpen(false)} />
             </div>
           </div>,
           document.body

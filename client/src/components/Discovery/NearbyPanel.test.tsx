@@ -42,7 +42,7 @@ describe('NearbyPanel', () => {
   it('opens on the idle state and scans when the button is pressed', () => {
     const scan = vi.fn();
     hook.mockReturnValue(state({ scan }));
-    render(<NearbyPanel tripId={7} />);
+    render(<NearbyPanel tripId={7} onClose={vi.fn()} />);
 
     expect(screen.getByText('Nearby')).toBeInTheDocument();
     expect(screen.getByText('See what is around you.')).toBeInTheDocument();
@@ -67,7 +67,7 @@ describe('NearbyPanel', () => {
         ],
       })
     );
-    render(<NearbyPanel tripId={7} />);
+    render(<NearbyPanel tripId={7} onClose={vi.fn()} />);
 
     const list = screen.getByRole('tablist', { name: 'Categories' });
     expect(within(list).getByRole('button', { name: /Culture/ })).toHaveAttribute('aria-pressed', 'false');
@@ -79,7 +79,7 @@ describe('NearbyPanel', () => {
   it('shows the offline message with a retry', () => {
     const scan = vi.fn();
     hook.mockReturnValue(state({ status: 'offline', scan }));
-    render(<NearbyPanel tripId={7} />);
+    render(<NearbyPanel tripId={7} onClose={vi.fn()} />);
 
     expect(screen.getByText('Finding nearby places needs a connection.')).toBeInTheDocument();
     screen.getByRole('button', { name: 'Try again' }).click();
