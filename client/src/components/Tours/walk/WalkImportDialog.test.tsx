@@ -83,7 +83,9 @@ describe('WalkImportDialog (CW-07)', () => {
     expect(rows.map((row) => row.getAttribute('data-unresolved'))).toEqual([null, 'true', null]);
     expect(screen.getByText('1 stop has no position in the link and is left out.')).toBeInTheDocument();
     expect(
-      screen.getByText('LightTrip plans the way between the stops again; the line drawn in Google Maps is not taken over.')
+      screen.getByText(
+        'LightTrip plans the way between the stops again; the line drawn in Google Maps is not taken over.'
+      )
     ).toBeInTheDocument();
     expect(screen.queryByText('A walk needs at least two stops with a position.')).toBeNull();
     expect(screen.queryByText('Loading the walk replaces the unsaved changes in the planner.')).toBeNull();

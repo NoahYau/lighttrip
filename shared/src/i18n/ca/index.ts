@@ -29,6 +29,7 @@ import dawarich from './dawarich';
 import day from './day';
 import dayplan from './dayplan';
 import demo from './demo';
+import discovery from './discovery';
 import docsync from './docsync';
 import ferratas from './ferratas';
 import files from './files';
@@ -152,6 +153,7 @@ const locale = {
   ...mobileCollections,
   ...storage,
   ...dawarich,
+  ...discovery,
   ...docsync,
   ...ferratas,
   ...assistant,

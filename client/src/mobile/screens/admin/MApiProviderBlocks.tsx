@@ -79,7 +79,7 @@ export function MTrekApiBlock() {
 
       <div className="overflow-hidden rounded-[16px] border border-[color:var(--m-act)] bg-[color:var(--m-ic)]">
         <div className="px-[14px] pt-[18px] pb-[13px]">
-          <TrekMark className="h-6 w-auto text-m-ink" aria-label="TREK Places API" />
+          <TrekMark className="h-6 w-auto text-m-ink" aria-label="LightTrip Places API" />
           <p className="mt-[9px] text-[0.8125rem] leading-relaxed text-m-muted">{t('admin.trekApi.tagline')}</p>
           <ul className="mt-3 grid grid-cols-1 gap-[7px]">
             {facts.map(({ Icon, text }) => (

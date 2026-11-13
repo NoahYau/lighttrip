@@ -1,6 +1,6 @@
-import { useTranslation } from '../../i18n/TranslationContext'
-import { MODE_LABELS, kilograms, kilometres, routeLabel, savingPercent, shareOf } from './carbonModel'
-import { useCarbon } from './useCarbon'
+import { useTranslation } from '../../i18n/TranslationContext';
+import { MODE_LABELS, kilograms, kilometres, routeLabel, savingPercent, shareOf } from './carbonModel';
+import { useCarbon } from './useCarbon';
 
 /**
  * The trip's carbon footprint: the estimate, where it comes from, and what the
@@ -10,22 +10,22 @@ import { useCarbon } from './useCarbon'
  * itinerary, and the only interaction is choosing which leg to compare.
  */
 export default function CarbonPanel({ tripId }: { tripId: number }) {
-  const { t, locale } = useTranslation()
-  const { status, footprint, selectedLeg, options, best, selectLeg, retry } = useCarbon(tripId)
+  const { t, locale } = useTranslation();
+  const { status, footprint, selectedLeg, options, best, selectLeg, retry } = useCarbon(tripId);
 
   if (status === 'loading') {
     return (
       <Shell title={t('carbon.title')}>
         <p className="text-body text-content-muted">{t('carbon.loading')}</p>
       </Shell>
-    )
+    );
   }
   if (status === 'offline') {
     return (
       <Shell title={t('carbon.title')}>
         <p className="text-body text-content-secondary">{t('carbon.offline')}</p>
       </Shell>
-    )
+    );
   }
   if (status === 'error' || !footprint) {
     return (
@@ -39,14 +39,14 @@ export default function CarbonPanel({ tripId }: { tripId: number }) {
           {t('carbon.retry')}
         </button>
       </Shell>
-    )
+    );
   }
   if (footprint.legs.length === 0) {
     return (
       <Shell title={t('carbon.title')}>
         <p className="text-body text-content-secondary">{t('carbon.empty')}</p>
       </Shell>
-    )
+    );
   }
 
   return (
@@ -115,7 +115,7 @@ export default function CarbonPanel({ tripId }: { tripId: number }) {
         <h3 className="text-caption uppercase tracking-wide text-content-muted">{t('carbon.legs')}</h3>
         <ul className="flex flex-col gap-1">
           {footprint.legs.map((leg) => {
-            const active = leg.id === selectedLeg?.id
+            const active = leg.id === selectedLeg?.id;
             return (
               <li key={leg.id}>
                 <button
@@ -123,7 +123,9 @@ export default function CarbonPanel({ tripId }: { tripId: number }) {
                   aria-pressed={active}
                   onClick={() => selectLeg(leg.id)}
                   className={`flex w-full items-baseline justify-between gap-3 rounded-xl border px-4 py-2 text-start ${
-                    active ? 'border-accent bg-accent-subtle' : 'border-edge-faint bg-surface-secondary hover:bg-surface-hover'
+                    active
+                      ? 'border-accent bg-accent-subtle'
+                      : 'border-edge-faint bg-surface-secondary hover:bg-surface-hover'
                   }`}
                 >
                   <span className="min-w-0">
@@ -138,7 +140,7 @@ export default function CarbonPanel({ tripId }: { tripId: number }) {
                   </span>
                 </button>
               </li>
-            )
+            );
           })}
         </ul>
       </section>
@@ -165,8 +167,8 @@ export default function CarbonPanel({ tripId }: { tripId: number }) {
             </thead>
             <tbody className="divide-y divide-edge-faint">
               {options.map((option) => {
-                const current = option.mode === selectedLeg?.mode
-                const percent = savingPercent(option)
+                const current = option.mode === selectedLeg?.mode;
+                const percent = savingPercent(option);
                 return (
                   <tr key={option.mode} className={current ? 'bg-accent-subtle' : undefined}>
                     <td className="px-4 py-2 text-body text-content">
@@ -189,14 +191,14 @@ export default function CarbonPanel({ tripId }: { tripId: number }) {
                       {percent == null ? '—' : current ? '—' : `${percent > 0 ? '−' : '+'}${Math.abs(percent)}%`}
                     </td>
                   </tr>
-                )
+                );
               })}
             </tbody>
           </table>
         )}
       </section>
     </div>
-  )
+  );
 }
 
 /** The panel's frame while there is nothing to lay out: the loading, offline and error faces. */
@@ -206,5 +208,5 @@ function Shell({ title, children }: { title: string; children: React.ReactNode }
       <h2 className="text-subtitle font-semibold text-content">{title}</h2>
       {children}
     </div>
-  )
+  );
 }

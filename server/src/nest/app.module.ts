@@ -43,6 +43,7 @@ import { DatabaseLifecycleModule } from './database/database-lifecycle.module';
 import { OrmModule } from './database/orm.module';
 import { DayNotesModule } from './day-notes/day-notes.module';
 import { DaysModule } from './days/days.module';
+import { DiscoveryModule } from './discovery/discovery.module';
 import { DocSyncModule } from './doc-sync/doc-sync.module';
 import { FeedsModule } from './feeds/feeds.module';
 import { FerratasModule } from './ferratas/ferratas.module';
@@ -160,6 +161,7 @@ import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
     TodoModule,
     BudgetModule,
     CarbonModule,
+    DiscoveryModule,
     ReservationsModule,
     DaysModule,
     DayNotesModule,

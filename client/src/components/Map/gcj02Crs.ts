@@ -46,7 +46,7 @@ function buildCrs(): L.CRS {
     },
     bounds: mercator.bounds,
   }
-  return L.Util.extend({}, L.CRS.EPSG3857, { code: 'TREK:GCJ02', projection }) as L.CRS
+  return L.Util.extend({}, L.CRS.EPSG3857, { code: 'LightTrip:GCJ02', projection }) as L.CRS
 }
 
 /**

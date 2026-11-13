@@ -176,7 +176,9 @@ describe('toChatHistory', () => {
       text: '[The user attached the file "trip.pdf" (application/pdf, 2048 bytes).]',
     });
     const note = (history[1] as { text: string }).text;
-    expect(note).toContain('LightTrip read the attached file "trip.pdf" and found 5 booking(s): "LH 716", "Hotel Gion"');
+    expect(note).toContain(
+      'LightTrip read the attached file "trip.pdf" and found 5 booking(s): "LH 716", "Hotel Gion"',
+    );
     expect(note).toContain('"LH 716" was added to the trip as a booking.');
     expect(note).toContain('"Hotel Gion" could not be added.');
     expect(note).toContain('The user discarded "Bus".');
@@ -230,7 +232,9 @@ describe('toChatHistory', () => {
     expect(read('nothing_found')).toContain(
       "found no booking in it: neither TREK's reader nor the AI reader found one.",
     );
-    expect(read('later_reason')).toBe('LightTrip read the attached file "AirBnB Buchung.pdf" and found no booking in it.');
+    expect(read('later_reason')).toBe(
+      'LightTrip read the attached file "AirBnB Buchung.pdf" and found no booking in it.',
+    );
   });
 
   it('ASTHIS-005c: a kept attachment is named with the id the model reads it by', () => {

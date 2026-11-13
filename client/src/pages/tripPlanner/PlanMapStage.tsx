@@ -1,58 +1,129 @@
-import type { Dispatch, ReactElement, SetStateAction } from 'react'
-import { createPortal } from 'react-dom'
-import { MapViewAuto as MapView } from '../../components/Map/MapViewAuto'
-import { MapCompassPill, type CompassMap } from '../../components/Map/MapCompassPill'
-import { TripRouteOverviewPill, TripRouteOverviewPanel } from '../../components/Map/TripRouteOverview'
-import { DawarichTrailPill } from '../../components/Map/DawarichTrailPill'
-import PoiCategoryPill from '../../components/Map/PoiCategoryPill'
-import ActivityCompareLegend from '../../components/Tours/activity/ActivityCompareLegend'
-import { useActivityCompareMap } from '../../components/Tours/activity/useActivityCompareMap'
-import type { Poi } from '../../components/Map/poiCategories'
-import type { Settings } from '../../types'
-import { RoadtripAlternativesBar } from './plannerLazy'
-import { LazyPanel } from './LazyPanel'
-import type { useTripPlanner } from './useTripPlanner'
-import type { useTripPlannerPage } from './useTripPlannerPage'
+import type { Dispatch, ReactElement, SetStateAction } from 'react';
+import { createPortal } from 'react-dom';
+import NearbyLauncher from '../../components/Discovery/NearbyLauncher';
+import ProximityCardHost from '../../components/Discovery/ProximityCardHost';
+import { DawarichTrailPill } from '../../components/Map/DawarichTrailPill';
+import { MapCompassPill, type CompassMap } from '../../components/Map/MapCompassPill';
+import { MapViewAuto as MapView } from '../../components/Map/MapViewAuto';
+import type { Poi } from '../../components/Map/poiCategories';
+import PoiCategoryPill from '../../components/Map/PoiCategoryPill';
+import { TripRouteOverviewPanel, TripRouteOverviewPill } from '../../components/Map/TripRouteOverview';
+import ActivityCompareLegend from '../../components/Tours/activity/ActivityCompareLegend';
+import { useActivityCompareMap } from '../../components/Tours/activity/useActivityCompareMap';
+import type { Settings } from '../../types';
+import { LazyPanel } from './LazyPanel';
+import { RoadtripAlternativesBar } from './plannerLazy';
+import type { useTripPlanner } from './useTripPlanner';
+import type { useTripPlannerPage } from './useTripPlannerPage';
 
-type Planner = ReturnType<typeof useTripPlanner>
-type PageState = ReturnType<typeof useTripPlannerPage>
+type Planner = ReturnType<typeof useTripPlanner>;
+type PageState = ReturnType<typeof useTripPlannerPage>;
 
 // Picked per concern so the key lists stay short and typed by the hook that owns them.
-type StageTrip = Pick<Planner, 'tripId' | 'trip' | 'can' | 'days' | 'places' | 'reservations' | 'isMobile' | 'selectedDayId' | 'selectedPlaceId' | 'selectedPlace' | 'showDayDetail' | 'handleSelectDay'>
-type StageMap = Pick<Planner,
-  | 'mapPlaces' | 'dayPlaces' | 'dayOrderMap' | 'mapTileUrl' | 'fitKey' | 'mapLocked' | 'toggleMapLocked' | 'mapFocusPoints'
-  | 'route' | 'routeWalking' | 'routeSegments' | 'routeVias' | 'transitRoutesShown'
-  | 'handleMarkerClick' | 'handleMapClick' | 'handleMapContextMenu' | 'handlePoiClick'
-  | 'visibleConnections' | 'setMapTransportDetail' | 'openBookingDetail' | 'assistantMap'
->
-type StageRoadtrip = Pick<Planner,
-  | 'roadtripActive' | 'roadtripMapPlaces' | 'roadtripMapLines' | 'roadtripLineColors' | 'roadtripMapVias' | 'roadtripRoutes' | 'roadtripConnections' | 'roadtripVias'
-  | 'dayBoundaryControls' | 'dropPoiOnRoute' | 'addRoadtripVia' | 'moveRoadtripVia' | 'removeRoadtripVia'
->
-type StageAlternatives = Pick<Planner, 'routeAlternatives' | 'alternativeOverlays' | 'highlightedAlternative' | 'chooseRouteAlternative' | 'setHighlightedAlternative'>
-type StageOverlays = Pick<Planner,
-  | 'overviewActive' | 'tripOverview' | 'overviewShown' | 'toggleOverview'
-  | 'dawarichEnabled' | 'dawarichTrail' | 'dawarichHiddenDates' | 'dawarichTrailShown' | 'toggleDawarichTrail'
-  | 'mobileSidebarOpen' | 'showPlaceForm' | 'showMembersModal' | 'showReservationModal'
->
+type StageTrip = Pick<
+  Planner,
+  | 'tripId'
+  | 'trip'
+  | 'can'
+  | 'days'
+  | 'places'
+  | 'reservations'
+  | 'isMobile'
+  | 'selectedDayId'
+  | 'selectedPlaceId'
+  | 'selectedPlace'
+  | 'showDayDetail'
+  | 'handleSelectDay'
+>;
+type StageMap = Pick<
+  Planner,
+  | 'mapPlaces'
+  | 'dayPlaces'
+  | 'dayOrderMap'
+  | 'mapTileUrl'
+  | 'fitKey'
+  | 'mapLocked'
+  | 'toggleMapLocked'
+  | 'mapFocusPoints'
+  | 'route'
+  | 'routeWalking'
+  | 'routeSegments'
+  | 'routeVias'
+  | 'transitRoutesShown'
+  | 'handleMarkerClick'
+  | 'handleMapClick'
+  | 'handleMapContextMenu'
+  | 'handlePoiClick'
+  | 'visibleConnections'
+  | 'setMapTransportDetail'
+  | 'openBookingDetail'
+  | 'assistantMap'
+>;
+type StageRoadtrip = Pick<
+  Planner,
+  | 'roadtripActive'
+  | 'roadtripMapPlaces'
+  | 'roadtripMapLines'
+  | 'roadtripLineColors'
+  | 'roadtripMapVias'
+  | 'roadtripRoutes'
+  | 'roadtripConnections'
+  | 'roadtripVias'
+  | 'dayBoundaryControls'
+  | 'dropPoiOnRoute'
+  | 'addRoadtripVia'
+  | 'moveRoadtripVia'
+  | 'removeRoadtripVia'
+>;
+type StageAlternatives = Pick<
+  Planner,
+  | 'routeAlternatives'
+  | 'alternativeOverlays'
+  | 'highlightedAlternative'
+  | 'chooseRouteAlternative'
+  | 'setHighlightedAlternative'
+>;
+type StageOverlays = Pick<
+  Planner,
+  | 'overviewActive'
+  | 'tripOverview'
+  | 'overviewShown'
+  | 'toggleOverview'
+  | 'dawarichEnabled'
+  | 'dawarichTrail'
+  | 'dawarichHiddenDates'
+  | 'dawarichTrailShown'
+  | 'toggleDawarichTrail'
+  | 'mobileSidebarOpen'
+  | 'showPlaceForm'
+  | 'showMembersModal'
+  | 'showReservationModal'
+>;
 
 /** What the page works out itself: the panel geometry, the compass map and the POI settings. */
 interface StagePageLocals {
-  leftPanelPx: number
-  rightPanelPx: number
-  mapInsetLeft: number
-  mapInsetRight: number
-  glMap: CompassMap | null
-  setGlMap: Dispatch<SetStateAction<CompassMap | null>>
-  poiPillEnabled: boolean
-  mapPois: Poi[]
-  distanceUnit: Settings['distance_unit']
+  leftPanelPx: number;
+  rightPanelPx: number;
+  mapInsetLeft: number;
+  mapInsetRight: number;
+  glMap: CompassMap | null;
+  setGlMap: Dispatch<SetStateAction<CompassMap | null>>;
+  poiPillEnabled: boolean;
+  mapPois: Poi[];
+  distanceUnit: Settings['distance_unit'];
   /** The open place card's measured height, so the selected pin is panned above it. */
-  inspectorHeight?: number
+  inspectorHeight?: number;
 }
 
 export interface PlanMapStageProps
-  extends StageTrip, StageMap, StageRoadtrip, StageAlternatives, StageOverlays, Pick<PageState, 'poi' | 'tourMap'>, StagePageLocals {}
+  extends
+    StageTrip,
+    StageMap,
+    StageRoadtrip,
+    StageAlternatives,
+    StageOverlays,
+    Pick<PageState, 'poi' | 'tourMap'>,
+    StagePageLocals {}
 
 /**
  * The plan tab's map and the controls floating over it. It returns a fragment on
@@ -61,27 +132,92 @@ export interface PlanMapStageProps
  * exactly what they were when this lived in the page.
  */
 export function PlanMapStage({
-  tripId, trip, can, days, places, reservations, isMobile,
-  selectedDayId, selectedPlaceId, selectedPlace, showDayDetail, handleSelectDay,
-  mapPlaces, dayPlaces, dayOrderMap, mapTileUrl, fitKey, mapLocked, toggleMapLocked, mapFocusPoints,
-  route, routeWalking, routeSegments, routeVias, transitRoutesShown,
-  handleMarkerClick, handleMapClick, handleMapContextMenu, handlePoiClick,
-  visibleConnections, setMapTransportDetail, openBookingDetail, assistantMap,
-  roadtripActive, roadtripMapPlaces, roadtripMapLines, roadtripLineColors, roadtripMapVias,
-  roadtripRoutes, roadtripConnections, roadtripVias,
-  dayBoundaryControls, dropPoiOnRoute, addRoadtripVia, moveRoadtripVia, removeRoadtripVia,
-  routeAlternatives, alternativeOverlays, highlightedAlternative, chooseRouteAlternative, setHighlightedAlternative,
-  overviewActive, tripOverview, overviewShown, toggleOverview,
-  dawarichEnabled, dawarichTrail, dawarichHiddenDates, dawarichTrailShown, toggleDawarichTrail,
-  mobileSidebarOpen, showPlaceForm, showMembersModal, showReservationModal,
-  poi, tourMap, leftPanelPx, rightPanelPx, mapInsetLeft, mapInsetRight,
-  glMap, setGlMap, poiPillEnabled, mapPois, distanceUnit, inspectorHeight = 0,
+  tripId,
+  trip,
+  can,
+  days,
+  places,
+  reservations,
+  isMobile,
+  selectedDayId,
+  selectedPlaceId,
+  selectedPlace,
+  showDayDetail,
+  handleSelectDay,
+  mapPlaces,
+  dayPlaces,
+  dayOrderMap,
+  mapTileUrl,
+  fitKey,
+  mapLocked,
+  toggleMapLocked,
+  mapFocusPoints,
+  route,
+  routeWalking,
+  routeSegments,
+  routeVias,
+  transitRoutesShown,
+  handleMarkerClick,
+  handleMapClick,
+  handleMapContextMenu,
+  handlePoiClick,
+  visibleConnections,
+  setMapTransportDetail,
+  openBookingDetail,
+  assistantMap,
+  roadtripActive,
+  roadtripMapPlaces,
+  roadtripMapLines,
+  roadtripLineColors,
+  roadtripMapVias,
+  roadtripRoutes,
+  roadtripConnections,
+  roadtripVias,
+  dayBoundaryControls,
+  dropPoiOnRoute,
+  addRoadtripVia,
+  moveRoadtripVia,
+  removeRoadtripVia,
+  routeAlternatives,
+  alternativeOverlays,
+  highlightedAlternative,
+  chooseRouteAlternative,
+  setHighlightedAlternative,
+  overviewActive,
+  tripOverview,
+  overviewShown,
+  toggleOverview,
+  dawarichEnabled,
+  dawarichTrail,
+  dawarichHiddenDates,
+  dawarichTrailShown,
+  toggleDawarichTrail,
+  mobileSidebarOpen,
+  showPlaceForm,
+  showMembersModal,
+  showReservationModal,
+  poi,
+  tourMap,
+  leftPanelPx,
+  rightPanelPx,
+  mapInsetLeft,
+  mapInsetRight,
+  glMap,
+  setGlMap,
+  poiPillEnabled,
+  mapPois,
+  distanceUnit,
+  inspectorHeight = 0,
 }: Readonly<PlanMapStageProps>): ReactElement {
   // ACT-02: a tour compared with its actual track lays the track into the day's lines, dotted.
   const compared = useActivityCompareMap({
     enabled: !roadtripActive && !overviewActive && !isMobile,
-    places, mapPlaces, route, routeWalking, selectedPlaceId,
-  })
+    places,
+    mapPlaces,
+    route,
+    routeWalking,
+    selectedPlaceId,
+  });
   return (
     <>
       <MapView
@@ -91,7 +227,9 @@ export function PlanMapStage({
         places={roadtripActive ? roadtripMapPlaces : compared.places}
         dayPlaces={dayPlaces}
         route={roadtripActive ? roadtripMapLines : overviewActive ? tripOverview.lines : compared.route}
-        routeColors={roadtripActive ? roadtripLineColors : overviewActive ? tripOverview.lineColors : compared.routeColors}
+        routeColors={
+          roadtripActive ? roadtripLineColors : overviewActive ? tripOverview.lineColors : compared.routeColors
+        }
         routeWalking={roadtripActive || overviewActive ? undefined : compared.routeWalking}
         followSelection={!mapLocked || isMobile}
         onToggleFollow={isMobile ? undefined : toggleMapLocked}
@@ -103,7 +241,9 @@ export function PlanMapStage({
         // know which automated transports may ride it (#2019).
         days={days}
         selectedDayId={selectedDayId}
-        routeSegments={roadtripActive ? roadtripRoutes.segments : overviewActive ? tripOverview.segments : routeSegments}
+        routeSegments={
+          roadtripActive ? roadtripRoutes.segments : overviewActive ? tripOverview.segments : routeSegments
+        }
         selectedPlaceId={selectedPlaceId}
         selectedPlace={selectedPlace}
         onMarkerClick={handleMarkerClick}
@@ -127,10 +267,10 @@ export function PlanMapStage({
         // The desktop plan shows the booking's detail; the narrow layout keeps the day
         // list's transport view.
         onReservationClick={(rid) => {
-          const r = reservations.find(x => x.id === rid)
-          if (!r) return
-          if (isMobile) setMapTransportDetail(r)
-          else openBookingDetail(r)
+          const r = reservations.find((x) => x.id === rid);
+          if (!r) return;
+          if (isMobile) setMapTransportDetail(r);
+          else openBookingDetail(r);
         }}
         /* In road trip mode the corridor's `visible` (not `search.results`: the map is
            the picture of that very list, and filtering the list while seventy pins stay
@@ -161,7 +301,18 @@ export function PlanMapStage({
       {/* Over the map rather than in a dialog: the answer to "which of these" is the
           roads drawn behind it, so covering them to ask would hide the point. */}
       {routeAlternatives.open && (
-        <div style={{ position: 'absolute', bottom: 18, left: '50%', /* rtl-lint-disable: centred on the map */ transform: 'translateX(-50%)', zIndex: 26, pointerEvents: 'none', display: 'flex', justifyContent: 'center' }}>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 18,
+            left: '50%',
+            /* rtl-lint-disable: centred on the map */ transform: 'translateX(-50%)',
+            zIndex: 26,
+            pointerEvents: 'none',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
           <LazyPanel id="roadtrip-alternatives">
             <RoadtripAlternativesBar
               open={routeAlternatives.open}
@@ -180,10 +331,19 @@ export function PlanMapStage({
           z-index 1000 and would cover this. The right corner is free on both
           renderers: the locate button that lives there is phone-only. */}
       {(!roadtripActive || dawarichEnabled) && (
-        <div className="hidden md:flex" style={{
-          position: 'absolute', bottom: 18, right: mapInsetRight + 14, zIndex: 26, // rtl-lint-disable: measured from the right panel's inset
-          pointerEvents: 'none', flexDirection: 'column', alignItems: 'flex-end', gap: 8,
-        }}>
+        <div
+          className="hidden md:flex"
+          style={{
+            position: 'absolute',
+            bottom: 18,
+            right: mapInsetRight + 14,
+            zIndex: 26, // rtl-lint-disable: measured from the right panel's inset
+            pointerEvents: 'none',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            gap: 8,
+          }}
+        >
           {compared.legend && <ActivityCompareLegend legend={compared.legend} />}
           {!roadtripActive && overviewActive && (
             <TripRouteOverviewPanel
@@ -193,9 +353,7 @@ export function PlanMapStage({
               onSelectDay={handleSelectDay}
             />
           )}
-          {!roadtripActive && (
-            <TripRouteOverviewPill active={overviewShown} onToggle={toggleOverview} />
-          )}
+          {!roadtripActive && <TripRouteOverviewPill active={overviewShown} onToggle={toggleOverview} />}
           {/* Stays in road-trip mode, unlike the overview: the route that was
               actually driven is the thing you most want beside the planned
               one. It is drawn, never applied. Correcting the plan from the
@@ -207,23 +365,41 @@ export function PlanMapStage({
               onToggle={toggleDawarichTrail}
             />
           )}
+          <NearbyLauncher tripId={tripId} />
+          <ProximityCardHost tripId={tripId} />
         </div>
       )}
 
       {(poiPillEnabled || glMap) && (
-        <div className="hidden md:flex" style={{
-          position: 'absolute', top: 14,
-          // Centred on the corridor the panels leave, not on the viewport: at
-          // 860px the viewport centre sits under the Places panel, where this
-          // cluster covered both collapse tabs and Add Place/Activity (#2247).
-          left: `calc(${mapInsetLeft}px + (100% - ${mapInsetLeft}px - ${mapInsetRight}px) / 2)`, // rtl-lint-disable: centred between the measured panel insets
-          // No wider than that corridor either: once plugins add categories the pill
-          // scrolls inside it instead of running on under a panel.
-          maxWidth: `calc(100% - ${mapInsetLeft}px - ${mapInsetRight}px - 24px)`,
-          transform: 'translateX(-50%)', zIndex: 25, pointerEvents: 'none', alignItems: 'flex-start', gap: 8,
-        }}>
+        <div
+          className="hidden md:flex"
+          style={{
+            position: 'absolute',
+            top: 14,
+            // Centred on the corridor the panels leave, not on the viewport: at
+            // 860px the viewport centre sits under the Places panel, where this
+            // cluster covered both collapse tabs and Add Place/Activity (#2247).
+            left: `calc(${mapInsetLeft}px + (100% - ${mapInsetLeft}px - ${mapInsetRight}px) / 2)`, // rtl-lint-disable: centred between the measured panel insets
+            // No wider than that corridor either: once plugins add categories the pill
+            // scrolls inside it instead of running on under a panel.
+            maxWidth: `calc(100% - ${mapInsetLeft}px - ${mapInsetRight}px - 24px)`,
+            transform: 'translateX(-50%)',
+            zIndex: 25,
+            pointerEvents: 'none',
+            alignItems: 'flex-start',
+            gap: 8,
+          }}
+        >
           {poiPillEnabled && (
-            <PoiCategoryPill categories={poi.categories} active={poi.active} onToggle={poi.toggle} loadingKeys={poi.loadingKeys} errorKeys={poi.errorKeys} moved={poi.moved} onSearchArea={poi.searchArea} />
+            <PoiCategoryPill
+              categories={poi.categories}
+              active={poi.active}
+              onToggle={poi.toggle}
+              loadingKeys={poi.loadingKeys}
+              errorKeys={poi.errorKeys}
+              moved={poi.moved}
+              onSearchArea={poi.searchArea}
+            />
           )}
           {glMap && <MapCompassPill map={glMap} />}
         </div>
@@ -232,19 +408,53 @@ export function PlanMapStage({
       {/* Mobile: the compass/reset-orientation control lives centre-top on its own
           (the desktop cluster above is hidden below md), between the edge Plan/Places tabs. */}
       {glMap && (
-        <div className="flex md:hidden" style={{ position: 'absolute', top: 14, left: '50%', /* rtl-lint-disable: centred on the map */ transform: 'translateX(-50%)', zIndex: 25, pointerEvents: 'none' }}>
+        <div
+          className="flex md:hidden"
+          style={{
+            position: 'absolute',
+            top: 14,
+            left: '50%',
+            /* rtl-lint-disable: centred on the map */ transform: 'translateX(-50%)',
+            zIndex: 25,
+            pointerEvents: 'none',
+          }}
+        >
           <MapCompassPill map={glMap} />
         </div>
       )}
 
       {/* Mobile POI search controls live in a portal like the Plan/Places
           buttons so map touch handlers cannot swallow the tap targets. */}
-      {poiPillEnabled && !mobileSidebarOpen && !showPlaceForm && !showMembersModal && !showReservationModal && createPortal(
-        <div data-testid="mobile-poi-category-pill" className="flex md:hidden" style={{ position: 'fixed', insetInline: 12, bottom: 'calc(var(--bottom-nav-h, 0px) + 12px)', justifyContent: 'center', zIndex: 100, pointerEvents: 'none' }}>
-          <PoiCategoryPill categories={poi.categories} active={poi.active} onToggle={poi.toggle} loadingKeys={poi.loadingKeys} errorKeys={poi.errorKeys} moved={poi.moved} onSearchArea={poi.searchArea} />
-        </div>,
-        document.body
-      )}
+      {poiPillEnabled &&
+        !mobileSidebarOpen &&
+        !showPlaceForm &&
+        !showMembersModal &&
+        !showReservationModal &&
+        createPortal(
+          <div
+            data-testid="mobile-poi-category-pill"
+            className="flex md:hidden"
+            style={{
+              position: 'fixed',
+              insetInline: 12,
+              bottom: 'calc(var(--bottom-nav-h, 0px) + 12px)',
+              justifyContent: 'center',
+              zIndex: 100,
+              pointerEvents: 'none',
+            }}
+          >
+            <PoiCategoryPill
+              categories={poi.categories}
+              active={poi.active}
+              onToggle={poi.toggle}
+              loadingKeys={poi.loadingKeys}
+              errorKeys={poi.errorKeys}
+              moved={poi.moved}
+              onSearchArea={poi.searchArea}
+            />
+          </div>,
+          document.body
+        )}
     </>
-  )
+  );
 }

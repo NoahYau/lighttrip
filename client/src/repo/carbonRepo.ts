@@ -1,6 +1,6 @@
-import type { TripCarbonResponse } from '@trek/shared'
-import { carbonApi } from '../api/carbon'
-import { requireOnline } from './onlineOnly'
+import type { TripCarbonResponse } from '@trek/shared';
+import { carbonApi } from '../api/carbon';
+import { requireOnline } from './onlineOnly';
 
 /**
  * The trip's footprint, online only on purpose: the figure is derived on the
@@ -10,7 +10,7 @@ import { requireOnline } from './onlineOnly'
  */
 export const carbonRepo = {
   async footprint(tripId: number, signal?: AbortSignal): Promise<TripCarbonResponse> {
-    requireOnline()
-    return carbonApi.footprint(tripId, signal)
+    requireOnline();
+    return carbonApi.footprint(tripId, signal);
   },
-}
+};

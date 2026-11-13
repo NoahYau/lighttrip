@@ -151,6 +151,15 @@ export const DEFAULT_ADDONS: AddonRow[] = [
     sort_order: 18,
   },
   {
+    id: 'discovery',
+    name: 'Discovery',
+    description: '“Near me” suggestions and the foreground roaming card that surfaces places worth a short walk',
+    type: 'trip',
+    icon: 'MapPin',
+    enabled: 0,
+    sort_order: 9,
+  },
+  {
     id: 'collections',
     name: 'Collections',
     description:

@@ -1,4 +1,4 @@
-import { LazyPanel } from './LazyPanel'
+import { LazyPanel } from './LazyPanel';
 
 /**
  * The scroll area a panel tab lives in.
@@ -30,5 +30,5 @@ export function TabPage({
     >
       <LazyPanel id={id}>{children}</LazyPanel>
     </div>
-  )
+  );
 }

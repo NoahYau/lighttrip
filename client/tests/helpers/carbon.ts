@@ -1,4 +1,4 @@
-import type { CarbonLeg, TripCarbonResponse } from '@trek/shared'
+import type { CarbonLeg, TripCarbonResponse } from '@trek/shared';
 
 /** A measured day leg; override what a case cares about. */
 export function carbonLeg(over: Partial<CarbonLeg> = {}): CarbonLeg {
@@ -15,12 +15,12 @@ export function carbonLeg(over: Partial<CarbonLeg> = {}): CarbonLeg {
     mode: 'rail',
     grams: 21_000,
     ...over,
-  }
+  };
 }
 
 /** The footprint of a one-leg trip, in the shape the route answers with. */
 export function tripCarbon(over: Partial<TripCarbonResponse> = {}): TripCarbonResponse {
-  const legs = over.legs ?? [carbonLeg()]
+  const legs = over.legs ?? [carbonLeg()];
   return {
     total_grams: 21_000,
     total_km: 600,
@@ -30,5 +30,5 @@ export function tripCarbon(over: Partial<TripCarbonResponse> = {}): TripCarbonRe
     days: [{ day_id: 1, day_number: 1, date: '2026-05-01', title: 'Arrival', legs: 1, km: 600, grams: 21_000 }],
     legs,
     ...over,
-  }
+  };
 }

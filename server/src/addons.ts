@@ -9,6 +9,7 @@ export const ADDON_IDS = {
   JOURNEY: 'journey',
   AIRTRAIL: 'airtrail',
   DAWARICH: 'dawarich',
+  DISCOVERY: 'discovery',
   LLM_PARSING: 'llm_parsing',
   COLLECTIONS: 'collections',
   ROADTRIP: 'roadtrip',

@@ -42,6 +42,7 @@
 - [[Public Share Links|Public-Share-Links]]
 - [[Trip Planner Overview|Trip-Planner-Overview]]
 - [[Places and Search|Places-and-Search]]
+- [[Discover Nearby|Discover-Nearby]]
 - [[Day Plans and Notes|Day-Plans-and-Notes]]
 - [[Map Features|Map-Features]]
 - [[Route Optimization|Route-Optimization]]

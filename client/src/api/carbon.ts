@@ -1,5 +1,5 @@
-import { tripCarbonResponseSchema, type TripCarbonResponse } from '@trek/shared'
-import apiClient from './client'
+import { tripCarbonResponseSchema, type TripCarbonResponse } from '@trek/shared';
+import apiClient from './client';
 
 /**
  * The carbon footprint of a trip, computed by the server from the itinerary on
@@ -11,7 +11,5 @@ import apiClient from './client'
  */
 export const carbonApi = {
   footprint: (tripId: number, signal?: AbortSignal): Promise<TripCarbonResponse> =>
-    apiClient
-      .get(`/trips/${tripId}/carbon`, { signal })
-      .then((r) => tripCarbonResponseSchema.parse(r.data)),
-}
+    apiClient.get(`/trips/${tripId}/carbon`, { signal }).then((r) => tripCarbonResponseSchema.parse(r.data)),
+};
