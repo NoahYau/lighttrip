@@ -169,8 +169,10 @@ export default function MMapArea({ planner, shell }: MMapAreaProps) {
   // The place sheet's search looks where this map looks (#2620).
   const reportViewport = usePlanMapViewport(planner.tripId);
   const poiViewportChange = poi.onViewportChange;
+  const mapCenterRef = useRef<{ lat: number; lng: number } | null>(null);
   const onViewportChange = useCallback(
     (bounds: Parameters<typeof poiViewportChange>[0]) => {
+      mapCenterRef.current = { lat: (bounds.south + bounds.north) / 2, lng: (bounds.west + bounds.east) / 2 };
       poiViewportChange(bounds);
       reportViewport(bounds);
     },
@@ -542,7 +544,7 @@ export default function MMapArea({ planner, shell }: MMapAreaProps) {
           {!planner.roadtripActive && (
             <TripRouteOverviewPill active={planner.overviewShown} onToggle={planner.toggleOverview} />
           )}
-          <MNearbyLauncher tripId={planner.tripId} />
+          <MNearbyLauncher tripId={planner.tripId} getFallbackCenter={() => mapCenterRef.current} />
           <MProximityCardHost tripId={planner.tripId} />
         </div>
       )}

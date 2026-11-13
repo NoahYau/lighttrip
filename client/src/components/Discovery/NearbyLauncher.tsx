@@ -9,7 +9,13 @@ import NearbyPanel from './NearbyPanel';
  * The map's "near me" button and its floating list. A pill like the other map
  * controls; the panel it opens stands bottom-right over the map.
  */
-export default function NearbyLauncher({ tripId }: { tripId: number }) {
+export default function NearbyLauncher({
+  tripId,
+  getFallbackCenter,
+}: {
+  tripId: number;
+  getFallbackCenter?: () => { lat: number; lng: number } | null;
+}) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
@@ -29,7 +35,7 @@ export default function NearbyLauncher({ tripId }: { tripId: number }) {
             style={{ bottom: 18, insetInlineEnd: 14, zIndex: 'var(--z-modal)' }}
           >
             <div className="pointer-events-auto">
-              <NearbyPanel tripId={tripId} />
+              <NearbyPanel tripId={tripId} getFallbackCenter={getFallbackCenter} />
             </div>
           </div>,
           document.body

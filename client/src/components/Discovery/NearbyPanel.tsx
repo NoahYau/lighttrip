@@ -18,9 +18,15 @@ import { useNearbyDiscovery } from './useNearbyDiscovery';
  * floating card over the map, opened by `NearbyLauncher`. Logic lives in the
  * shared `useNearbyDiscovery` hook; this file is only markup.
  */
-export default function NearbyPanel({ tripId }: { tripId: number }) {
+export default function NearbyPanel({
+  tripId,
+  getFallbackCenter,
+}: {
+  tripId: number;
+  getFallbackCenter?: () => { lat: number; lng: number } | null;
+}) {
   const { t, locale } = useTranslation();
-  const { status, suggestions, scan } = useNearbyDiscovery(tripId);
+  const { status, suggestions, scan } = useNearbyDiscovery(tripId, getFallbackCenter);
   const [chip, setChip] = useState<DiscoveryCategory | 'all'>('all');
   const counts = useMemo(() => categoryCounts(suggestions), [suggestions]);
   const visible = useMemo(() => filterByCategory(suggestions, chip), [suggestions, chip]);

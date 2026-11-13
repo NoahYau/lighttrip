@@ -1,4 +1,4 @@
-import type { Dispatch, ReactElement, SetStateAction } from 'react';
+import { useRef, type Dispatch, type ReactElement, type SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
 import NearbyLauncher from '../../components/Discovery/NearbyLauncher';
 import ProximityCardHost from '../../components/Discovery/ProximityCardHost';
@@ -209,6 +209,8 @@ export function PlanMapStage({
   distanceUnit,
   inspectorHeight = 0,
 }: Readonly<PlanMapStageProps>): ReactElement {
+  // The last map viewport centre, as the fallback origin for the "near me" scan.
+  const mapCenterRef = useRef<{ lat: number; lng: number } | null>(null);
   // ACT-02: a tour compared with its actual track lays the track into the day's lines, dotted.
   const compared = useActivityCompareMap({
     enabled: !roadtripActive && !overviewActive && !isMobile,
@@ -292,7 +294,10 @@ export function PlanMapStage({
         onHighlightAlternative={setHighlightedAlternative}
         onMoveVia={can('day_edit', trip) ? moveRoadtripVia : undefined}
         onRemoveVia={can('day_edit', trip) ? removeRoadtripVia : undefined}
-        onViewportChange={tourMap.captureViewport}
+        onViewportChange={(bbox) => {
+          mapCenterRef.current = { lat: (bbox.south + bbox.north) / 2, lng: (bbox.west + bbox.east) / 2 };
+          tourMap.captureViewport(bbox);
+        }}
         onMapReady={setGlMap}
         // The assistant's suggestions, camera and pin marks (useAssistantMapLink).
         {...assistantMap}
@@ -365,7 +370,7 @@ export function PlanMapStage({
               onToggle={toggleDawarichTrail}
             />
           )}
-          <NearbyLauncher tripId={tripId} />
+          <NearbyLauncher tripId={tripId} getFallbackCenter={() => mapCenterRef.current} />
           <ProximityCardHost tripId={tripId} />
         </div>
       )}

@@ -36,8 +36,14 @@ function suggestion(over: Partial<DiscoverySuggestion> = {}): DiscoverySuggestio
   };
 }
 
-function Harness({ tripId }: { tripId: number }) {
-  const { status, suggestions, scan: run, retry } = useNearbyDiscovery(tripId);
+function Harness({
+  tripId,
+  getFallbackCenter,
+}: {
+  tripId: number;
+  getFallbackCenter?: () => { lat: number; lng: number } | null;
+}) {
+  const { status, suggestions, scan: run, retry } = useNearbyDiscovery(tripId, getFallbackCenter);
   return (
     <div>
       <span data-testid="status">{status}</span>
@@ -87,5 +93,28 @@ describe('useNearbyDiscovery', () => {
     render(<Harness tripId={7} />);
     screen.getByRole('button', { name: 'scan' }).click();
     expect(await screen.findByTestId('status')).toHaveTextContent('denied');
+  });
+
+  it('falls back to the map centre when the browser cannot locate the device', async () => {
+    getPos.mockRejectedValue(new GeoOnceError('unavailable'));
+    scan.mockResolvedValue({
+      suggestions: [suggestion()],
+      servedAt: '2026-11-13T14:00:00.000Z',
+      cell: 'c',
+      ttlSeconds: 86400,
+    });
+    const getFallbackCenter = vi.fn(() => ({ lat: 22.5, lng: 114.2 }));
+
+    render(<Harness tripId={7} getFallbackCenter={getFallbackCenter} />);
+    screen.getByRole('button', { name: 'scan' }).click();
+
+    expect(await screen.findByTestId('status')).toHaveTextContent('ready');
+    expect(getFallbackCenter).toHaveBeenCalled();
+    expect(scan).toHaveBeenCalledWith(
+      7,
+      expect.objectContaining({ lat: 22.5, lng: 114.2, mode: 'manual' }),
+      'en',
+      expect.any(AbortSignal)
+    );
   });
 });

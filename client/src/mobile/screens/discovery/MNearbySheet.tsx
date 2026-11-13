@@ -18,6 +18,7 @@ interface MNearbySheetProps {
   open: boolean;
   tripId: number;
   onClose: () => void;
+  getFallbackCenter?: () => { lat: number; lng: number } | null;
 }
 
 /**
@@ -26,9 +27,9 @@ interface MNearbySheetProps {
  * What the two share is the logic — the `useNearbyDiscovery` hook and the
  * `nearbyModel` helpers — which is why both import the same module.
  */
-export default function MNearbySheet({ open, tripId, onClose }: MNearbySheetProps) {
+export default function MNearbySheet({ open, tripId, onClose, getFallbackCenter }: MNearbySheetProps) {
   const { t, locale } = useTranslation();
-  const { status, suggestions, scan } = useNearbyDiscovery(tripId);
+  const { status, suggestions, scan } = useNearbyDiscovery(tripId, getFallbackCenter);
   const [chip, setChip] = useState<DiscoveryCategory | 'all'>('all');
   const counts = useMemo(() => categoryCounts(suggestions), [suggestions]);
   const visible = useMemo(() => filterByCategory(suggestions, chip), [suggestions, chip]);
