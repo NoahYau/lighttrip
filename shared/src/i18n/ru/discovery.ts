@@ -2,10 +2,13 @@ import type { TranslationStrings } from '../types';
 
 const discovery: TranslationStrings = {
   'discovery.title': "Рядом",
+  'discovery.whatsNearby': "Что рядом",
   'discovery.subtitle': "Места, до которых стоит немного пройтись",
   'discovery.idle': "Посмотрите, что вокруг.",
   'discovery.scan': "Осмотреться",
   'discovery.scanAgain': "Осмотреться ещё раз",
+  'discovery.originDevice': 'Рядом со мной',
+  'discovery.originArea': 'Этот район',
   'discovery.loading': "Осматриваемся…",
   'discovery.empty': "Сейчас рядом нет ничего, до чего стоило бы прогуляться.",
   'discovery.noMatches': "Рядом нет ничего из этой категории.",

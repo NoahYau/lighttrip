@@ -784,6 +784,8 @@ const admin: TranslationStrings = {
   'admin.addons.subOptionsOn.many': 'المُفعّل: {count}',
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle': 'يمكن للمستخدمين ربط خادم wanderer الخاص بهم واستيراد دروبه كجولات',
+  'admin.discoveryMapArea.title': 'البحث عن القريب حول الخريطة',
+  'admin.discoveryMapArea.subtitle': 'اعثر على أماكن قريبة من المنطقة التي حرّكت الخريطة إليها، وليس فقط حيث تقف.',
   'admin.toursHikingMap.title': 'خريطة المشي (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'يعرض OpenHikingMap كخريطة أساسية في مخطط الجولات. مجاني للتثبيتات غير التجارية حتى 500,000 مربع شهريًا؛ أما التثبيت التجاري أو الأكبر فيحتاج أولًا إلى اتفاق مع openmaps.fr',

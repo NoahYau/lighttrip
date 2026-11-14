@@ -19,7 +19,7 @@ import { corePoiCategories, pluginPoiCategories } from '../../../../src/componen
 import { OFM_DARK } from '../../../../src/constants/mapDefaults'
 import { setSizeClass } from '../../../helpers/sizeClass'
 
-// FE-MOB-MAPAREA-001 to FE-MOB-MAPAREA-052
+// FE-MOB-MAPAREA-001 to FE-MOB-MAPAREA-053
 //
 // The stage's pins come out of the trip store rather than the planner's map list, so the
 // stage fixtures seed the store and leave `mapPlaces` to stand for what the plan tab shows.
@@ -690,6 +690,26 @@ describe('MMapArea', () => {
       expect(compassBand(container)).not.toBeNull()
       unmount()
     }
+  })
+
+  it('FE-MOB-MAPAREA-053: the nearby capsule is bottom-centred above the dock, not stacked in the overview column', () => {
+    renderArea()
+    const band = screen.getByTestId('mnearby-launcher-band')
+
+    // Centred across the map on its own band, a class-based bottom so the compass
+    // stays the one element setting --bottom-nav-h inline (FE-MOB-MAPAREA-027).
+    expect(band.className).toContain('justify-center')
+    expect(band.className).toContain('start-0')
+    expect(band.className).toContain('end-0')
+    expect(band.className).toContain('bottom-[calc(var(--bottom-nav-h,84px)+12px)]')
+    expect(band.getAttribute('style')).toBeNull()
+
+    // The real capsule, with its visible label, standing in that band rather than
+    // in the right-hand column the overview pill and the locate button share.
+    const capsule = screen.getByTestId('mnearby-launcher')
+    expect(band).toContainElement(capsule)
+    expect(screen.getByRole('button', { name: "What's Nearby" })).toHaveTextContent("What's Nearby")
+    expect(screen.queryByTestId('mnearby-sheet')).toBeNull()
   })
 
   it('FE-MOB-MAPAREA-033: a point the planner hands back once offers or roads close does not take the camera again', () => {

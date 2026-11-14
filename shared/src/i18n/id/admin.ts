@@ -779,6 +779,9 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'Pengguna dapat menghubungkan instans wanderer milik sendiri dan mengimpor jalurnya sebagai tur',
+  'admin.discoveryMapArea.title': 'Cari di sekitar peta',
+  'admin.discoveryMapArea.subtitle':
+    'Temukan tempat di sekitar area yang digeser pada peta, bukan hanya tempat perangkat berada.',
   'admin.toursHikingMap.title': 'Peta pendakian (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'Menawarkan OpenHikingMap sebagai peta dasar di perencana tur. Gratis untuk instalasi nonkomersial hingga 500.000 ubin per bulan; instalasi komersial atau yang lebih besar perlu perjanjian dengan openmaps.fr terlebih dahulu',

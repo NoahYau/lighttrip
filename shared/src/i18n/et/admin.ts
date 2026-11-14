@@ -798,6 +798,9 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'Kasutajad saavad ühendada oma wanderer-serveri ja importida selle matkarajad retkedena',
+  'admin.discoveryMapArea.title': 'Otsi lähedalt kaardil',
+  'admin.discoveryMapArea.subtitle':
+    'Leia kohti kaardi selle piirkonna ümbrusest, kuhu on liigutud, mitte ainult sealt, kus seade on.',
   'admin.toursHikingMap.title': 'Matkakaart (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'Pakub OpenHikingMapi matkaplaneerija aluskaardina. Mitteäriliste paigalduste jaoks tasuta kuni 500 000 paani kuus; äriline või suurem paigaldus vajab enne kokkulepet openmaps.fr-iga',

@@ -801,6 +801,9 @@ const admin: TranslationStrings = {
   'admin.addons.subOptionsOn.one': '{count} aktiv',
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle': 'Användare kan ansluta sin egen wanderer-instans och importera dess leder som turer',
+  'admin.discoveryMapArea.title': 'Sök i närheten runt kartan',
+  'admin.discoveryMapArea.subtitle':
+    'Hitta platser i närheten av området kartan har flyttats till, inte bara där enheten är.',
   'admin.toursHikingMap.title': 'Vandringskarta (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'Erbjuder OpenHikingMap som baskarta i turplaneraren. Gratis för icke-kommersiella installationer upp till 500 000 rutor i månaden; en kommersiell eller större installation behöver först ett avtal med openmaps.fr',

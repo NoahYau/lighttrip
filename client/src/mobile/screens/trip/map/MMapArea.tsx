@@ -524,6 +524,19 @@ export default function MMapArea({ planner, shell }: MMapAreaProps) {
           {!planner.roadtripActive && (
             <TripRouteOverviewPill active={planner.overviewShown} onToggle={planner.toggleOverview} />
           )}
+        </div>
+      )}
+
+      {/* Bottom-CENTRE, above the dock: the "what's nearby" capsule. It opens the sheet
+          that covers the lower half of the screen, so it stands where the thumb lands
+          and where that sheet will rise from, not stacked in the overview column. The
+          bottom is a class rather than an inline offset so the compass band stays the one
+          element naming --bottom-nav-h inline (FE-MOB-MAPAREA-015/027/030). */}
+      {mapActive && !onStage && (
+        <div
+          data-testid="mnearby-launcher-band"
+          className="pointer-events-none absolute start-0 end-0 z-[25] flex justify-center bottom-[calc(var(--bottom-nav-h,84px)+12px)]"
+        >
           <MNearbyLauncher tripId={planner.tripId} getFallbackCenter={() => mapCenterRef.current} />
         </div>
       )}

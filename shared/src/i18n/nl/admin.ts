@@ -734,6 +734,9 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'Gebruikers kunnen hun eigen wanderer-instantie koppelen en de wandelroutes daarvan als tochten importeren',
+  'admin.discoveryMapArea.title': 'In de buurt zoeken rond de kaart',
+  'admin.discoveryMapArea.subtitle':
+    'Vind plaatsen in de buurt van het gebied waar de kaart naartoe is geschoven, niet alleen waar het apparaat is.',
   'admin.toursHikingMap.title': 'Wandelkaart (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'Biedt OpenHikingMap aan als basiskaart in de tochtplanner. Gratis voor niet-commerciële installaties tot 500.000 tegels per maand; een commerciële of grotere installatie heeft eerst een afspraak met openmaps.fr nodig',

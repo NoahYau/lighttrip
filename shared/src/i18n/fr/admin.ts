@@ -742,6 +742,9 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'Les utilisateurs peuvent connecter leur propre instance wanderer et importer ses sentiers comme sorties',
+  'admin.discoveryMapArea.title': 'Rechercher à proximité autour de la carte',
+  'admin.discoveryMapArea.subtitle':
+    "Trouver des lieux à proximité de la zone vers laquelle la carte a été déplacée, pas seulement là où se trouve l'appareil.",
   'admin.toursHikingMap.title': 'Carte de randonnée (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     "Propose OpenHikingMap comme fond de carte dans le planificateur d'itinéraires. Gratuit pour les installations non commerciales jusqu'à 500 000 tuiles par mois ; une installation commerciale ou plus importante nécessite d'abord un accord avec openmaps.fr",

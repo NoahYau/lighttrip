@@ -118,6 +118,23 @@ describe('Discovery scan e2e (real addon + auth + trip-access guards)', () => {
     expect(nearbyPlaces).toHaveBeenCalledWith(ownerId, 22.3027, 114.1772, { radius: 250, limit: 20, lang: undefined });
   });
 
+  it('passes an explicit radius through to the provider', async () => {
+    const res = await request(server)
+      .post(`/api/trips/${tripId}/discovery/scan`)
+      .send({ ...SCAN, radius: 1000 })
+      .set('Cookie', sessionCookie(ownerId));
+    expect(res.status).toBe(200);
+    expect(nearbyPlaces).toHaveBeenCalledWith(ownerId, 22.3027, 114.1772, { radius: 1000, limit: 20, lang: undefined });
+  });
+
+  it('refuses a radius outside the contract bounds', async () => {
+    const res = await request(server)
+      .post(`/api/trips/${tripId}/discovery/scan`)
+      .send({ ...SCAN, radius: 49 })
+      .set('Cookie', sessionCookie(ownerId));
+    expect(res.status).toBe(400);
+  });
+
   it('refuses a malformed body', async () => {
     const res = await request(server)
       .post(`/api/trips/${tripId}/discovery/scan`)

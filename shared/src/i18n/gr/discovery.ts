@@ -2,10 +2,13 @@ import type { TranslationStrings } from '../types';
 
 const discovery: TranslationStrings = {
   'discovery.title': "Κοντά σας",
+  'discovery.whatsNearby': "Τι υπάρχει κοντά",
   'discovery.subtitle': "Μέρη που αξίζουν μια σύντομη βόλτα από εδώ",
   'discovery.idle': "Δείτε τι υπάρχει γύρω σας.",
   'discovery.scan': "Ρίξτε μια ματιά γύρω",
   'discovery.scanAgain': "Ρίξτε ξανά μια ματιά γύρω",
+  'discovery.originDevice': 'Κοντά μου',
+  'discovery.originArea': 'Αυτή η περιοχή',
   'discovery.loading': "Αναζήτηση γύρω…",
   'discovery.empty': "Δεν υπάρχει κάτι που να αξίζει μια σύντομη βόλτα εδώ αυτή τη στιγμή.",
   'discovery.noMatches': "Τίποτα από αυτή την κατηγορία κοντά.",

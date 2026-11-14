@@ -741,6 +741,9 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'A felhasználók csatlakoztathatják saját wanderer-példányukat, és túraként importálhatják annak túraútvonalait',
+  'admin.discoveryMapArea.title': 'Keresés a közelben a térkép körül',
+  'admin.discoveryMapArea.subtitle':
+    'Közeli helyek keresése a térkép azon területe körül, ahová elmozdították, nem csak ott, ahol az eszköz van.',
   'admin.toursHikingMap.title': 'Túratérkép (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'Az OpenHikingMapet alaptérképként kínálja a túratervezőben. Nem kereskedelmi telepítéseknek havi 500 000 csempéig ingyenes; kereskedelmi vagy nagyobb telepítéshez előbb megállapodás kell az openmaps.fr-rel',

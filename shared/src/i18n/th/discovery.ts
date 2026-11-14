@@ -2,10 +2,13 @@ import type { TranslationStrings } from '../types';
 
 const discovery: TranslationStrings = {
   'discovery.title': "ใกล้คุณ",
+  'discovery.whatsNearby': "มีอะไรใกล้ ๆ",
   'discovery.subtitle': "สถานที่ที่คุ้มค่ากับการเดินเล่นสั้น ๆ จากที่นี่",
   'discovery.idle': "ดูว่ามีอะไรรอบตัวคุณ",
   'discovery.scan': "มองรอบ ๆ",
   'discovery.scanAgain': "มองรอบ ๆ อีกครั้ง",
+  'discovery.originDevice': 'ใกล้ฉัน',
+  'discovery.originArea': 'บริเวณนี้',
   'discovery.loading': "กำลังมองรอบ ๆ…",
   'discovery.empty': "ตอนนี้ไม่มีอะไรที่คุ้มค่ากับการเดินเล่นสั้น ๆ แถวนี้",
   'discovery.noMatches': "ไม่มีสถานที่ในหมวดหมู่นี้อยู่ใกล้",

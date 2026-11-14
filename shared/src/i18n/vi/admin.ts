@@ -792,6 +792,8 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'Người dùng có thể kết nối máy chủ wanderer riêng và nhập các cung đường của máy chủ đó thành chuyến tham quan',
+  'admin.discoveryMapArea.title': 'Tìm gần đây quanh bản đồ',
+  'admin.discoveryMapArea.subtitle': 'Tìm các địa điểm gần khu vực đã kéo bản đồ tới, không chỉ nơi thiết bị đang ở.',
   'admin.toursHikingMap.title': 'Bản đồ đi bộ đường dài (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'Cung cấp OpenHikingMap làm bản đồ nền trong trình lập kế hoạch chuyến đi. Miễn phí cho các bản cài đặt phi thương mại đến 500.000 ô bản đồ mỗi tháng; bản cài đặt thương mại hoặc lớn hơn cần thỏa thuận với openmaps.fr trước',

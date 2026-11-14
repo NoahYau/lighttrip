@@ -31,8 +31,11 @@ export class DiscoveryService {
   constructor(private readonly maps: MapsService) {}
 
   async scan(userId: number, body: DiscoveryScanRequest, lang?: string): Promise<DiscoveryScanResponse> {
+    // One radius for the whole answer: the provider's circle and the card's
+    // proximity score must agree, so it is resolved once and threaded into both.
+    const radius = body.radius ?? DISCOVERY_SCAN_RADIUS_M;
     const { places } = await this.maps.nearbyPlaces(userId, body.lat, body.lng, {
-      radius: DISCOVERY_SCAN_RADIUS_M,
+      radius,
       limit: DISCOVERY_SCAN_LIMIT,
       lang,
     });
@@ -41,7 +44,7 @@ export class DiscoveryService {
     const ranked = rankCandidates(dedupeCandidates(candidates));
 
     return {
-      suggestions: ranked.map((candidate) => toSuggestion(candidate, DISCOVERY_SCAN_RADIUS_M)),
+      suggestions: ranked.map((candidate) => toSuggestion(candidate, radius)),
       servedAt: new Date().toISOString(),
       cell: body.cell,
       ttlSeconds: DISCOVERY_SCAN_TTL_SECONDS,

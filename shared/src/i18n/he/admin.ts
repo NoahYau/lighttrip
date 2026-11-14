@@ -769,6 +769,8 @@ const admin: TranslationStrings = {
   'admin.addons.subOptionsOn.two': 'שתיים פועלות',
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle': 'משתמשים יכולים לחבר מופע wanderer משלהם ולייבא את השבילים שלו כמסלולים',
+  'admin.discoveryMapArea.title': 'חיפוש בקרבת מקום סביב המפה',
+  'admin.discoveryMapArea.subtitle': 'מציאת מקומות בקרבת האזור שאליו גוללה המפה, ולא רק היכן שהמכשיר נמצא.',
   'admin.toursHikingMap.title': 'מפת הליכה (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'מציע את OpenHikingMap כמפת בסיס במתכנן המסלולים. חינמי להתקנות לא מסחריות עד 500,000 אריחים בחודש; התקנה מסחרית או גדולה יותר צריכה קודם הסכם עם openmaps.fr',

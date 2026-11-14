@@ -362,6 +362,27 @@ export class AdminController {
     return result;
   }
 
+  // Discovery's instance switch: whether a nearby scan may cover the map area a traveller
+  // has panned to, not only where the device is standing. Off until an admin turns it on.
+  @Get('discovery-map-area')
+  @ResponseContract(adminFeatureToggleResponseSchema)
+  getDiscoveryMapArea() {
+    return this.addons.getDiscoveryMapArea();
+  }
+
+  @Put('discovery-map-area')
+  @ResponseContract(adminFeatureToggleResponseSchema)
+  async updateDiscoveryMapArea(@CurrentUser() user: User, @Body() body: AdminFeatureToggleDto, @Req() req: Request) {
+    const result = await this.addons.updateDiscoveryMapArea(body.enabled);
+    await this.audit.writeAudit({
+      userId: user.id,
+      action: 'admin.discovery_map_area',
+      ip: getClientIp(req),
+      details: { enabled: result.enabled },
+    });
+    return result;
+  }
+
   @Get('places-photos')
   getPlacesPhotos() {
     return this.addons.getPlacesPhotos();

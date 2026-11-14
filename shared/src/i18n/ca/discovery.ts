@@ -2,10 +2,13 @@ import type { TranslationStrings } from '../types';
 
 const discovery: TranslationStrings = {
   'discovery.title': "A prop",
+  'discovery.whatsNearby': "Què hi ha a prop",
   'discovery.subtitle': "Llocs que valen una curta passejada des d’aquí",
   'discovery.idle': "Mira què tens al voltant.",
   'discovery.scan': "Mira al voltant",
   'discovery.scanAgain': "Torna a mirar al voltant",
+  'discovery.originDevice': 'A prop meu',
+  'discovery.originArea': 'Aquesta zona',
   'discovery.loading': "Mirant al voltant…",
   'discovery.empty': "Ara mateix no hi ha res que valgui una curta passejada.",
   'discovery.noMatches': "No hi ha res d’aquesta categoria a prop.",

@@ -3,7 +3,7 @@ import { DiscoveryService } from '../../../src/nest/discovery/discovery.service'
 import { MapsService } from '../../../src/nest/maps/maps.service';
 import { Test } from '@nestjs/testing';
 
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 const nearbyPlaces = vi.fn();
 
@@ -26,6 +26,8 @@ const REQUEST = {
 };
 
 describe('DiscoveryService.scan', () => {
+  beforeEach(() => nearbyPlaces.mockReset());
+
   it('dedupes the same place across providers, ranks nearest first, and shapes the answer', async () => {
     nearbyPlaces.mockResolvedValueOnce({
       places: [
@@ -101,6 +103,51 @@ describe('DiscoveryService.scan', () => {
     nearbyPlaces.mockResolvedValueOnce({ places: [], source: 'openstreetmap' });
     const result = await (await service()).scan(1, REQUEST, undefined);
     expect(result.suggestions).toEqual([]);
+  });
+
+  it('threads one explicit radius into the provider circle and into the proximity score', async () => {
+    nearbyPlaces.mockResolvedValueOnce({
+      places: [
+        {
+          osm_id: 'node:10',
+          name: 'Halfway Cafe',
+          category: 'restaurant',
+          lat: 22.3072,
+          lng: 114.1772,
+          distance_m: 500,
+          source: 'openstreetmap',
+        },
+      ],
+      source: 'openstreetmap',
+    });
+
+    const result = await (await service()).scan(1, { ...REQUEST, radius: 1000 }, 'en');
+
+    expect(nearbyPlaces).toHaveBeenCalledWith(1, 22.3027, 114.1772, { radius: 1000, limit: 20, lang: 'en' });
+    expect(result.suggestions[0]).toMatchObject({ name: 'Halfway Cafe', distanceM: 500, score: 0.5 });
+  });
+
+  it('falls back to exactly 250 for the circle and the score when no radius is sent', async () => {
+    nearbyPlaces.mockResolvedValueOnce({
+      places: [
+        {
+          osm_id: 'node:11',
+          name: 'Corner Cafe',
+          category: 'restaurant',
+          lat: 22.3049,
+          lng: 114.1772,
+          distance_m: 250,
+          source: 'openstreetmap',
+        },
+      ],
+      source: 'openstreetmap',
+    });
+
+    const result = await (await service()).scan(1, REQUEST);
+
+    expect(nearbyPlaces).toHaveBeenCalledWith(1, 22.3027, 114.1772, { radius: 250, limit: 20, lang: undefined });
+    // 1 - 250/250: the default circle exactly reaches the place.
+    expect(result.suggestions[0]?.score).toBe(0);
   });
 
   it('drops a record with no name or no coordinates', async () => {

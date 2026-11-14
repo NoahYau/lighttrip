@@ -238,6 +238,7 @@ export * from './oidc/oidc.schema';
 export * from './native-auth/native-auth.schema';
 export * from './oauth/oauth.schema';
 export * from './admin/admin.schema';
+export * from './addons/addons.schema';
 export * from './service-identity/service-identity.schema';
 export * from './routing-relay/routing-relay.schema';
 export * from './routing-relay/valhalla-provider';

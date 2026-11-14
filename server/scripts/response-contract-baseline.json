@@ -1,7 +1,6 @@
 {
   "counts": {
     "src/nest/accommodations/accommodations.controller.ts": 4,
-    "src/nest/addons/addons.controller.ts": 1,
     "src/nest/admin/admin.controller.ts": 44,
     "src/nest/airports/airports.controller.ts": 2,
     "src/nest/assignments/assignments.controller.ts": 13,

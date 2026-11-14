@@ -1,4 +1,9 @@
-import { discoveryScanResponseSchema, type DiscoveryScanRequest, type DiscoveryScanResponse } from '@trek/shared';
+import {
+  discoveryScanResponseSchema,
+  type AdminFeatureToggleResponse,
+  type DiscoveryScanRequest,
+  type DiscoveryScanResponse,
+} from '@trek/shared';
 import apiClient from './client';
 
 /**
@@ -18,4 +23,15 @@ export const discoveryApi = {
     apiClient
       .post(`/trips/${tripId}/discovery/scan`, body, { params: { lang }, signal })
       .then((r) => discoveryScanResponseSchema.parse(r.data)),
+};
+
+/**
+ * The admin's instance-wide switch for searching around the map area (Discovery):
+ * whether a nearby scan may cover the region a traveller has panned to, not only
+ * where the device is standing. Off until an admin turns it on.
+ */
+export const discoveryMapAreaAdminApi = {
+  get: (): Promise<AdminFeatureToggleResponse> => apiClient.get('/admin/discovery-map-area').then((r) => r.data),
+  update: (enabled: boolean): Promise<AdminFeatureToggleResponse> =>
+    apiClient.put('/admin/discovery-map-area', { enabled }).then((r) => r.data),
 };

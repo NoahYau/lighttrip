@@ -1,4 +1,4 @@
-// FE-PAGE-PLANNER-MAPSTAGE-001 to FE-PAGE-PLANNER-MAPSTAGE-011
+// FE-PAGE-PLANNER-MAPSTAGE-001 to FE-PAGE-PLANNER-MAPSTAGE-013
 //
 // The plan tab's map and its floating controls, rendered on their own. The map
 // and the pills are stubs that record their props, so each mode the stage
@@ -235,5 +235,43 @@ describe('PlanMapStage', () => {
     expect(useTourActivityCompareStore.getState().mapAvailable).toBe(true)
     rerender(<PlanMapStage {...stageProps({ ...compared, roadtripActive: true })} />)
     expect(useTourActivityCompareStore.getState().mapAvailable).toBe(false)
+  })
+
+  it('FE-PAGE-PLANNER-MAPSTAGE-012: the nearby capsule sits on the bottom edge, centred in the corridor between the panels', () => {
+    renderStage({ mapInsetLeft: 330, mapInsetRight: 290 })
+    const band = screen.getByTestId('nearby-launcher-band')
+
+    // The desktop band only, as its siblings over the map are. Its display stays on
+    // the classes: an inline `flex` would outrank `hidden` and show it on a phone.
+    expect(band.className).toContain('hidden md:flex')
+    expect(band.style.display).toBe('')
+    expect(band.style.bottom).toBe('18px')
+    // Between the measured panels, not on the window: the capsule and the 360px
+    // panel above it both stay inside that corridor.
+    expect(band.style.insetInlineStart).toBe('330px')
+    expect(band.style.insetInlineEnd).toBe('290px')
+    expect(band.style.justifyContent).toBe('center')
+    expect(band.style.pointerEvents).toBe('none')
+
+    // The real launcher, with its visible label — the panel it opens stays closed.
+    expect(band).toContainElement(screen.getByTestId('nearby-launcher'))
+    expect(screen.getByRole('button', { name: "What's Nearby" })).toBeInTheDocument()
+    expect(screen.queryByTestId('nearby-panel')).toBeNull()
+  })
+
+  it('FE-PAGE-PLANNER-MAPSTAGE-013: the capsule steps aside for the cards that own the bottom centre', () => {
+    const { rerender } = renderStage()
+    expect(screen.getByTestId('nearby-launcher-band')).toBeInTheDocument()
+
+    // The place card, the day detail and the alternatives bar all stand in this
+    // band; stacking the capsule with them would put it under their own controls.
+    for (const cover of [
+      { selectedPlace: place },
+      { showDayDetail: { id: 3 } },
+      { routeAlternatives: { open: { dayId: 3 }, close: vi.fn() } },
+    ]) {
+      rerender(<PlanMapStage {...stageProps(cover)} />)
+      expect(screen.queryByTestId('nearby-launcher-band')).toBeNull()
+    }
   })
 })

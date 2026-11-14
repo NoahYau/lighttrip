@@ -2,6 +2,7 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { adminApi } from '../../../api/client';
+import { discoveryMapAreaAdminApi } from '../../../api/discovery';
 import { cycleMapAdminApi, hikingMapAdminApi, skiRoutingAdminApi } from '../../../api/tourBaseMaps';
 import { wandererAdminApi } from '../../../api/wanderer';
 import { useAddonStore } from '../../../store/addonStore';
@@ -43,6 +44,7 @@ beforeEach(() => {
   vi.spyOn(hikingMapAdminApi, 'get').mockResolvedValue({ enabled: true });
   vi.spyOn(cycleMapAdminApi, 'get').mockResolvedValue({ enabled: true });
   vi.spyOn(skiRoutingAdminApi, 'get').mockResolvedValue({ enabled: true });
+  vi.spyOn(discoveryMapAreaAdminApi, 'get').mockResolvedValue({ enabled: true });
 });
 afterEach(() => vi.restoreAllMocks());
 
@@ -58,6 +60,13 @@ const enabledOf = (addons: Addon[], id: string) => addons.find((a) => a.id === i
 function mapSwitch(manager: ReturnType<typeof useAddonManager>, key: 'hiking' | 'cycle' | 'ski') {
   const found = manager.mapSwitches.find((entry) => entry.key === key);
   if (!found) throw new Error(`no ${key} map switch`);
+  return found;
+}
+
+/** The one switch under the Discovery tile. */
+function discoverySwitch(manager: ReturnType<typeof useAddonManager>) {
+  const found = manager.discoverySwitches[0];
+  if (!found) throw new Error('no discovery map-area switch');
   return found;
 }
 
@@ -169,6 +178,26 @@ describe('useAddonManager', () => {
     const { result } = await loaded();
     await act(() => result.current.toggleToursWanderer());
     expect(result.current.toursWanderer).toBe(false);
+    expect(toast.error).toHaveBeenCalledWith('admin.addons.toast.error');
+  });
+
+  it('FE-HOOK-ADDONMGR-011: the Discovery map-area switch loads, flips, saves and refreshes the store', async () => {
+    const update = vi.spyOn(discoveryMapAreaAdminApi, 'update').mockResolvedValue({ enabled: false });
+    const { result } = await loaded();
+    await waitFor(() => expect(discoverySwitch(result.current).enabled).toBe(true));
+    await act(() => discoverySwitch(result.current).toggle());
+    expect(update).toHaveBeenCalledWith(false);
+    expect(discoverySwitch(result.current).enabled).toBe(false);
+    expect(loadAddons).toHaveBeenCalled();
+    expect(toast.success).toHaveBeenCalledWith('admin.addons.toast.updated');
+  });
+
+  it('FE-HOOK-ADDONMGR-012: a failed map-area save puts the Discovery switch back and says so', async () => {
+    vi.spyOn(discoveryMapAreaAdminApi, 'update').mockRejectedValue(new Error('500'));
+    const { result } = await loaded();
+    await waitFor(() => expect(discoverySwitch(result.current).enabled).toBe(true));
+    await act(() => discoverySwitch(result.current).toggle());
+    expect(discoverySwitch(result.current).enabled).toBe(true);
     expect(toast.error).toHaveBeenCalledWith('admin.addons.toast.error');
   });
 });

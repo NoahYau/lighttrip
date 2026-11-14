@@ -754,6 +754,9 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'Użytkownicy mogą połączyć własną instancję wanderer i importować z niej szlaki jako wycieczki',
+  'admin.discoveryMapArea.title': 'Szukaj w pobliżu na mapie',
+  'admin.discoveryMapArea.subtitle':
+    'Znajdź miejsca w pobliżu obszaru, na który przesunięto mapę, nie tylko tam, gdzie znajduje się urządzenie.',
   'admin.toursHikingMap.title': 'Mapa turystyczna (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'Udostępnia OpenHikingMap jako mapę bazową w planerze tras. Bezpłatnie dla niekomercyjnych instalacji do 500 000 kafelków miesięcznie; instalacja komercyjna lub większa wymaga najpierw porozumienia z openmaps.fr',

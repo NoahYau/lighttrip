@@ -80,7 +80,9 @@ beforeEach(() => {
     // The Tours switches load beside the list; unanswered, each would toast the same error as a failed list.
     http.get('/api/admin/tours-hiking-map', () => HttpResponse.json({ enabled: false })),
     http.get('/api/admin/tours-cycle-map', () => HttpResponse.json({ enabled: false })),
-    http.get('/api/admin/tours-ski-routing', () => HttpResponse.json({ enabled: false }))
+    http.get('/api/admin/tours-ski-routing', () => HttpResponse.json({ enabled: false })),
+    // Discovery's map-area flag, beside the addon list for the same reason.
+    http.get('/api/admin/discovery-map-area', () => HttpResponse.json({ enabled: false }))
   );
 });
 
@@ -750,6 +752,45 @@ describe('AddonManager', () => {
     await user.click(screen.getByRole('button', { name: 'Off' }));
     await user.type(screen.getByRole('searchbox', { name: 'Search addons' }), 'nothing like this');
     expect(screen.getByText('No addon matches the search or the filter.')).toBeInTheDocument();
+  });
+
+  it('FE-ADMIN-ADDON-046: the Discovery tile carries the instance map-area switch once the addon is on', async () => {
+    const user = userEvent.setup();
+    let body: unknown = null;
+    server.use(
+      addonsRoute([
+        buildAddon({ id: 'discovery', name: 'Discovery', description: '“Near me” suggestions', icon: 'MapPin', enabled: true }),
+      ]),
+      http.put('/api/admin/discovery-map-area', async ({ request }) => {
+        body = await request.json();
+        return HttpResponse.json({ enabled: true });
+      }),
+    );
+    render(<><ToastContainer /><AddonManager /></>);
+    await screen.findByText('Discovery');
+
+    // One option under the tile shows at once, without the fold bar.
+    expect(screen.queryByRole('button', { name: /\d+ options?/ })).not.toBeInTheDocument();
+    const toggle = await screen.findByRole('button', { name: 'Search nearby around the map' });
+    expect(isOn(toggle)).toBe(false);
+
+    await user.click(toggle);
+
+    await waitFor(() => expect(body).toEqual({ enabled: true }));
+    await screen.findByText('Addon updated');
+    expect(isOn(screen.getByRole('button', { name: 'Search nearby around the map' }))).toBe(true);
+  });
+
+  it('FE-ADMIN-ADDON-047: the Discovery map-area switch stays hidden while the addon is off', async () => {
+    server.use(
+      addonsRoute([
+        buildAddon({ id: 'discovery', name: 'Discovery', description: '“Near me” suggestions', icon: 'MapPin', enabled: false }),
+      ]),
+    );
+    render(<AddonManager />);
+    await screen.findByText('Discovery');
+
+    expect(screen.queryByRole('button', { name: 'Search nearby around the map' })).not.toBeInTheDocument();
   });
 });
 

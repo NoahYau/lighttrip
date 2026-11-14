@@ -737,6 +737,8 @@ const admin: TranslationStrings = {
   'admin.addons.subOptionsOn': '{count}개 켜짐',
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle': '사용자가 자신의 wanderer 인스턴스를 연결하고 그 트레일을 투어로 가져올 수 있습니다',
+  'admin.discoveryMapArea.title': '지도 기준으로 주변 검색',
+  'admin.discoveryMapArea.subtitle': '기기가 있는 곳뿐 아니라 지도를 옮긴 영역 주변의 장소도 찾아보세요.',
   'admin.toursHikingMap.title': '하이킹 지도 (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     '투어 플래너에서 OpenHikingMap을 기본 지도로 제공합니다. 비상업적 설치는 월 500,000 타일까지 무료이며, 상업적이거나 더 큰 설치는 먼저 openmaps.fr과의 협의가 필요합니다',

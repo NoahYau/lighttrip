@@ -2,10 +2,13 @@ import type { TranslationStrings } from '../types';
 
 const discovery: TranslationStrings = {
   'discovery.title': "בקרבת מקום",
+  'discovery.whatsNearby': "מה יש בסביבה",
   'discovery.subtitle': "מקומות ששווים הליכה קצרה מכאן",
   'discovery.idle': "ראו מה נמצא סביבכם.",
   'discovery.scan': "הציצו סביב",
   'discovery.scanAgain': "הציצו שוב סביב",
+  'discovery.originDevice': 'לידי',
+  'discovery.originArea': 'האזור הזה',
   'discovery.loading': "מחפש סביב…",
   'discovery.empty': "כרגע אין כאן דבר ששווה הליכה קצרה.",
   'discovery.noMatches': "אין דבר מהקטגוריה הזו בקרבת מקום.",

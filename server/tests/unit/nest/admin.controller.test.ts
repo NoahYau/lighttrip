@@ -53,6 +53,9 @@ const addonsStub = () =>
     updateToursCycleMap: vi.fn((enabled: boolean) => ({ enabled })),
     getToursSkiRouting: vi.fn(() => ({ enabled: true })),
     updateToursSkiRouting: vi.fn((enabled: boolean) => ({ enabled })),
+    // Off until an admin turns it on (instance setting), unlike the Tours maps.
+    getDiscoveryMapArea: vi.fn(() => ({ enabled: false })),
+    updateDiscoveryMapArea: vi.fn((enabled: boolean) => ({ enabled })),
     getPlacesPhotos: vi.fn(() => ({ enabled: false })),
     updatePlacesPhotos: vi.fn((enabled: boolean) => ({ enabled })),
     getPlacesAutocomplete: vi.fn(() => ({ enabled: false })),
@@ -502,6 +505,11 @@ describe('AdminController feature toggles', () => {
       [() => c.updateToursHikingMap(user, { enabled: true }, req), 'admin.tours_hiking_map', 'updateToursHikingMap'],
       [() => c.updateToursCycleMap(user, { enabled: true }, req), 'admin.tours_cycle_map', 'updateToursCycleMap'],
       [() => c.updateToursSkiRouting(user, { enabled: true }, req), 'admin.tours_ski_routing', 'updateToursSkiRouting'],
+      [
+        () => c.updateDiscoveryMapArea(user, { enabled: true }, req),
+        'admin.discovery_map_area',
+        'updateDiscoveryMapArea',
+      ],
       [() => c.updatePlacesPhotos(user, { enabled: true }, req), 'admin.places_photos', 'updatePlacesPhotos'],
       [
         () => c.updatePlacesAutocomplete(user, { enabled: true }, req),
@@ -526,6 +534,7 @@ describe('AdminController feature toggles', () => {
     expect(await c.getToursHikingMap()).toEqual({ enabled: true });
     expect(await c.getToursCycleMap()).toEqual({ enabled: true });
     expect(await c.getToursSkiRouting()).toEqual({ enabled: true });
+    expect(await c.getDiscoveryMapArea()).toEqual({ enabled: false });
     expect(await c.getPlacesPhotos()).toEqual({ enabled: false });
     expect(await c.getPlacesAutocomplete()).toEqual({ enabled: false });
     expect(await c.getPlacesDetails()).toEqual({ enabled: false });

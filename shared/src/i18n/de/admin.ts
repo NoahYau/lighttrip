@@ -737,6 +737,9 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'Nutzer können ihre eigene wanderer-Instanz verbinden und deren Trails als Touren importieren',
+  'admin.discoveryMapArea.title': 'Umgebung auf der Karte durchsuchen',
+  'admin.discoveryMapArea.subtitle':
+    'Zeigt Orte in der Nähe des Kartenbereichs an, zu dem verschoben wurde – nicht nur dort, wo das Gerät ist.',
   'admin.toursHikingMap.title': 'Wanderkarte (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'Bietet OpenHikingMap als Grundkarte im Tourplaner an. Kostenlos für nichtkommerzielle Installationen bis 500.000 Kacheln im Monat; eine kommerzielle oder größere Installation braucht vorher eine Vereinbarung mit openmaps.fr',

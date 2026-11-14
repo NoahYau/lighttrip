@@ -2,10 +2,13 @@ import type { TranslationStrings } from '../types';
 
 const discovery: TranslationStrings = {
   'discovery.title': "Di sekitar",
+  'discovery.whatsNearby': "Apa yang ada di sekitar",
   'discovery.subtitle': "Tempat yang layak untuk jalan kaki singkat dari sini",
   'discovery.idle': "Lihat apa yang ada di sekitarmu.",
   'discovery.scan': "Lihat sekitar",
   'discovery.scanAgain': "Lihat sekitar lagi",
+  'discovery.originDevice': 'Dekat saya',
+  'discovery.originArea': 'Area ini',
   'discovery.loading': "Melihat sekitar…",
   'discovery.empty': "Saat ini tidak ada yang layak untuk jalan kaki singkat di sekitar sini.",
   'discovery.noMatches': "Tidak ada yang termasuk kategori ini di sekitar.",

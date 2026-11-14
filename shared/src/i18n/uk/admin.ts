@@ -755,6 +755,9 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'Користувачі можуть підключити власний екземпляр wanderer та імпортувати його маршрути як тури',
+  'admin.discoveryMapArea.title': 'Шукати поблизу на карті',
+  'admin.discoveryMapArea.subtitle':
+    'Знаходити місця поблизу області, на яку перемістили карту, а не лише там, де перебуває пристрій.',
   'admin.toursHikingMap.title': 'Туристична карта (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'Пропонує OpenHikingMap як базову карту в планувальнику маршрутів. Безкоштовно для некомерційних установок до 500 000 тайлів на місяць; комерційній або більшій установці спершу потрібна домовленість з openmaps.fr',

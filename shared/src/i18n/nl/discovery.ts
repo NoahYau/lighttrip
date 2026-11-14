@@ -2,10 +2,13 @@ import type { TranslationStrings } from '../types';
 
 const discovery: TranslationStrings = {
   'discovery.title': "In de buurt",
+  'discovery.whatsNearby': "Wat is er in de buurt",
   'discovery.subtitle': "Plekken die een korte wandeling vanaf hier waard zijn",
   'discovery.idle': "Kijk wat er om je heen is.",
   'discovery.scan': "Rondkijken",
   'discovery.scanAgain': "Nog eens rondkijken",
+  'discovery.originDevice': 'Dicht bij mij',
+  'discovery.originArea': 'Dit gebied',
   'discovery.loading': "Aan het rondkijken…",
   'discovery.empty': "Er is nu niets in de buurt dat een korte wandeling waard is.",
   'discovery.noMatches': "Niets uit deze categorie in de buurt.",

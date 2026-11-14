@@ -2,15 +2,20 @@ import type { DiscoveryCategory, DiscoverySuggestion } from '@trek/shared';
 import { MapPin, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from '../../i18n';
+import { useAddonStore } from '../../store/addonStore';
 import DiscoveryFilterChips from './DiscoveryFilterChips';
 import {
   CATEGORY_LABELS,
   categoryCounts,
+  DEFAULT_SCAN_RADIUS_M,
   distanceLabel,
   filterByCategory,
   nearbyStatusView,
+  showsWalkTime,
   walkTimeLabel,
+  type NearbyOriginMode,
 } from './nearbyModel';
+import NearbyOriginSwitch from './NearbyOriginSwitch';
 import { useNearbyDiscovery } from './useNearbyDiscovery';
 
 /**
@@ -28,11 +33,23 @@ export default function NearbyPanel({
   onClose: () => void;
 }) {
   const { t, locale } = useTranslation();
-  const { status, suggestions, scan } = useNearbyDiscovery(tripId, getFallbackCenter);
+  // The instance's Discovery addon decides whether the card offers the origin
+  // switch; OFF is today's card, controls and all. It defaults to off.
+  const areaEnabled = useAddonStore((s) => s.discoveryMapArea);
+  // The launcher unmounts this card when it closes, so the mode starts on the
+  // device every time the card opens. That is the behaviour we want.
+  const [origin, setOrigin] = useState<NearbyOriginMode>('device');
+  const { status, suggestions, radiusM, scan, rescan } = useNearbyDiscovery(tripId, getFallbackCenter, { origin });
   const [chip, setChip] = useState<DiscoveryCategory | 'all'>('all');
   const counts = useMemo(() => categoryCounts(suggestions), [suggestions]);
   const visible = useMemo(() => filterByCategory(suggestions, chip), [suggestions, chip]);
   const view = nearbyStatusView(status, suggestions.length > 0, t);
+  // A 2–5 km scan is not a short walk, so the row keeps the distance and drops
+  // the chip. The predicate is shared with the phone sheet.
+  const withWalkTime = showsWalkTime(radiusM ?? DEFAULT_SCAN_RADIUS_M);
+  // `rescan` and `scan` are the same action; the fallback keeps the button live
+  // for a view test double written before the field existed.
+  const scanAgain = rescan ?? scan;
 
   return (
     <div
@@ -61,6 +78,8 @@ export default function NearbyPanel({
       </header>
 
       <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-3">
+        {areaEnabled ? <NearbyOriginSwitch variant="desktop" origin={origin} onSelect={setOrigin} t={t} /> : null}
+
         {view.kind === 'empty' ? (
           <Empty text={view.text} action={view.action ?? undefined} onAction={scan} />
         ) : (
@@ -79,10 +98,26 @@ export default function NearbyPanel({
             ) : (
               <ul className="flex flex-col gap-2">
                 {visible.map((suggestion) => (
-                  <SuggestionRow key={suggestion.providerId} suggestion={suggestion} t={t} locale={locale} />
+                  <SuggestionRow
+                    key={suggestion.providerId}
+                    suggestion={suggestion}
+                    t={t}
+                    locale={locale}
+                    withWalkTime={withWalkTime}
+                  />
                 ))}
               </ul>
             )}
+
+            {areaEnabled ? (
+              <button
+                type="button"
+                onClick={scanAgain}
+                className="mt-3 rounded-full border border-edge px-4 py-2 text-body font-semibold text-content"
+              >
+                {t('discovery.scanAgain')}
+              </button>
+            ) : null}
           </>
         )}
       </div>
@@ -94,10 +129,12 @@ function SuggestionRow({
   suggestion,
   t,
   locale,
+  withWalkTime,
 }: {
   suggestion: DiscoverySuggestion;
   t: (key: string, vars?: Record<string, string>) => string;
   locale: string;
+  withWalkTime: boolean;
 }) {
   return (
     <li className="rounded-xl border border-edge px-3 py-2">
@@ -107,7 +144,9 @@ function SuggestionRow({
       </div>
       <div className="mt-0.5 flex flex-wrap items-center gap-2 text-caption text-content-muted">
         <span>{t(CATEGORY_LABELS[suggestion.category].labelKey)}</span>
-        <span>{t('discovery.walkTime', { time: walkTimeLabel(suggestion.walkMinutes, locale) })}</span>
+        {withWalkTime ? (
+          <span>{t('discovery.walkTime', { time: walkTimeLabel(suggestion.walkMinutes, locale) })}</span>
+        ) : null}
       </div>
       {suggestion.reason ? <p className="mt-0.5 text-caption text-content-muted">{suggestion.reason}</p> : null}
     </li>

@@ -76,6 +76,7 @@ export default function AddonManager({ bagTrackingEnabled, onToggleBagTracking, 
     wandererOffered,
     toggleToursWanderer,
     mapSwitches,
+    discoverySwitches,
   } = useAddonManager()
   const [query, setQuery] = useState('')
   const [view, setView] = useState<AddonView>('all')
@@ -153,6 +154,20 @@ export default function AddonManager({ bagTrackingEnabled, onToggleBagTracking, 
           />
         )
       })
+    }
+    // Discovery's instance switches: the feature itself is the tile, and the map
+    // area it may search around is the one thing an admin decides here.
+    if (addon.id === 'discovery' && addon.enabled) {
+      return discoverySwitches.map(({ key, Icon, titleKey, subtitleKey, enabled, toggle }) => (
+        <AddonSubRow
+          key={key}
+          icon={<Icon size={14} />}
+          title={t(titleKey)}
+          description={t(subtitleKey)}
+          enabled={enabled}
+          onToggle={() => void toggle()}
+        />
+      ))
     }
     // An array, not a fragment: the tile counts its rows to fold them behind the
     // "N options" bar the way Collab's and Documents' are.

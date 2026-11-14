@@ -804,6 +804,9 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'Οι χρήστες μπορούν να συνδέσουν τη δική τους εγκατάσταση wanderer και να εισαγάγουν τα μονοπάτια της ως εκδρομές',
+  'admin.discoveryMapArea.title': 'Αναζήτηση κοντινών γύρω από τον χάρτη',
+  'admin.discoveryMapArea.subtitle':
+    'Εύρεση κοντινών μερών γύρω από την περιοχή στην οποία μετακινήθηκε ο χάρτης, όχι μόνο εκεί που βρίσκεται η συσκευή.',
   'admin.toursHikingMap.title': 'Χάρτης πεζοπορίας (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'Προσφέρει το OpenHikingMap ως χάρτη βάσης στον σχεδιαστή διαδρομών. Δωρεάν για μη εμπορικές εγκαταστάσεις έως 500.000 πλακίδια τον μήνα· μια εμπορική ή μεγαλύτερη εγκατάσταση χρειάζεται πρώτα συμφωνία με το openmaps.fr',

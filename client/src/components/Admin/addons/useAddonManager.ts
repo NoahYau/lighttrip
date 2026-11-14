@@ -1,8 +1,9 @@
 import type { AdminFeatureToggleResponse } from '@trek/shared';
-import { Bike, Footprints, MountainSnow } from 'lucide-react';
+import { Bike, Compass, Footprints, MountainSnow } from 'lucide-react';
 import { useEffect, useEffectEvent, useState } from 'react';
 
 import { adminApi } from '../../../api/client';
+import { discoveryMapAreaAdminApi } from '../../../api/discovery';
 import { cycleMapAdminApi, hikingMapAdminApi, skiRoutingAdminApi } from '../../../api/tourBaseMaps';
 import { wandererAdminApi } from '../../../api/wanderer';
 import { useTranslation } from '../../../i18n';
@@ -24,6 +25,61 @@ function loadToursFlag(
     .catch(onError);
 }
 
+/** The addon lists both admin shells group their tiles and provider shelves from. */
+function groupAddons(addons: Addon[], toggle: (addon: Addon) => Promise<void>) {
+  const asOption = (provider: Addon): ProviderOption => ({
+    key: provider.id,
+    label: provider.name,
+    description: provider.description,
+    enabled: provider.enabled,
+    toggle: () => void toggle(provider),
+  });
+
+  return {
+    tripAddons: addons.filter((a) => a.type === 'trip' && !isPhotosAddon(a)),
+    globalAddons: addons.filter((a) => a.type === 'global'),
+    // The AI addons leave the list to sit together on one tile at its head.
+    integrationAddons: addons.filter((a) => a.type === 'integration' && !isAiAddon(a)),
+    aiAddons: aiAddonsOf(addons),
+    providerOptions: addons.filter((a) => a.type === 'photo_provider').map(asOption),
+    // No credential form under these, unlike the photo providers: a document
+    // connection belongs to a trip and is entered there. The admin only decides
+    // whether a provider may be offered at all.
+    documentProviderOptions: addons.filter((a) => a.type === 'document_provider').map(asOption),
+  };
+}
+
+/** Optimistic flip, per-row rollback on failure. Rolling the whole addons snapshot back
+ *  instead would undo a toggle the user hit in parallel. */
+async function toggleAddon(
+  addon: Addon,
+  deps: {
+    setAddons: (update: (prev: Addon[]) => Addon[]) => void;
+    loadAddons: () => Promise<void>;
+    refreshGlobalAddons: () => void;
+    sayError: () => void;
+    sayUpdated: () => void;
+  }
+) {
+  const newEnabled = !addon.enabled;
+  deps.setAddons((prev) => prev.map((a) => (a.id === addon.id ? { ...a, enabled: newEnabled } : a)));
+  try {
+    await adminApi.updateAddon(addon.id, { enabled: newEnabled });
+  } catch {
+    deps.setAddons((prev) => prev.map((a) => (a.id === addon.id ? { ...a, enabled: !newEnabled } : a)));
+    deps.sayError();
+    return;
+  }
+  deps.refreshGlobalAddons();
+  // Journey off disables every photo provider with it, and the response carries
+  // only Journey. Without re-reading, switching Journey back on brings the shelf
+  // up with providers the database has long since turned off.
+  // Same for Documents: switching it off disables every document provider in
+  // the database, and the response carries only the addon itself.
+  if (addon.id === 'journey' || addon.id === 'documents') await deps.loadAddons();
+  deps.sayUpdated();
+}
+
 /**
  * The addon switches behind both admin shells: the addon list loaded on mount, an
  * optimistic toggle with a per row rollback, and the lists each shell groups its tiles
@@ -43,6 +99,9 @@ export function useAddonManager() {
   const [toursHikingMap, setToursHikingMap] = useState(false);
   const [toursCycleMap, setToursCycleMap] = useState(false);
   const [toursSkiRouting, setToursSkiRouting] = useState(false);
+  // The instance-wide switch for Discovery: off, "What's Nearby" answers around
+  // the device; on, it also answers around the map area a traveller panned to.
+  const [discoveryMapArea, setDiscoveryMapArea] = useState(false);
 
   const loadAddons = async () => {
     try {
@@ -60,32 +119,24 @@ export function useAddonManager() {
     loadToursFlag(hikingMapAdminApi, setToursHikingMap, unreadable);
     loadToursFlag(cycleMapAdminApi, setToursCycleMap, unreadable);
     loadToursFlag(skiRoutingAdminApi, setToursSkiRouting, unreadable);
+    loadToursFlag(discoveryMapAreaAdminApi, setDiscoveryMapArea, unreadable);
   });
   useEffect(() => {
     loadOnMount();
   }, []);
 
-  /** Optimistic flip, per-row rollback on failure. Rolling the whole addons
-   *  snapshot back instead would undo a toggle the user hit in parallel. */
-  const handleToggle = async (addon: Addon) => {
-    const newEnabled = !addon.enabled;
-    setAddons((prev) => prev.map((a) => (a.id === addon.id ? { ...a, enabled: newEnabled } : a)));
-    try {
-      await adminApi.updateAddon(addon.id, { enabled: newEnabled });
-    } catch {
-      setAddons((prev) => prev.map((a) => (a.id === addon.id ? { ...a, enabled: !newEnabled } : a)));
-      toast.error(t('admin.addons.toast.error'));
-      return;
-    }
-    refreshGlobalAddons();
-    // Journey off disables every photo provider with it, and the response carries
-    // only Journey. Without re-reading, switching Journey back on brings the shelf
-    // up with providers the database has long since turned off.
-    // Same for Documents: switching it off disables every document provider in
-    // the database, and the response carries only the addon itself.
-    if (addon.id === 'journey' || addon.id === 'documents') await loadAddons();
-    toast.success(t('admin.addons.toast.updated'));
-  };
+  const handleToggle = (addon: Addon) =>
+    toggleAddon(addon, {
+      setAddons,
+      loadAddons,
+      // The shelf refresh is fire-and-forget: `void` here keeps it out of the
+      // promised-return slot `toggleAddon` declares, which expects a void call.
+      refreshGlobalAddons: () => {
+        void refreshGlobalAddons();
+      },
+      sayError: () => toast.error(t('admin.addons.toast.error')),
+      sayUpdated: () => toast.success(t('admin.addons.toast.updated')),
+    });
 
   /** A switch under Tours (wanderer, OpenHikingMap, CyclOSM): flipped at once, put back when the save fails. */
   const flipToursSwitch = async (
@@ -133,25 +184,20 @@ export function useAddonManager() {
       toggle: () => flipToursSwitch(toursSkiRouting, setToursSkiRouting, skiRoutingAdminApi.update),
     },
   ] as const;
+  /** The instance switches that hang off the Discovery tile, the way the maps hang off Tours. */
+  const discoverySwitches = [
+    {
+      key: 'mapArea',
+      Icon: Compass,
+      titleKey: 'admin.discoveryMapArea.title',
+      subtitleKey: 'admin.discoveryMapArea.subtitle',
+      enabled: discoveryMapArea,
+      toggle: () => flipToursSwitch(discoveryMapArea, setDiscoveryMapArea, discoveryMapAreaAdminApi.update),
+    },
+  ] as const;
 
-  const asOption = (provider: Addon): ProviderOption => ({
-    key: provider.id,
-    label: provider.name,
-    description: provider.description,
-    enabled: provider.enabled,
-    toggle: () => handleToggle(provider),
-  });
-
-  const tripAddons = addons.filter((a) => a.type === 'trip' && !isPhotosAddon(a));
-  const globalAddons = addons.filter((a) => a.type === 'global');
-  // The AI addons leave the list to sit together on one tile at its head.
-  const integrationAddons = addons.filter((a) => a.type === 'integration' && !isAiAddon(a));
-  const aiAddons = aiAddonsOf(addons);
-  const providerOptions = addons.filter((a) => a.type === 'photo_provider').map(asOption);
-  // No credential form under these, unlike the photo providers: a document connection
-  // belongs to a trip and is entered there. The admin only decides whether a provider
-  // may be offered at all.
-  const documentProviderOptions = addons.filter((a) => a.type === 'document_provider').map(asOption);
+  const { tripAddons, globalAddons, integrationAddons, aiAddons, providerOptions, documentProviderOptions } =
+    groupAddons(addons, handleToggle);
 
   return {
     addons,
@@ -167,5 +213,6 @@ export function useAddonManager() {
     wandererOffered,
     toggleToursWanderer,
     mapSwitches,
+    discoverySwitches,
   };
 }

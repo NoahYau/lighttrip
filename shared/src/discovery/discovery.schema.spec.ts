@@ -1,5 +1,6 @@
 import {
   discoveryCategorySchema,
+  discoveryNearbyQuerySchema,
   discoveryScanRequestSchema,
   discoveryScanResponseSchema,
   discoverySuggestionSchema,
@@ -47,6 +48,38 @@ describe('discoveryScanRequestSchema', () => {
   it('rejects an unknown mode or a non-datetime timestamp', () => {
     expect(discoveryScanRequestSchema.safeParse({ ...valid, mode: 'auto' }).success).toBe(false);
     expect(discoveryScanRequestSchema.safeParse({ ...valid, at: 'yesterday' }).success).toBe(false);
+  });
+
+  it('treats the radius as optional', () => {
+    const parsed = discoveryScanRequestSchema.safeParse(valid);
+    expect(parsed.success).toBe(true);
+    if (parsed.success) expect(parsed.data.radius).toBeUndefined();
+  });
+
+  it('accepts the radius at both bounds of the contract', () => {
+    expect(discoveryScanRequestSchema.safeParse({ ...valid, radius: 50 }).success).toBe(true);
+    expect(discoveryScanRequestSchema.safeParse({ ...valid, radius: 5000 }).success).toBe(true);
+  });
+
+  it('rejects a radius outside the 50..5000 bounds `/api/maps/nearby` takes', () => {
+    expect(discoveryScanRequestSchema.safeParse({ ...valid, radius: 49 }).success).toBe(false);
+    expect(discoveryScanRequestSchema.safeParse({ ...valid, radius: 5001 }).success).toBe(false);
+  });
+
+  it('rejects a fractional radius, because both bounds are whole metres', () => {
+    expect(discoveryScanRequestSchema.safeParse({ ...valid, radius: 1.5 }).success).toBe(false);
+  });
+});
+
+describe('discoveryNearbyQuerySchema', () => {
+  const valid = { lat: 22.3027, lng: 114.1772 };
+
+  it('carries the same optional radius bounds as the REST request', () => {
+    expect(discoveryNearbyQuerySchema.safeParse(valid).success).toBe(true);
+    expect(discoveryNearbyQuerySchema.safeParse({ ...valid, radius: 5000 }).success).toBe(true);
+    expect(discoveryNearbyQuerySchema.safeParse({ ...valid, radius: 49 }).success).toBe(false);
+    expect(discoveryNearbyQuerySchema.safeParse({ ...valid, radius: 5001 }).success).toBe(false);
+    expect(discoveryNearbyQuerySchema.safeParse({ ...valid, radius: 1.5 }).success).toBe(false);
   });
 });
 

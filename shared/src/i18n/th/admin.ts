@@ -652,6 +652,8 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'ผู้ใช้เชื่อมต่ออินสแตนซ์ wanderer ของตนเองและนำเข้าเส้นทางเดินจากที่นั่นเป็นทัวร์ได้',
+  'admin.discoveryMapArea.title': 'ค้นหาใกล้เคียงรอบแผนที่',
+  'admin.discoveryMapArea.subtitle': 'ค้นหาสถานที่ใกล้เคียงรอบบริเวณที่เลื่อนแผนที่ไป ไม่ใช่แค่ตำแหน่งของอุปกรณ์',
   'admin.toursHikingMap.title': 'แผนที่เดินป่า (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'เสนอ OpenHikingMap เป็นแผนที่ฐานในตัววางแผนทัวร์ ใช้ฟรีสำหรับการติดตั้งที่ไม่ใช่เชิงพาณิชย์ได้ถึง 500,000 ไทล์ต่อเดือน การติดตั้งเชิงพาณิชย์หรือขนาดใหญ่กว่าต้องทำข้อตกลงกับ openmaps.fr ก่อน',

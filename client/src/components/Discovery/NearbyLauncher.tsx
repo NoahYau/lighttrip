@@ -1,21 +1,32 @@
-import { MapPin } from 'lucide-react';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from '../../i18n';
 import { MapTogglePill } from '../Map/MapTogglePill';
+import SafariCompassIcon from '../shared/SafariCompassIcon';
 import NearbyPanel from './NearbyPanel';
 
 /**
- * The map's "near me" button and its floating list. A pill like the other map
- * controls; the panel it opens stands bottom-right over the map.
+ * The panel's bottom edge, in px from the viewport bottom: the capsule's own 18
+ * plus its 42 (a 34px button in the shell's 4px padding) and an 8px gap above it.
+ */
+const PANEL_BOTTOM = 68;
+
+/**
+ * The map's "what's nearby" capsule and its floating list. The capsule is a
+ * bottom-centre map control like the others; the panel it opens stands centred
+ * above it, inside the corridor the side panels leave ("what is around here" is
+ * answered against the map behind it, so it must not sit under a panel).
  */
 export default function NearbyLauncher({
   tripId,
   getFallbackCenter,
-  insetEnd = 14,
+  insetStart = 0,
+  insetEnd = 0,
 }: {
   tripId: number;
   getFallbackCenter?: () => { lat: number; lng: number } | null;
+  /** The card's gap from the viewport's inline start, in px (past the left panel). */
+  insetStart?: number;
   /** The card's gap from the viewport's inline end, in px (past the right panel). */
   insetEnd?: number;
 }) {
@@ -27,15 +38,24 @@ export default function NearbyLauncher({
       <MapTogglePill
         active={open}
         onToggle={() => setOpen((o) => !o)}
-        label={t('discovery.title')}
+        label={t('discovery.whatsNearby')}
+        text={t('discovery.whatsNearby')}
         testId="nearby-launcher"
-        icon={<MapPin size={17} strokeWidth={2} />}
+        icon={<SafariCompassIcon size={17} />}
       />
       {open &&
         createPortal(
           <div
-            className="pointer-events-none fixed flex flex-col items-end"
-            style={{ bottom: 18, insetInlineEnd: insetEnd, zIndex: 'var(--z-modal)' }}
+            style={{
+              position: 'fixed',
+              insetInlineStart: insetStart,
+              insetInlineEnd: insetEnd,
+              bottom: PANEL_BOTTOM,
+              display: 'flex',
+              justifyContent: 'center',
+              pointerEvents: 'none',
+              zIndex: 'var(--z-modal)',
+            }}
           >
             <div className="pointer-events-auto">
               <NearbyPanel tripId={tripId} getFallbackCenter={getFallbackCenter} onClose={() => setOpen(false)} />

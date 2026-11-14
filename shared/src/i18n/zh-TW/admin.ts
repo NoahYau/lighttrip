@@ -709,6 +709,8 @@ const admin: TranslationStrings = {
   'admin.addons.subOptionsOn': '已開啟 {count} 個',
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle': '使用者可以連結自己的 wanderer 執行個體，並將其中的步道匯入為遊程',
+  'admin.discoveryMapArea.title': '圍繞地圖搜尋周邊',
+  'admin.discoveryMapArea.subtitle': '尋找把地圖拖曳到的區域周邊地點，而不只是裝置目前所在的位置。',
   'admin.toursHikingMap.title': '健行地圖 (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     '在路線規劃器中提供 OpenHikingMap 作為底圖。非商業安裝每月 500,000 個圖磚以內免費；商業或更大規模的安裝需要先與 openmaps.fr 達成協議',

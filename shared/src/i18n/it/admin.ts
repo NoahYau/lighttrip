@@ -735,6 +735,9 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'Gli utenti possono collegare la propria istanza wanderer e importarne i sentieri come escursioni',
+  'admin.discoveryMapArea.title': 'Cerca nei dintorni sulla mappa',
+  'admin.discoveryMapArea.subtitle':
+    "Trova luoghi nei dintorni dell'area verso cui è stata spostata la mappa, non solo dove si trova il dispositivo.",
   'admin.toursHikingMap.title': 'Mappa escursionistica (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     "Offre OpenHikingMap come mappa di base nel pianificatore di percorsi. Gratuito per installazioni non commerciali fino a 500.000 tile al mese; un'installazione commerciale o più grande richiede prima un accordo con openmaps.fr",

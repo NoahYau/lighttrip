@@ -195,6 +195,32 @@ describe('Admin e2e (real auth + admin guard + temp SQLite)', () => {
     });
   });
 
+  it('discovery-map-area toggle round-trips through app_settings and is audited', async () => {
+    // Off until an admin turns it on: an install that never touches it reads false.
+    const off = await request(server).get('/api/admin/discovery-map-area').set('Cookie', sessionCookie(1));
+    expect(off.status).toBe(200);
+    expect(off.body).toEqual({ enabled: false });
+
+    const on = await request(server)
+      .put('/api/admin/discovery-map-area')
+      .set('Cookie', sessionCookie(1))
+      .send({ enabled: true });
+    expect(on.status).toBe(200);
+    expect(on.body).toEqual({ enabled: true });
+    expect(await readAppSetting(orm, 'discovery_map_area_enabled')).toBe('true');
+    expect(await findRow(orm, AuditLog, { action: 'admin.discovery_map_area' })).not.toBeNull();
+
+    const stored = await request(server).get('/api/admin/discovery-map-area').set('Cookie', sessionCookie(1));
+    expect(stored.body).toEqual({ enabled: true });
+
+    // A non-boolean is refused by the shared toggle schema, before any write.
+    const bad = await request(server)
+      .put('/api/admin/discovery-map-area')
+      .set('Cookie', sessionCookie(1))
+      .send({ enabled: 'yes' });
+    expect(bad.status).toBe(400);
+  });
+
   it('GET /stats counts real rows', async () => {
     const trip = await makeTrip(orm, 1, { title: 'T' });
     await insertRow(orm, Places, { trip: trip.id, name: 'P' });

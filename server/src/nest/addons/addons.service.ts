@@ -114,6 +114,20 @@ export class AddonsService {
     return this.writeFlag('ski_routing_enabled', enabled);
   }
 
+  /**
+   * Discovery: whether a nearby scan may cover the map area a traveller has panned to,
+   * not only the 250 m around the device. Fail-closed: off until an admin turns it on,
+   * so an install that never touches it behaves exactly as it always has.
+   */
+  async getDiscoveryMapArea() {
+    const value = await readAppSetting(this.appSettings, 'discovery_map_area_enabled');
+    return { enabled: value === 'true' };
+  }
+
+  async updateDiscoveryMapArea(enabled: boolean) {
+    return this.writeFlag('discovery_map_area_enabled', enabled);
+  }
+
   /** The photo providers users can connect: none while the journey addon is off. */
   async enabledPhotoProviderIds(): Promise<string[]> {
     if (!(await this.isAddonEnabled(ADDON_IDS.JOURNEY))) return [];
@@ -212,6 +226,8 @@ export class AddonsService {
       toursWanderer: await this.isWandererAvailable(),
       toursHikingMap: (await this.isAddonEnabled(ADDON_IDS.TOURS)) && (await this.getToursHikingMap()).enabled,
       toursCycleMap: (await this.isAddonEnabled(ADDON_IDS.TOURS)) && (await this.getToursCycleMap()).enabled,
+      // Offered only while Discovery itself is on, like the two Tours maps above.
+      discoveryMapArea: (await this.isAddonEnabled(ADDON_IDS.DISCOVERY)) && (await this.getDiscoveryMapArea()).enabled,
       addons: [
         // The repository row carries every scalar column (description, config,
         // sort_order included); the legacy statement selected only these five,

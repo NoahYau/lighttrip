@@ -4,14 +4,19 @@ import { useMemo, useState } from 'react';
 import DiscoveryFilterChips from '../../../components/Discovery/DiscoveryFilterChips';
 import {
   CATEGORY_LABELS,
+  DEFAULT_SCAN_RADIUS_M,
   categoryCounts,
   distanceLabel,
   filterByCategory,
   nearbyStatusView,
+  showsWalkTime,
   walkTimeLabel,
+  type NearbyOriginMode,
 } from '../../../components/Discovery/nearbyModel';
+import NearbyOriginSwitch from '../../../components/Discovery/NearbyOriginSwitch';
 import { useNearbyDiscovery } from '../../../components/Discovery/useNearbyDiscovery';
 import { useTranslation } from '../../../i18n';
+import { useAddonStore } from '../../../store/addonStore';
 import MSheet from '../../components/MSheet';
 
 interface MNearbySheetProps {
@@ -29,11 +34,25 @@ interface MNearbySheetProps {
  */
 export default function MNearbySheet({ open, tripId, onClose, getFallbackCenter }: MNearbySheetProps) {
   const { t, locale } = useTranslation();
-  const { status, suggestions, scan } = useNearbyDiscovery(tripId, getFallbackCenter);
+  const areaEnabled = useAddonStore((s) => s.discoveryMapArea);
+  const [origin, setOrigin] = useState<NearbyOriginMode>('device');
+  // The sheet is mounted while closed, so it tells the hook both that it is shut
+  // and to answer around the device: a closed sheet never auto-scans.
+  const {
+    status,
+    suggestions,
+    radiusM,
+    scan,
+    rescan = scan,
+  } = useNearbyDiscovery(tripId, getFallbackCenter, {
+    origin: open && areaEnabled ? origin : 'device',
+    enabled: open,
+  });
   const [chip, setChip] = useState<DiscoveryCategory | 'all'>('all');
   const counts = useMemo(() => categoryCounts(suggestions), [suggestions]);
   const visible = useMemo(() => filterByCategory(suggestions, chip), [suggestions, chip]);
   const view = nearbyStatusView(status, suggestions.length > 0, t);
+  const showWalkTime = showsWalkTime(radiusM ?? DEFAULT_SCAN_RADIUS_M);
 
   return (
     <MSheet open={open} onClose={onClose} variant="bottom" ariaLabel={t('discovery.title')}>
@@ -48,6 +67,11 @@ export default function MNearbySheet({ open, tripId, onClose, getFallbackCenter 
       </div>
 
       <div className="m-scroll-fade min-h-0 flex-1 overflow-y-auto px-5 pb-5 pt-3">
+        {/* Above the state branch, like the desktop card: the map area must be
+            pickable before the first scan, or idle/empty states would force a
+            device scan before the switch appears. */}
+        {areaEnabled ? <NearbyOriginSwitch variant="mobile" origin={origin} onSelect={setOrigin} t={t} /> : null}
+
         {view.kind === 'empty' ? (
           <EmptyBlock text={view.text} action={view.action ?? undefined} onAction={scan} />
         ) : (
@@ -66,14 +90,20 @@ export default function MNearbySheet({ open, tripId, onClose, getFallbackCenter 
             ) : (
               <ul className="flex flex-col gap-2">
                 {visible.map((suggestion) => (
-                  <NearbyRow key={suggestion.providerId} suggestion={suggestion} t={t} locale={locale} />
+                  <NearbyRow
+                    key={suggestion.providerId}
+                    suggestion={suggestion}
+                    t={t}
+                    locale={locale}
+                    showWalkTime={showWalkTime}
+                  />
                 ))}
               </ul>
             )}
 
             <button
               type="button"
-              onClick={scan}
+              onClick={rescan}
               className="mt-3 flex h-11 w-full items-center justify-center rounded-full border border-[color:var(--m-rowbr)] bg-[color:var(--m-ic)] font-semibold text-m-ink"
             >
               {t('discovery.scanAgain')}
@@ -89,10 +119,12 @@ function NearbyRow({
   suggestion,
   t,
   locale,
+  showWalkTime,
 }: {
   suggestion: DiscoverySuggestion;
   t: (key: string, vars?: Record<string, string>) => string;
   locale: string;
+  showWalkTime: boolean;
 }) {
   return (
     <li className="rounded-2xl border border-[color:var(--m-rowbr)] bg-[color:var(--m-ic)] px-3.5 py-3">
@@ -106,7 +138,9 @@ function NearbyRow({
         <span className="rounded-full bg-[color:var(--m-rowbr)] px-2 py-0.5">
           {t(CATEGORY_LABELS[suggestion.category].labelKey)}
         </span>
-        <span>{t('discovery.walkTime', { time: walkTimeLabel(suggestion.walkMinutes, locale) })}</span>
+        {showWalkTime ? (
+          <span>{t('discovery.walkTime', { time: walkTimeLabel(suggestion.walkMinutes, locale) })}</span>
+        ) : null}
       </div>
       {suggestion.reason ? (
         <p className="mt-1.5 font-geist text-caption leading-relaxed text-m-muted">{suggestion.reason}</p>

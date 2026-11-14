@@ -2,10 +2,13 @@ import type { TranslationStrings } from '../types';
 
 const discovery: TranslationStrings = {
   'discovery.title': "Yaxınlıqda",
+  'discovery.whatsNearby': "Yaxınlıqda nə var",
   'discovery.subtitle': "Buraxılış qısa gəzintiyə dəyər yerlər",
   'discovery.idle': "Ətrafınıza baxın.",
   'discovery.scan': "Ətrafa bax",
   'discovery.scanAgain': "Yenidən ətrafa bax",
+  'discovery.originDevice': 'Mənim yaxınlığımda',
+  'discovery.originArea': 'Bu ərazi',
   'discovery.loading': "Ətrafa baxılır…",
   'discovery.empty': "Hazırda ətrafda qısa gəzintiyə dəyər heç nə yoxdur.",
   'discovery.noMatches': "Yaxınlıqda bu kateqoriyada heç nə yoxdur.",

@@ -226,8 +226,33 @@ export function PlanMapStage({
               onToggle={toggleDawarichTrail}
             />
           )}
-          <NearbyLauncher tripId={tripId} getFallbackCenter={() => mapCenterRef.current} insetEnd={mapInsetRight + 14} />
           <LocateMeButton onLocate={handleLocate} />
+        </div>
+      )}
+
+      {/* Bottom-CENTRE: the "what's nearby" capsule, with the panel it opens standing
+          right above it. It needs the corridor between the panels rather than a corner
+          (the panel is 360px wide), so it is centred on the measured insets like the
+          POI bar at the top. It steps aside while the place card, the day detail or the
+          alternatives bar owns this band, or the two would stack into each other.
+          The display stays on the classes (`hidden md:flex`): an inline `flex` would
+          outrank `hidden` and show the desktop band on a phone. */}
+      {(!roadtripActive || dawarichEnabled) && !selectedPlace && !showDayDetail && !routeAlternatives.open && (
+        <div
+          className="hidden md:flex"
+          data-testid="nearby-launcher-band"
+          style={{
+            position: 'absolute', bottom: 18,
+            insetInlineStart: mapInsetLeft, insetInlineEnd: mapInsetRight,
+            justifyContent: 'center', zIndex: 26, pointerEvents: 'none',
+          }}
+        >
+          <NearbyLauncher
+            tripId={tripId}
+            getFallbackCenter={() => mapCenterRef.current}
+            insetStart={mapInsetLeft}
+            insetEnd={mapInsetRight}
+          />
         </div>
       )}
 

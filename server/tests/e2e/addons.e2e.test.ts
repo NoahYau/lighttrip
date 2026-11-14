@@ -22,6 +22,7 @@ import { createTestMikroOrmModule, createTestOrm, type TestOrm } from '../helper
 import { TestUnitOfWorkModule } from '../helpers/test-uow';
 import { sessionCookie } from './harness';
 import { Test } from '@nestjs/testing';
+import { addonsEnabledResponseSchema } from '@trek/shared';
 
 import cookieParser from 'cookie-parser';
 import type { Server } from 'http';
@@ -138,6 +139,8 @@ describe('GET /api/addons e2e (real auth guard + temp SQLite)', () => {
       toursWanderer: false,
       toursHikingMap: false,
       toursCycleMap: false,
+      // Discovery is off in this database, so the map-area switch is not offered either.
+      discoveryMapArea: false,
       addons: [
         { id: 'packing', name: 'Packing', type: 'trip', icon: 'Backpack', enabled: true },
         { id: 'journey', name: 'Journey', type: 'global', icon: 'Compass', enabled: true },
@@ -165,6 +168,9 @@ describe('GET /api/addons e2e (real auth guard + temp SQLite)', () => {
         },
       ],
     });
+    // The route declares this schema (`@ResponseContract`), so this pins the
+    // contract's field set as well as the exact body above.
+    expect(addonsEnabledResponseSchema.safeParse(res.body).success).toBe(true);
   });
 
   it('200 drops the photo providers while the journey addon is off', async () => {
@@ -179,6 +185,22 @@ describe('GET /api/addons e2e (real auth guard + temp SQLite)', () => {
       expect((await findRow(orm, PhotoProviders, { id: 'immich' }))!.enabled).toBe(1);
     } finally {
       await setAddonEnabled(orm, 'journey', true);
+    }
+  });
+
+  it('offers the Discovery map-area search only with Discovery on and the admin switch on', async () => {
+    await setAddonEnabled(orm, 'discovery', true);
+    await setAppSetting(orm, 'discovery_map_area_enabled', 'true');
+    try {
+      const res = await request(server).get('/api/addons').set('Cookie', sessionCookie(1));
+      expect(res.status).toBe(200);
+      expect(res.body.discoveryMapArea).toBe(true);
+      expect(addonsEnabledResponseSchema.safeParse(res.body).success).toBe(true);
+    } finally {
+      // A disabled row is filtered out of listEnabled(), so this restores the
+      // starting body the cases above assert without deleting the row.
+      await setAddonEnabled(orm, 'discovery', false);
+      await setAppSetting(orm, 'discovery_map_area_enabled', 'false');
     }
   });
 });

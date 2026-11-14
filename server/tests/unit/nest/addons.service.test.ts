@@ -489,6 +489,23 @@ describe('AddonsService addon/feature flags', () => {
     expect(await svc.getToursSkiRouting()).toEqual({ enabled: true });
   });
 
+  it('the Discovery map-area search is off until an admin turns it on, and offered only with Discovery', async () => {
+    expect(await svc.getDiscoveryMapArea()).toEqual({ enabled: false }); // absent row → OFF
+    expect((await svc.list()).discoveryMapArea).toBe(false); // Discovery is off
+    await insertAddon({ id: 'discovery', name: 'Discovery', enabled: 1 });
+    expect((await svc.list()).discoveryMapArea).toBe(false); // the addon is on, the switch is not
+
+    expect(await svc.updateDiscoveryMapArea(true)).toEqual({ enabled: true });
+    expect(await storedAppSetting('discovery_map_area_enabled')).toEqual({
+      key: 'discovery_map_area_enabled',
+      value: 'true',
+    });
+    expect((await svc.list()).discoveryMapArea).toBe(true);
+
+    expect(await svc.updateDiscoveryMapArea(false)).toEqual({ enabled: false });
+    expect((await svc.list()).discoveryMapArea).toBe(false);
+  });
+
   it('getCollabFeatures is opt-out: absent rows default ON, only false disables', async () => {
     await setAppSetting('collab_chat_enabled', 'false');
     await setAppSetting('collab_polls_enabled', 'true');

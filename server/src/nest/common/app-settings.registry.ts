@@ -107,6 +107,10 @@ export const APP_SETTINGS = {
   places_enrich_enabled: { schema: flag, default: 'true', publicConfig: true },
   place_shadow_enabled: { schema: flag, default: 'false', publicConfig: true },
   bag_tracking_enabled: { schema: flag, default: 'false' },
+  // Discovery: whether a nearby scan may cover the map area a traveller has panned to,
+  // not only the 250 m around the device. Off until an admin turns it on, so an install
+  // that never touches it behaves exactly as it always has.
+  discovery_map_area_enabled: { schema: flag, default: 'false' },
   // Off until an admin allows it: every user's wanderer calls go out to an address of their choosing.
   tours_wanderer_enabled: { schema: flag, default: 'false' },
   // MAP-01: OpenHikingMap as a base map of the Tours planner. On, since its tiles are free for

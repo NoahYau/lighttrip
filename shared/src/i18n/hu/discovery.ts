@@ -2,10 +2,13 @@ import type { TranslationStrings } from '../types';
 
 const discovery: TranslationStrings = {
   'discovery.title': "A közelben",
+  'discovery.whatsNearby': "Mi van a közelben",
   'discovery.subtitle': "Helyek, amelyek megérnek egy rövid sétát innen",
   'discovery.idle': "Nézd meg, mi van körülötted.",
   'discovery.scan': "Körülnézés",
   'discovery.scanAgain': "Nézz körül újra",
+  'discovery.originDevice': 'Közelemben',
+  'discovery.originArea': 'Ez a terület',
   'discovery.loading': "Körülnézés…",
   'discovery.empty': "Jelenleg nincs itt semmi, ami megérne egy rövid sétát.",
   'discovery.noMatches': "Ebből a kategóriából nincs semmi a közelben.",

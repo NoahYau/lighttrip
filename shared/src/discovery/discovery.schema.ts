@@ -36,6 +36,12 @@ export const discoveryScanRequestSchema = z.object({
   speed: z.number().min(0).max(100).nullable().optional(),
   /** 150m grid id, used for idempotency and the privacy promise (only the cell is kept). */
   cell: z.string().min(1).max(32),
+  /**
+   * How far around the position to look, in metres. 250 when left out (the
+   * device scan's "short walk"), with the same 50..5000 bounds `/api/maps/nearby`
+   * takes — the map-region scan asks for the circle covering what is on screen.
+   */
+  radius: z.number().int().min(50).max(5000).optional(),
   /** What is on screen: the manual button, or the foreground roaming engine. */
   mode: z.enum(['roam', 'manual']),
   at: z.string().datetime(),
@@ -64,13 +70,16 @@ export const discoverySuggestionSchema = z.object({
 export type DiscoverySuggestion = z.infer<typeof discoverySuggestionSchema>;
 
 /**
- * The MCP twin's input: a coordinate plus the language, without the fix quality
- * or cell a device scan carries. Declared here so the tool file holds no inline
- * zod (`lint:mcp-zod` counts a new `.mcp.ts` against a zero baseline).
+ * The MCP twin's input: a coordinate, an optional radius plus the language,
+ * without the fix quality or cell a device scan carries. Declared here so the
+ * tool file holds no inline zod (`lint:mcp-zod` counts a new `.mcp.ts` against a
+ * zero baseline).
  */
 export const discoveryNearbyQuerySchema = z.object({
   lat: z.number().min(-90).max(90),
   lng: z.number().min(-180).max(180),
+  /** Metres, 250 when left out; the same 50..5000 bounds `/api/maps/nearby` takes. */
+  radius: z.number().int().min(50).max(5000).optional(),
   lang: z.string().max(35).optional(),
 });
 export type DiscoveryNearbyQuery = z.infer<typeof discoveryNearbyQuerySchema>;

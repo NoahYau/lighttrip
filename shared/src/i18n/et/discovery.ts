@@ -2,10 +2,13 @@ import type { TranslationStrings } from '../types';
 
 const discovery: TranslationStrings = {
   'discovery.title': "Läheduses",
+  'discovery.whatsNearby': "Mis on lähedal",
   'discovery.subtitle': "Kohad, mis väärivad siit lühikest jalutuskäiku",
   'discovery.idle': "Vaata, mis on ümberringi.",
   'discovery.scan': "Vaata ringi",
   'discovery.scanAgain': "Vaata uuesti ringi",
+  'discovery.originDevice': 'Minu lähedal',
+  'discovery.originArea': 'See piirkond',
   'discovery.loading': "Ringi vaatamine…",
   'discovery.empty': "Praegu pole siin midagi, mis väärinuks lühikest jalutuskäiku.",
   'discovery.noMatches': "Selles kategoorias pole läheduses midagi.",

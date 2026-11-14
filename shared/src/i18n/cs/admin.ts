@@ -729,6 +729,9 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'Uživatelé mohou připojit vlastní instanci wanderer a importovat z ní trasy jako výlety',
+  'admin.discoveryMapArea.title': 'Hledat v okolí kolem mapy',
+  'admin.discoveryMapArea.subtitle':
+    'Najít místa v okolí oblasti, na kterou jste mapu posunuli, nejen tam, kde právě stojíte.',
   'admin.toursHikingMap.title': 'Turistická mapa (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'Nabízí OpenHikingMap jako podkladovou mapu v plánovači túr. Zdarma pro nekomerční instalace do 500 000 dlaždic měsíčně; komerční nebo větší instalace potřebuje nejdřív dohodu s openmaps.fr',

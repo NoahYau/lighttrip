@@ -741,6 +741,8 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'ユーザーが自分のwandererインスタンスを接続し、そのトレイルをツアーとしてインポートできます',
+  'admin.discoveryMapArea.title': '地図の周辺で近くを検索',
+  'admin.discoveryMapArea.subtitle': '現在地だけでなく、地図を移動した範囲の周辺にある場所も見つけられます。',
   'admin.toursHikingMap.title': 'ハイキング地図 (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'ツアープランナーのベースマップとして OpenHikingMap を提供します。非商用の環境では月 500,000 タイルまで無料です。商用またはそれ以上の規模の環境では、先に openmaps.fr との合意が必要です',

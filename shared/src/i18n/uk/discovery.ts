@@ -2,10 +2,13 @@ import type { TranslationStrings } from '../types';
 
 const discovery: TranslationStrings = {
   'discovery.title': "Поруч",
+  'discovery.whatsNearby': "Що поруч",
   'discovery.subtitle': "Місця, до яких варто трохи прогулятися звідси",
   'discovery.idle': "Подивіться, що навколо.",
   'discovery.scan': "Озирнутися",
   'discovery.scanAgain': "Озирнутися ще раз",
+  'discovery.originDevice': 'Поруч зі мною',
+  'discovery.originArea': 'Ця область',
   'discovery.loading': "Озираємося…",
   'discovery.empty': "Зараз поруч немає нічого, до чого варто було б прогулятися.",
   'discovery.noMatches': "Поруч немає нічого з цієї категорії.",

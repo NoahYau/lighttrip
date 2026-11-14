@@ -44,6 +44,16 @@ describe('addonStore', () => {
       expect(useAddonStore.getState().toursWanderer).toBe(false);
     });
 
+    it('captures the admin flag for searching around the map area, off unless the install turns it on', async () => {
+      server.use(http.get('/api/addons', () => HttpResponse.json({ discoveryMapArea: true, addons: [] })));
+      await useAddonStore.getState().loadAddons();
+      expect(useAddonStore.getState().discoveryMapArea).toBe(true);
+
+      server.use(http.get('/api/addons', () => HttpResponse.json({ addons: [] })));
+      await useAddonStore.getState().loadAddons();
+      expect(useAddonStore.getState().discoveryMapArea).toBe(false);
+    });
+
     it('keeps the collab chat on unless the response turns it off', async () => {
       server.use(http.get('/api/addons', () => HttpResponse.json({ addons: [] })));
       await useAddonStore.getState().loadAddons();

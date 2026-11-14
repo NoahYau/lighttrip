@@ -2,10 +2,13 @@ import type { TranslationStrings } from '../types';
 
 const discovery: TranslationStrings = {
   'discovery.title': "Nablízku",
+  'discovery.whatsNearby': "Co je poblíž",
   'discovery.subtitle': "Místa, která stojí za krátkou procházku odsud",
   'discovery.idle': "Podívej se, co je kolem.",
   'discovery.scan': "Rozhlédnout se",
   'discovery.scanAgain': "Rozhlédnout se znovu",
+  'discovery.originDevice': 'Blízko mě',
+  'discovery.originArea': 'Tato oblast',
   'discovery.loading': "Rozhlížím se…",
   'discovery.empty': "Právě teď tu není nic, co by stálo za krátkou procházku.",
   'discovery.noMatches': "V této kategorii tu nic není.",

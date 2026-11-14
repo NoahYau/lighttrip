@@ -728,6 +728,9 @@ const admin: TranslationStrings = {
   'admin.toursWanderer.title': 'wanderer',
   'admin.toursWanderer.subtitle':
     'Os usuários podem conectar a própria instância do wanderer e importar as trilhas dela como passeios',
+  'admin.discoveryMapArea.title': 'Buscar por perto ao redor do mapa',
+  'admin.discoveryMapArea.subtitle':
+    'Encontrar lugares próximos à área para onde você arrastou o mapa, não apenas onde você está.',
   'admin.toursHikingMap.title': 'Mapa de trilhas (OpenHikingMap)',
   'admin.toursHikingMap.subtitle':
     'Oferece o OpenHikingMap como mapa base no planejador de passeios. Gratuito para instalações não comerciais até 500.000 blocos por mês; uma instalação comercial ou maior precisa antes de um acordo com o openmaps.fr',
