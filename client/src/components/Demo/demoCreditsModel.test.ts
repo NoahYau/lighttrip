@@ -3,8 +3,8 @@ import { PHOTO_CREDITS, PUBLIC_DOMAIN, commonsPage, creditTitle, licenseDeed } f
 
 describe('demo photo credits', () => {
   it('FE-DEMO-CREDITS-001: credits every photo of the demo content, each file once', () => {
-    expect(PHOTO_CREDITS).toHaveLength(228);
-    expect(new Set(PHOTO_CREDITS.map((c) => c.file)).size).toBe(228);
+    expect(PHOTO_CREDITS).toHaveLength(230);
+    expect(new Set(PHOTO_CREDITS.map((c) => c.file)).size).toBe(230);
     for (const { file } of PHOTO_CREDITS) expect(file, file).toMatch(/\.jpe?g$/i);
   });
 

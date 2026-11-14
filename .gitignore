@@ -22,7 +22,11 @@ client/public/icons/*.png
 
 # User data
 server/data/*
-server/uploads/
+# Runtime uploads stay out of git; the demo's seeded covers are the exception.
+server/uploads/*
+!server/uploads/covers/
+server/uploads/covers/*
+!server/uploads/covers/demo-*.jpg
 
 # Environment
 .env
