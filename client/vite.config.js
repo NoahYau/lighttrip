@@ -375,7 +375,7 @@ export default defineConfig(({ mode }) => ({
     port: DEV_PORT,
 
 
-    allowedHosts: ["picked-unbiased-slug.ngrok-free.app"],
+    allowedHosts: ["lighttrip.rona.eu.org"],
 
 
     // And watch the build output, so rebuilding shared reloads the page rather
