@@ -313,7 +313,7 @@ describe('DisplaySettingsTab – Compact language picker', () => {
   });
 });
 
-// ── Map & privacy toggles (040–047) ───────────────────────────────────────────
+// ── Map & privacy toggles (040–048) ───────────────────────────────────────────
 
 describe('DisplaySettingsTab – Map and privacy toggles', () => {
   it('FE-COMP-DISPLAY-040: turning booking route labels off persists false', async () => {
